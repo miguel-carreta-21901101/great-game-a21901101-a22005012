@@ -59,12 +59,10 @@ public class GameManager {
 
     public ArrayList<Programmer> getProgrammers(int position){
 
-        /*for(Programmer p : Tabuleiro.posicoesMapa.get(position)){
-            playersInPosition.add(p);
-        }
-        return new ArrayList<>(Tabuleiro.posicoesMapa.get(position));*/
 
-        return Programmer.programmers;
+        return new ArrayList<>(Tabuleiro.posicoesMapa.get(position));
+
+
     }
 
     public int getCurrentPlayerID(){

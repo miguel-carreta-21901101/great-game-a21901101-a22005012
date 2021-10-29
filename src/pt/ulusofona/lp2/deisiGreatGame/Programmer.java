@@ -13,7 +13,7 @@ public class Programmer {
     HashSet<String> linguagensProgramacao = new HashSet<>();
     boolean inGame = true;
     String estado;
-    public static ArrayList<Programmer> programmers = new ArrayList<>();
+    ArrayList<Programmer> programmers = new ArrayList<>();
 
     enum ProgrammerColor {
         PURPLE,
@@ -34,6 +34,9 @@ public class Programmer {
         return pos;
     }
 
+    public ArrayList<Programmer> getProgrammers(){
+        return programmers;
+    }
     ProgrammerColor getColor(){
         return ProgrammerColor.BROWN;
     }
