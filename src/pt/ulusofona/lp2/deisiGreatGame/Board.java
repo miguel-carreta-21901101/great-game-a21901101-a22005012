@@ -11,7 +11,7 @@ public class Board {
 
     String ultimaPosicao = "glory.png";
 
-    public HashMap<Integer, ArrayList<Programmer>> posicoesMapa = new HashMap<>();
+    private HashMap<Integer, ArrayList<Programmer>> posicoesMapa = new HashMap<>();
 
     public Board() {
     }
