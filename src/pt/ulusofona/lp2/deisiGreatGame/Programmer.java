@@ -1,9 +1,9 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Properties;
 
 public class Programmer {
 
@@ -13,13 +13,30 @@ public class Programmer {
     HashSet<String> linguagensProgramacao = new HashSet<>();
     boolean inGame = true;
     String estado;
-    ArrayList<Programmer> programmers = new ArrayList<>();
+    ProgrammerColor color;
 
-    enum ProgrammerColor {
-        PURPLE,
-        BLUE,
-        GREEN,
-        BROWN
+
+    private String[] playersInfo;
+
+
+    public Programmer() {
+        playersInfo = new String[3];
+
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Programmer(int id) {
+        this.id = id;
+    }
+
+
+
+    public void setPlayersInfo(String[] playersInfo) {
+        this.playersInfo = playersInfo;
     }
 
     public int getId(){
@@ -34,12 +51,17 @@ public class Programmer {
         return pos;
     }
 
-    public ArrayList<Programmer> getProgrammers(){
-        return programmers;
+    public String[] getPlayersInfo(){
+        return playersInfo;
     }
-    ProgrammerColor getColor(){
-        return ProgrammerColor.BROWN;
+
+    public ProgrammerColor getColor(){
+
+        return color;
     }
+
+
+
 
     public void stillInGame(){
         if (inGame){
@@ -50,7 +72,7 @@ public class Programmer {
     }
 
     public String toString() {
-        return getId() + " | " + getName() + getPos() + " | " + Arrays.toString(linguagensProgramacao.toString()
+        return id + " | " + name + pos + " | " + Arrays.toString(linguagensProgramacao.toString()
                 .split("; ")) + " | " + estado;
     }
 }
