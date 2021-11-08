@@ -13,5 +13,8 @@ public enum ProgrammerColor {
     }
 
 
+    public void setColor(String cor){
+        color = cor;
+    }
     public String toString() {return color;}
 }

@@ -10,10 +10,11 @@ public class Programmer {
     String name;
     int id;
     int pos;
-    HashSet<String> linguagensProgramacao = new HashSet<>();
+    String linguagens;
     boolean inGame = true;
     String estado;
     ProgrammerColor color;
+    String cor;
 
 
     private String[] playersInfo;
@@ -24,6 +25,12 @@ public class Programmer {
 
     }
 
+    public Programmer(String name, int id, String linguagens , String cor) {
+        this.name = name;
+        this.id = id;
+        this.linguagens = linguagens;
+        this.cor = cor;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -51,13 +58,21 @@ public class Programmer {
         return pos;
     }
 
+    public void setPos(int pos) {
+        this.pos = pos;
+    }
+
     public String[] getPlayersInfo(){
         return playersInfo;
     }
 
+    public String getCor(){
+        return cor;
+    }
+
     public ProgrammerColor getColor(){
 
-        return color;
+        return  color;
     }
 
 
@@ -72,7 +87,7 @@ public class Programmer {
     }
 
     public String toString() {
-        return id + " | " + name + pos + " | " + Arrays.toString(linguagensProgramacao.toString()
-                .split("; ")) + " | " + estado;
+        return id + " | " + name + " | " + pos + " | " + linguagens
+                 + " | Em Jogo";
     }
 }

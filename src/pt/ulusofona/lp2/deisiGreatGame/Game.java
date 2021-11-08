@@ -4,9 +4,10 @@ import java.util.HashMap;
 
 public class Game {
 
-    private int currentPlayerID, endedShifts = 0;
+    int currentPlayerID, casaPartida = 0;
+    int endedShifts = 1;
     private String winner;
-    private HashMap<Integer, Programmer> players = new HashMap<>();
+
     private HashMap<Integer, Programmer> classifications = new HashMap<>();
 
     public Game() {
@@ -20,8 +21,8 @@ public class Game {
         this.winner = winner;
     }
 
-    public void setEndedShifts(int endedShifts) {
-        this.endedShifts = endedShifts;
+    public void nextShift() {
+        endedShifts ++;
     }
 
 
@@ -30,6 +31,7 @@ public class Game {
     }
 
     public int getCurrentPlayerID(){
+
         return currentPlayerID;
     }
 
@@ -41,7 +43,5 @@ public class Game {
         return endedShifts;
     }
 
-    public HashMap<Integer, Programmer> getPlayers() {
-        return players;
-    }
+
 }
