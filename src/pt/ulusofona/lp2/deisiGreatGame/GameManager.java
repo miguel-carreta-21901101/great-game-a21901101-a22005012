@@ -1,7 +1,8 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -10,8 +11,7 @@ import java.util.HashSet;
 
 public class GameManager {
 
-    // ID , CASA ATUAL
-    HashMap<Integer, Integer> mapPositionPerPlayer = new HashMap<>();
+
     HashMap<Integer, Programmer> players = new HashMap<>();
     int count;
     int idMenor = Integer.MAX_VALUE;
@@ -75,7 +75,7 @@ public class GameManager {
                         }
                         //adiciona o ID ao Hashset
                         idsRepetidos.add(Integer.parseInt(playerInfo[i][j]));
-                        id = Integer.parseInt(playerInfo[i][j]);;
+                        id = Integer.parseInt(playerInfo[i][j]);
                         if (id < idMenor){
                             idMenor = id;
                         }
@@ -97,7 +97,7 @@ public class GameManager {
                         if (playerInfo[i][2] == null || playerInfo[i][2].length() == 0){
                             return false;
                         }
-                        ArrayList<String> linguagensProgramacao = null;
+                        ArrayList<String> linguagensProgramacao;
                         StringBuilder aux = new StringBuilder();
 
                         linguagensProgramacao = new ArrayList<>(Arrays.asList(playerInfo[i][j]));
@@ -132,7 +132,8 @@ public class GameManager {
             }
             countPlayers++;
 
-            players.put(id, new Programmer(nome, id, linguagensProgramacaoAux, cor));
+
+            players.put(id, new Programmer(id, nome, linguagensProgramacaoAux, cor));
         }
 
         if (countPlayers <= 1 || countPlayers > 4){
@@ -153,6 +154,7 @@ public class GameManager {
         board.setTamanho(boardSize);
 
 
+
         return true;
 
     }
@@ -164,37 +166,47 @@ public class GameManager {
             return null;
         }
 
-        for (Programmer p : players.values())
-            if (p.getPos() == position){
+        for (Programmer p : players.values()) {
+            if (p.getPos() == position) {
                 return "player" + p.getCor() + ".png";
             }
-
+        }
         if (position == board.getTamanho()) {
             return board.getUltimaPosicao();
 
+        }else if (position <= board.getTamanho()){
+            return "blank.png";
+
+        }else {
+            return null;
         }
 
-            return null;
+
+
 
     }
 
     public ArrayList<Programmer> getProgrammers() {
 
-        //???
+
+       //???
         ArrayList<Programmer> p = new ArrayList<>();
         Programmer p1 = new Programmer();
+        p1.name = "joao";
         Programmer p2 = new Programmer();
+        p2.name = "mar";
         p.add(p1);
         p.add(p2);
 
         return p;
 
-        //return new ArrayList<Programmer>(players.values());
+     //   return new ArrayList<>(players.values());
     }
 
     public ArrayList<Programmer> getProgrammers(int position) {
 
         ArrayList<Programmer> programmers = new ArrayList<>();
+        boolean existemProgrammers = false;
 
         if (position < 0 || position > board.getTamanho()){
             return null;
@@ -202,17 +214,24 @@ public class GameManager {
 
         for (Programmer p : players.values()){
             if (p.getPos() == position){
+                existemProgrammers = true;
                 programmers.add(p);
             }
         }
 
-        return programmers;
+        if (existemProgrammers){
+            return programmers;
+        }else {
+            return null;
+        }
     }
 
     public int getCurrentPlayerID() {
 
 
-        return 0;// game.getCurrentPlayerID();//this.game.getCurrentPlayerID();
+
+        return 0;
+        // game.getCurrentPlayerID();//this.game.getCurrentPlayerID();
     }
 
 
@@ -226,19 +245,23 @@ public class GameManager {
         int aux;
         Programmer p = players.get(game.getCurrentPlayerID());
 
-
         if ((p.getPos() + nrPositions) > board.getTamanho()){
             aux = (board.getTamanho() - p.getPos() - nrPositions) * -1;
-            p.setPos(board.getTamanho() - aux);
+            players.get(p.getId()).setPos(board.getTamanho() - aux);
+           // p.setPos(board.getTamanho() - aux);
 
         } else {
-           p.setPos(p.getPos() + nrPositions);
+            players.get(p.getId()).setPos(p.getPos() + nrPositions);
+            //p.setPos(p.getPos() + nrPositions);
         }
 
 
-        game.setCurrentPlayerID(game.getCurrentPlayerID()+1);
+        game.setCurrentPlayerID(game.getCurrentPlayerID());
+
+
         count ++;
         game.nextShift();
+
 
         if (count == players.size()){
             count = 0;
@@ -249,10 +272,20 @@ public class GameManager {
     }
 
     public boolean gameIsOver() {
+        boolean isOver = false;
+
         for (Programmer p : players.values()){
             if (p.getPos() == board.getTamanho() ){
-                return true;
+                isOver = true;
+                break;
+
             }
+        }
+        if (isOver){
+            players.clear();
+            game = new Game();
+            board = new Board();
+            return true;
         }
 
         return false;
@@ -288,8 +321,21 @@ public class GameManager {
         return gameResults;
     }
 
+
     public JPanel getAuthorsPanel() {
-        return null;
+
+        JPanel painel = new JPanel();
+
+        painel.setPreferredSize(new Dimension(300,300));
+        painel.setBackground(Color.LIGHT_GRAY);
+        JLabel miguel = new JLabel("Miguel Carreta     21901101");
+        JLabel traco = new JLabel("_________________________________________");
+        JLabel ricardo = new JLabel("Ricardo Gonçalves 22005012");
+        painel.add(miguel);
+        painel.add(traco);
+        painel.add(ricardo);
+
+        return painel;
     }
 
 }

@@ -25,9 +25,10 @@ public class Programmer {
 
     }
 
-    public Programmer(String name, int id, String linguagens , String cor) {
-        this.name = name;
+    public Programmer(int id, String name,  String linguagens , String cor) {
         this.id = id;
+        this.name = name;
+
         this.linguagens = linguagens;
         this.cor = cor;
     }

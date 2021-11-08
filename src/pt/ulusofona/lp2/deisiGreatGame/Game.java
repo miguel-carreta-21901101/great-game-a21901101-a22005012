@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class Game {
 
     int currentPlayerID, casaPartida = 0;
-    int endedShifts = 1;
+    int endedShifts = 0;
     private String winner;
 
     private HashMap<Integer, Programmer> classifications = new HashMap<>();
@@ -23,6 +23,7 @@ public class Game {
 
     public void nextShift() {
         endedShifts ++;
+        currentPlayerID++;
     }
 
 
