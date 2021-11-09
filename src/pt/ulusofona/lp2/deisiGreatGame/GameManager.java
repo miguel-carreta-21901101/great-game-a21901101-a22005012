@@ -103,9 +103,9 @@ public class GameManager {
 
 
                         for (String s : linguagensProgramacao){
-                            aux.append(s).append("; ");
+                            aux.append(s).append(";  ");
                         }
-                        linguagensProgramacaoAux = aux.substring(0, aux.length() -2);
+                        linguagensProgramacaoAux = aux.substring(0, aux.length() -3);
                         break;
 
                     // COR
