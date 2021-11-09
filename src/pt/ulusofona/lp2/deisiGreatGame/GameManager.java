@@ -14,7 +14,6 @@ public class GameManager {
     int count;
     int idMenor = Integer.MAX_VALUE;
     HashMap<Integer, Programmer> programmers = new HashMap<>();
-    ArrayList<String> linguagensProgramacao;
     HashMap<String, Integer> classificados = new HashMap<>();
     Board board = new Board();
     Game game = new Game();
@@ -196,7 +195,7 @@ public class GameManager {
     public ArrayList<Programmer> getProgrammers(int position) {
 
         ArrayList<Programmer> programmers = new ArrayList<>();
-        boolean existemProgrammers = false;
+       // boolean existemProgrammers = false;
 
         if (position < 0 || position > board.getTamanho()){
             return null;
@@ -204,16 +203,18 @@ public class GameManager {
 
         for (Programmer p : this.programmers.values()){
             if (p.getPos() == position){
-                existemProgrammers = true;
+               // existemProgrammers = true;
                 programmers.add(p);
             }
         }
+        return programmers;
+/*
 
         if (existemProgrammers){
             return programmers;
         }else {
             return null;
-        }
+        }*/
     }
 
     public int getCurrentPlayerID() {

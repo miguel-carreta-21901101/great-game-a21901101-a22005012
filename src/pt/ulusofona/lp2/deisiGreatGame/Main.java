@@ -19,8 +19,8 @@ public class Main {
 
        game.createInitialBoard(bros, 4);
        System.out.println(game.getProgrammers());
+
+
 */
-
-
     }
 }
