@@ -1,7 +1,5 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
-import javafx.collections.transformation.SortedList;
-
 import javax.swing.*;
 
 import java.awt.*;
