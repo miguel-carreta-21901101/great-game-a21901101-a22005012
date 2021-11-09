@@ -102,7 +102,7 @@ public class GameManager {
                         linguagensProgramacao = new ArrayList<>(Arrays.asList(playerInfo[i][j]));
 
                         for (String s : linguagensProgramacao){
-                            aux.append(s).append(",");
+                            aux.append(s).append("; ");
                         }
                         linguagensProgramacaoAux = aux.substring(0, aux.length() -1);
                         break;
