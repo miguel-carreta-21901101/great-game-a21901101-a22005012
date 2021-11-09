@@ -22,9 +22,9 @@ public class Programmer {
     public Programmer(int id, String name,  String linguagens , String cor) {
         this.id = id;
         this.name = name;
-
         this.linguagens = linguagens;
         this.cor = cor;
+        pos = 1;
     }
 
     public void setName(String name) {
@@ -75,7 +75,7 @@ public class Programmer {
 
 
     public String toString() {
-        return String.format("%d | %s | %d | %s | Em Jogo", id, name, pos+1, linguagens);
+        return String.format("%d | %s | %d | %s | Em Jogo", id, name, pos, linguagens);
 
     }
 }

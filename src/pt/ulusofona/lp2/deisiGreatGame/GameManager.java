@@ -189,6 +189,7 @@ public class GameManager {
 
     public ArrayList<Programmer> getProgrammers() {
 
+        System.out.println(programmers.values());
         return new ArrayList<>(programmers.values());
     }
 
