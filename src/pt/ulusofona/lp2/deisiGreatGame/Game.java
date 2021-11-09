@@ -4,11 +4,9 @@ import java.util.HashMap;
 
 public class Game {
 
-    int currentPlayerID, casaPartida = 0;
+    int currentPlayerID= 0;
     int endedShifts = 1;
     private String winner;
-
-
 
     public Game() {
     }
@@ -26,9 +24,6 @@ public class Game {
         currentPlayerID++;
     }
 
-
-
-
     public int getCurrentPlayerID(){
 
 
@@ -43,5 +38,7 @@ public class Game {
         return endedShifts;
     }
 
-
+    public void setEndedShifts(int n){
+        endedShifts = n;
+    }
 }

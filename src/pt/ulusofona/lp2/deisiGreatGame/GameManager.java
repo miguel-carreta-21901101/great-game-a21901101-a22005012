@@ -3,10 +3,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 import javax.swing.*;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 
 public class GameManager {
@@ -14,7 +11,7 @@ public class GameManager {
     int count;
     int idMenor = Integer.MAX_VALUE;
     HashMap<Integer, Programmer> programmers = new HashMap<>();
-    HashMap<String, Integer> classificados = new HashMap<>();
+    TreeMap<Integer, String> classF = new TreeMap<>(Collections.reverseOrder());
     Board board = new Board();
     Game game = new Game();
 
@@ -266,7 +263,9 @@ public class GameManager {
         for (Programmer p : programmers.values()){
             if (p.getPos() == board.getTamanho()){
                 for (Programmer p1: programmers.values()){
-                    classificados.put(p1.getName(), p1.getPos());
+                    classF.put(p1.getPos(), p1.getName());
+
+                  //  classificados.put(p1.getName(), p1.getPos());
                 }
                 game.setWinner(p.getName());
                 isOver = true;
@@ -295,31 +294,15 @@ public class GameManager {
             gameResults.add("RESTANTES");
 
 
-            for (String s : classificados.keySet()){
-                if (s.equals(game.getWinner())){
+            for (Integer i : classF.keySet()){
+                if (classF.get(i).equals(game.getWinner())){
                     continue;
                 }
-                /*HashMap<String, Integer> aux = new HashMap<>();
-                for (Integer i : classificados.values()){
 
-                }*/
-                gameResults.add(s + " " + classificados.get(s));
+                gameResults.add(classF.get(i) + " " + i);
             }
 
 
-            /*
-            String inicio = "O GRANDE JOGO DO DEISI\n\nNR. DE TURNOS\n" + game.getEndedShifts() + "\n\n" +
-                    "VENCEDOR\n" + game.getWinner() + "\nRESTANTES";
-
-            for (Integer i : game.getClassifications().keySet()) {
-                if (i == 0) {
-                    continue;
-                }
-                classfic = game.getClassifications().get(i).name + " " + i + "\n";
-            }
-
-            gameResults.add(inicio);
-            gameResults.add(classfic);*/
         } catch (Exception e) {
 
             gameResults.clear();
