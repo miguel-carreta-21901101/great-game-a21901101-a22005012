@@ -7,7 +7,7 @@ public class Main {
 
         bros[0][0] = "1";
         bros[0][1] = "Miguel";
-        bros[0][2] = "LP1;LP;C";
+        bros[0][2] = "D;Common Lisp;Clojure";
         bros[0][3] = "Purple";
         bros[1][0] = "2";
         bros[1][1] = "Filipe";
