@@ -2,12 +2,12 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 public class Main {
     public static void main(String[] args) {
-
+/*
         String[][] bros = new String[2][4];
 
         bros[0][0] = "1";
         bros[0][1] = "Miguel";
-        bros[0][2] = "LP1 CONA";
+        bros[0][2] = "LP1";
         bros[0][3] = "Purple";
         bros[1][0] = "2";
         bros[1][1] = "Filipe";
@@ -20,12 +20,7 @@ public class Main {
 
        System.out.println(game.createInitialBoard(bros, 4));
         System.out.println(game.getProgrammers());
-
-
-
-
-
-
+*/
 
 
     }

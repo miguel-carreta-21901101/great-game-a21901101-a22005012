@@ -14,7 +14,7 @@ public class GameManager {
     int count;
     int idMenor = Integer.MAX_VALUE;
     HashMap<Integer, Programmer> programmers = new HashMap<>();
-
+    ArrayList<String> linguagensProgramacao;
     HashMap<String, Integer> classificados = new HashMap<>();
     Board board = new Board();
     Game game = new Game();
@@ -96,16 +96,20 @@ public class GameManager {
                         if (playerInfo[i][2] == null || playerInfo[i][2].length() == 0){
                             return false;
                         }
-                        ArrayList<String> linguagensProgramacao;
-                        StringBuilder aux = new StringBuilder();
 
+                        //StringBuilder aux = new StringBuilder();
                         linguagensProgramacao = new ArrayList<>(Arrays.asList(playerInfo[i][j]));
 
-
+/*
                         for (String s : linguagensProgramacao){
-                            aux.append(s).append(";  ");
+                            aux.append(s).append("; ");
+                           // System.out.println(aux);
                         }
-                        linguagensProgramacaoAux = aux.substring(0, aux.length() -3);
+
+
+                        linguagensProgramacaoAux = aux.substring(0, aux.length() -2);
+                       // System.out.println(linguagensProgramacaoAux);*/
+
                         break;
 
                     // COR
@@ -132,8 +136,7 @@ public class GameManager {
             }
             countPlayers++;
 
-
-            programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, cor));
+            programmers.put(id, new Programmer(id, nome, linguagensProgramacao, cor));
         }
 
         if (countPlayers <= 1 || countPlayers > 4){
@@ -153,7 +156,6 @@ public class GameManager {
             idsAJogar.add(p.getId());
         }
         board.setTamanho(boardSize);
-
 
 
         return true;
@@ -189,6 +191,7 @@ public class GameManager {
 
     public ArrayList<Programmer> getProgrammers() {
 
+        System.out.println(programmers.values());
         return new ArrayList<>(programmers.values());
     }
 
