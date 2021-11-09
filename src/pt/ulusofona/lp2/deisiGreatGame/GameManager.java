@@ -100,6 +100,7 @@ public class GameManager {
                         String[] parts = playerInfo[i][j].split(";");
                         StringBuilder aux = new StringBuilder();
 
+                        Arrays.sort(parts);
 
                         for (String s: parts){
                             aux.append(s);

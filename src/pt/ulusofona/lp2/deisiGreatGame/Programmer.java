@@ -10,7 +10,6 @@ public class Programmer {
     String name;
     int id;
     int pos;
-    ArrayList<String> lngs;
     String linguagens;
     boolean inGame = true;
     String estado;
@@ -74,10 +73,6 @@ public class Programmer {
         }
     }
 
-
-    public void transformaArrayLinguagens(){
-
-    }
 
     public String toString() {
         return String.format("%d | %s | %d | %s | Em Jogo", id, name, pos+1, linguagens);
