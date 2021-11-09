@@ -97,18 +97,16 @@ public class GameManager {
                             return false;
                         }
 
-                        //StringBuilder aux = new StringBuilder();
-                        linguagensProgramacao = new ArrayList<>(Arrays.asList(playerInfo[i][j]));
+                        String[] parts = playerInfo[i][j].split(";");
+                        StringBuilder aux = new StringBuilder();
 
-/*
-                        for (String s : linguagensProgramacao){
-                            aux.append(s).append("; ");
-                           // System.out.println(aux);
+
+                        for (String s: parts){
+                            aux.append(s);
+                            aux.append("; ");
                         }
 
-
                         linguagensProgramacaoAux = aux.substring(0, aux.length() -2);
-                       // System.out.println(linguagensProgramacaoAux);*/
 
                         break;
 
@@ -136,7 +134,7 @@ public class GameManager {
             }
             countPlayers++;
 
-            programmers.put(id, new Programmer(id, nome, linguagensProgramacao, cor));
+            programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, cor));
         }
 
         if (countPlayers <= 1 || countPlayers > 4){

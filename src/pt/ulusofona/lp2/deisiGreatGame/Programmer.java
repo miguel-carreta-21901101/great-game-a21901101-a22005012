@@ -20,11 +20,11 @@ public class Programmer {
 
     public Programmer(){}
 
-    public Programmer(int id, String name,  ArrayList<String> lngs , String cor) {
+    public Programmer(int id, String name,  String linguagens , String cor) {
         this.id = id;
         this.name = name;
 
-        this.lngs = lngs;
+        this.linguagens = linguagens;
         this.cor = cor;
     }
 
@@ -75,8 +75,12 @@ public class Programmer {
     }
 
 
+    public void transformaArrayLinguagens(){
+
+    }
+
     public String toString() {
-        return String.format("%d | %s | %d | %s | Em Jogo", id, name, pos+1, lngs);
+        return String.format("%d | %s | %d | %s | Em Jogo", id, name, pos+1, linguagens);
 
     }
 }

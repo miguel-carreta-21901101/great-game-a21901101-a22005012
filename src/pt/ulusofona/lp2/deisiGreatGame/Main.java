@@ -7,7 +7,7 @@ public class Main {
 
         bros[0][0] = "1";
         bros[0][1] = "Miguel";
-        bros[0][2] = "LP1";
+        bros[0][2] = "LP1;LP;C";
         bros[0][3] = "Purple";
         bros[1][0] = "2";
         bros[1][1] = "Filipe";
@@ -15,11 +15,10 @@ public class Main {
         bros[1][3] = "Green";
 
 
-        System.out.println(bros.length);
         GameManager game = new GameManager();
 
-       System.out.println(game.createInitialBoard(bros, 4));
-        System.out.println(game.getProgrammers());
+       game.createInitialBoard(bros, 4);
+       System.out.println(game.getProgrammers());
 */
 
 
