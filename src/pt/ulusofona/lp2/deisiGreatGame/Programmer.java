@@ -17,13 +17,7 @@ public class Programmer {
     String cor;
 
 
-    private String[] playersInfo;
-
-
-    public Programmer() {
-        playersInfo = new String[3];
-
-    }
+    public Programmer(){}
 
     public Programmer(int id, String name,  String linguagens , String cor) {
         this.id = id;
@@ -42,11 +36,6 @@ public class Programmer {
     }
 
 
-
-    public void setPlayersInfo(String[] playersInfo) {
-        this.playersInfo = playersInfo;
-    }
-
     public int getId(){
         return id;
     }
@@ -63,9 +52,6 @@ public class Programmer {
         this.pos = pos;
     }
 
-    public String[] getPlayersInfo(){
-        return playersInfo;
-    }
 
     public String getCor(){
         return cor;

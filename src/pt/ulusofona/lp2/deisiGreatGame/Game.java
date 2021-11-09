@@ -5,10 +5,10 @@ import java.util.HashMap;
 public class Game {
 
     int currentPlayerID, casaPartida = 0;
-    int endedShifts = 0;
+    int endedShifts = 1;
     private String winner;
 
-    private HashMap<Integer, Programmer> classifications = new HashMap<>();
+
 
     public Game() {
     }
@@ -27,11 +27,10 @@ public class Game {
     }
 
 
-    public HashMap<Integer, Programmer> getClassifications() {
-        return classifications;
-    }
+
 
     public int getCurrentPlayerID(){
+
 
         return currentPlayerID;
     }

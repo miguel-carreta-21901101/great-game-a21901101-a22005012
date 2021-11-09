@@ -11,18 +11,17 @@ import java.util.HashSet;
 
 public class GameManager {
 
-
-    HashMap<Integer, Programmer> players = new HashMap<>();
     int count;
     int idMenor = Integer.MAX_VALUE;
-    int jogadorAtual = 0;
+    HashMap<Integer, Programmer> programmers = new HashMap<>();
+
+    HashMap<String, Integer> classificados = new HashMap<>();
     Board board = new Board();
     Game game = new Game();
 
 
     public GameManager() {
     }
-
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
 
@@ -84,7 +83,7 @@ public class GameManager {
                     // NOME
                     case 1:
 
-                        // Se o NOME nao for null OU vazios , false
+                        // Se o NOME for null OU vazios , false
                         if (playerInfo[i][j] == null || playerInfo[i][j].length() == 0) {
                             return false;
                         }
@@ -133,7 +132,7 @@ public class GameManager {
             countPlayers++;
 
 
-            players.put(id, new Programmer(id, nome, linguagensProgramacaoAux, cor));
+            programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, cor));
         }
 
         if (countPlayers <= 1 || countPlayers > 4){
@@ -145,7 +144,8 @@ public class GameManager {
         }
 
         game.setCurrentPlayerID(idMenor);
-        for (Programmer p : players.values()){
+
+        for (Programmer p : programmers.values()){
             if (p.getId() == idMenor){
                 continue;
             }
@@ -166,7 +166,7 @@ public class GameManager {
             return null;
         }
 
-        for (Programmer p : players.values()) {
+        for (Programmer p : programmers.values()) {
             if (p.getPos() == position) {
                 return "player" + p.getCor() + ".png";
             }
@@ -188,19 +188,13 @@ public class GameManager {
 
     public ArrayList<Programmer> getProgrammers() {
 
-
-       //???
-        ArrayList<Programmer> p = new ArrayList<>();
-        Programmer p1 = new Programmer();
-        p1.name = "joao";
-        Programmer p2 = new Programmer();
-        p2.name = "mar";
-        p.add(p1);
-        p.add(p2);
-
-        return p;
-
-     //   return new ArrayList<>(players.values());
+/*
+        ArrayList<Programmer> arrayList = new ArrayList<>();
+        Programmer p = new Programmer();
+        p.name= "ola";// programmers.get(0);
+        arrayList.add(p);
+        return arrayList;*/
+        return new ArrayList<>(this.programmers.values());
     }
 
     public ArrayList<Programmer> getProgrammers(int position) {
@@ -212,7 +206,7 @@ public class GameManager {
             return null;
         }
 
-        for (Programmer p : players.values()){
+        for (Programmer p : this.programmers.values()){
             if (p.getPos() == position){
                 existemProgrammers = true;
                 programmers.add(p);
@@ -230,40 +224,40 @@ public class GameManager {
 
 
 
-        return 0;
+        return game.getCurrentPlayerID();
         // game.getCurrentPlayerID();//this.game.getCurrentPlayerID();
     }
 
 
     public boolean moveCurrentPlayer(int nrPositions) {
 
+        // numeros do dado 1 - 6
         if (nrPositions < 1 || nrPositions > 6) {
             return false;
         }
 
-
         int aux;
-        Programmer p = players.get(game.getCurrentPlayerID());
+        Programmer p = programmers.get(game.getCurrentPlayerID());
+
 
         if ((p.getPos() + nrPositions) > board.getTamanho()){
+
             aux = (board.getTamanho() - p.getPos() - nrPositions) * -1;
-            players.get(p.getId()).setPos(board.getTamanho() - aux);
-           // p.setPos(board.getTamanho() - aux);
+
+            programmers.get(p.getId()).setPos(board.getTamanho() - aux);
 
         } else {
-            players.get(p.getId()).setPos(p.getPos() + nrPositions);
-            //p.setPos(p.getPos() + nrPositions);
+            programmers.get(p.getId()).setPos(p.getPos() + nrPositions);
+
         }
 
 
         game.setCurrentPlayerID(game.getCurrentPlayerID());
 
-
         count ++;
         game.nextShift();
 
-
-        if (count == players.size()){
+        if (count == programmers.size()){
             count = 0;
             game.setCurrentPlayerID(idMenor);
         }
@@ -274,21 +268,18 @@ public class GameManager {
     public boolean gameIsOver() {
         boolean isOver = false;
 
-        for (Programmer p : players.values()){
-            if (p.getPos() == board.getTamanho() ){
+        for (Programmer p : programmers.values()){
+            if (p.getPos() == board.getTamanho()){
+                for (Programmer p1: programmers.values()){
+                    classificados.put(p1.getName(), p1.getPos());
+                }
+                game.setWinner(p.getName());
                 isOver = true;
                 break;
 
             }
         }
-        if (isOver){
-            players.clear();
-            game = new Game();
-            board = new Board();
-            return true;
-        }
-
-        return false;
+        return isOver;
 
     }
 
@@ -297,8 +288,31 @@ public class GameManager {
         ArrayList<String> gameResults = new ArrayList<>();
 
         try {
-            String classfic = "";
 
+            gameResults.add("O GRANDE JOGO DO DEISI");
+            gameResults.add("");
+            gameResults.add("NR. DE TURNOS");
+            gameResults.add("" + game.getEndedShifts());
+            gameResults.add("");
+            gameResults.add("Vencedor");
+            gameResults.add(game.getWinner());
+            gameResults.add("");
+            gameResults.add("RESTANTES");
+
+
+            for (String s : classificados.keySet()){
+                if (s.equals(game.getWinner())){
+                    continue;
+                }
+                /*HashMap<String, Integer> aux = new HashMap<>();
+                for (Integer i : classificados.values()){
+
+                }*/
+                gameResults.add(s + " " + classificados.get(s));
+            }
+
+
+            /*
             String inicio = "O GRANDE JOGO DO DEISI\n\nNR. DE TURNOS\n" + game.getEndedShifts() + "\n\n" +
                     "VENCEDOR\n" + game.getWinner() + "\nRESTANTES";
 
@@ -310,7 +324,7 @@ public class GameManager {
             }
 
             gameResults.add(inicio);
-            gameResults.add(classfic);
+            gameResults.add(classfic);*/
         } catch (Exception e) {
 
             gameResults.clear();
@@ -320,7 +334,6 @@ public class GameManager {
 
         return gameResults;
     }
-
 
     public JPanel getAuthorsPanel() {
 
