@@ -207,6 +207,7 @@ public class GameManager {
                 programmers.add(p);
             }
         }
+
         return programmers;
 /*
 
@@ -288,7 +289,7 @@ public class GameManager {
             gameResults.add("NR. DE TURNOS");
             gameResults.add("" + game.getEndedShifts());
             gameResults.add("");
-            gameResults.add("Vencedor");
+            gameResults.add("VENCEDOR");
             gameResults.add(game.getWinner());
             gameResults.add("");
             gameResults.add("RESTANTES");
