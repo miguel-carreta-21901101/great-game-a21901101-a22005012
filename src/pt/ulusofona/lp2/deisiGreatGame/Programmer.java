@@ -74,7 +74,7 @@ public class Programmer {
     }
 
     public String toString() {
-        return id + " | " + name + " | " + pos + " | " + linguagens
-                 + " | Em Jogo";
+        return String.format("%d | %s | %d | %s | Em Jogo", id, name, pos+1, linguagens);
+
     }
 }

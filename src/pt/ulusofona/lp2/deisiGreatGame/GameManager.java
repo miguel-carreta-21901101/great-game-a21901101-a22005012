@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import javafx.collections.transformation.SortedList;
+
 import javax.swing.*;
 
 import java.awt.*;
@@ -101,10 +103,11 @@ public class GameManager {
 
                         linguagensProgramacao = new ArrayList<>(Arrays.asList(playerInfo[i][j]));
 
+
                         for (String s : linguagensProgramacao){
                             aux.append(s).append("; ");
                         }
-                        linguagensProgramacaoAux = aux.substring(0, aux.length() -1);
+                        linguagensProgramacaoAux = aux.substring(0, aux.length() -2);
                         break;
 
                     // COR
@@ -188,13 +191,7 @@ public class GameManager {
 
     public ArrayList<Programmer> getProgrammers() {
 
-/*
-        ArrayList<Programmer> arrayList = new ArrayList<>();
-        Programmer p = new Programmer();
-        p.name= "ola";// programmers.get(0);
-        arrayList.add(p);
-        return arrayList;*/
-        return new ArrayList<>(this.programmers.values());
+        return new ArrayList<>(programmers.values());
     }
 
     public ArrayList<Programmer> getProgrammers(int position) {
@@ -222,10 +219,7 @@ public class GameManager {
 
     public int getCurrentPlayerID() {
 
-
-
         return game.getCurrentPlayerID();
-        // game.getCurrentPlayerID();//this.game.getCurrentPlayerID();
     }
 
 
