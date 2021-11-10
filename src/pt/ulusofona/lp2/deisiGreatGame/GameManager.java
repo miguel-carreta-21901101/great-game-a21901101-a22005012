@@ -11,11 +11,9 @@ public class GameManager {
     int count;
     int idMenor = Integer.MAX_VALUE;
     HashMap<Integer, Programmer> programmers = new HashMap<>();
-    TreeMap<Integer, String> classF = new TreeMap<>(Collections.reverseOrder());
-
+    TreeMap<Integer, String> classified = new TreeMap<>(Collections.reverseOrder());
     Board board = new Board();
     Game game = new Game();
-
 
     public GameManager() {
     }
@@ -243,26 +241,34 @@ public class GameManager {
         }
 
         int aux;
-        Programmer p = programmers.get(game.getCurrentPlayerID());
 
+        // Replico o programmer que esta neste momento a jogar
+        Programmer programmerTemp = programmers.get(game.getCurrentPlayerID());
 
-        if ((p.getPos() + nrPositions) > board.getTamanho()){
+        // Se o programmer ultrapassar a casa final do jogo :
+        if ((programmerTemp.getPos() + nrPositions) > board.getTamanho()){
 
-            aux = (board.getTamanho() - p.getPos() - nrPositions) * -1;
+            // Recua o numero de casas em excesso
+            aux = (board.getTamanho() - programmerTemp.getPos() - nrPositions) * -1;
 
-            programmers.get(p.getId()).setPos(board.getTamanho() - aux);
+            //Adiciono ao verdadeiro programmer a sua posicao atual
+            programmers.get(programmerTemp.getId()).setPos(board.getTamanho() - aux);
 
         } else {
-            programmers.get(p.getId()).setPos(p.getPos() + nrPositions);
+            // Adiciono ao verdadeiro programmer a sua posicao atual
+            programmers.get(programmerTemp.getId()).setPos(programmerTemp.getPos() + nrPositions);
 
         }
 
 
+        //mudo o ID do jogador que está a jogar
         game.setCurrentPlayerID(game.getCurrentPlayerID());
-
         count ++;
+
+        //Troco de turno incrementando os turnos terminados e o ID do player atual
         game.nextShift();
 
+        //Dependendo do num players , 2 -4 , vai  trocando o ID de quem esta a jogar
         if (count == programmers.size()){
             count = 0;
             game.setCurrentPlayerID(idMenor);
@@ -272,22 +278,23 @@ public class GameManager {
     }
 
     public boolean gameIsOver() {
-        boolean isOver = false;
 
+        // Se algum jogador chegar à ultima casa do mapa ,
         for (Programmer p : programmers.values()){
             if (p.getPos() == board.getTamanho()){
                 for (Programmer p1: programmers.values()){
-                    classF.put(p1.getPos(), p1.getName());
 
+                    //Adiciono ao TreeMap invertido A posicao em que cada jogador estava quando acabou o jogo, e o nome
+                    // < int , String >
+                    classified.put(p1.getPos(), p1.getName());
                 }
+                //Declaro o Vencedor
                 game.setWinner(p.getName());
-                isOver = true;
-                break;
-
+                return true;
             }
         }
-        return isOver;
 
+        return false;
     }
 
     public ArrayList<String> getGameResults() {
@@ -307,12 +314,14 @@ public class GameManager {
             gameResults.add("RESTANTES");
 
 
-            for (Integer i : classF.keySet()){
-                if (classF.get(i).equals(game.getWinner())){
+            // Se o programmer for o vencedor passo à frente porque já o retornei
+            for (Integer i : classified.keySet()){
+                if (classified.get(i).equals(game.getWinner())){
                     continue;
                 }
 
-                gameResults.add(classF.get(i) + " " + i);
+                //Adicionar à String o Nome e a Pos  < Nome Pos >
+                gameResults.add(classified.get(i) + " " + i);
             }
 
 

@@ -30,7 +30,7 @@ public class Main {
 /*
         //---------------------------------------------------------------------
 
-                                            ////    GAME RESULTS
+                                            ////   getGameResults()
 
         GameManager gameMng = new GameManager();
         Game gm = new Game();

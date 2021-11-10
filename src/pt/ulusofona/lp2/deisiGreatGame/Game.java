@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 public class Game {
 
-    int currentPlayerID= 0;
-    int endedShifts = 1;
+    private int currentPlayerID= 0;
+    private int endedShifts = 1;
     private String winner;
 
     public Game() {
@@ -17,11 +17,6 @@ public class Game {
 
     public void setWinner(String winner) {
         this.winner = winner;
-    }
-
-    public void nextShift() {
-        endedShifts ++;
-        currentPlayerID++;
     }
 
     public int getCurrentPlayerID(){
@@ -38,7 +33,9 @@ public class Game {
         return endedShifts;
     }
 
-    public void setEndedShifts(int n){
-        endedShifts = n;
+    public void nextShift() {
+        endedShifts ++;
+        currentPlayerID++;
     }
+
 }
