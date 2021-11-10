@@ -1,7 +1,5 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import javax.swing.*;
 
 import java.awt.*;
@@ -135,23 +133,32 @@ public class GameManager {
             }
             countPlayers++;
 
-            if (cor.equals("Purple")){
-                ProgrammerColor color = ProgrammerColor.PURPLE;
-                programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, color));
+            switch (cor) {
+                case "Purple": {
+                    ProgrammerColor color = ProgrammerColor.PURPLE;
+                    programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, color));
 
-            }else if (cor.equals("Blue")){
-                ProgrammerColor color = ProgrammerColor.BLUE;
-                programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, color));
+                    break;
+                }
+                case "Blue": {
+                    ProgrammerColor color = ProgrammerColor.BLUE;
+                    programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, color));
 
-            }else if (cor.equals("Green")){
-                ProgrammerColor color = ProgrammerColor.GREEN;
-                programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, color));
+                    break;
+                }
+                case "Green": {
+                    ProgrammerColor color = ProgrammerColor.GREEN;
+                    programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, color));
 
-            }else if (cor.equals("Brown")){
-                ProgrammerColor color = ProgrammerColor.BROWN;
-                programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, color));
-            }else {
-                throw new IllegalArgumentException();
+                    break;
+                }
+                case "Brown": {
+                    ProgrammerColor color = ProgrammerColor.BROWN;
+                    programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, color));
+                    break;
+                }
+                default:
+                    throw new IllegalArgumentException();
             }
 
 
