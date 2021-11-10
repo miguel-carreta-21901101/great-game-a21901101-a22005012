@@ -26,14 +26,9 @@ public class GameManager {
         HashSet<String> coresRepetidas = new HashSet<>();
         int countPlayers = 0;
         int id = 0;
-
         String nome = "";
-        ArrayList<Integer> idsAJogar = new ArrayList<>();
-
-
-        String linguagensProgramacaoAux  = "";
+        String linguagensProgramacao  = "";
         String cor = "";
-
 
         if (boardSize < 1) {
             return false;
@@ -64,7 +59,7 @@ public class GameManager {
                     case 0:
 
 
-                        // Se o ID nao for repetido OU  menor que 0 , false
+                        // Se o ID  for repetido OU  menor que 0 , false
                         if (idsRepetidos.contains(Integer.parseInt(playerInfo[i][j])) ||
                                 (Integer.parseInt(playerInfo[i][j]) < 0) ) {
 
@@ -73,6 +68,8 @@ public class GameManager {
                         //adiciona o ID ao Hashset
                         idsRepetidos.add(Integer.parseInt(playerInfo[i][j]));
                         id = Integer.parseInt(playerInfo[i][j]);
+
+                        //Procura o ID mais pequeno
                         if (id < idMenor){
                             idMenor = id;
                         }
@@ -105,7 +102,7 @@ public class GameManager {
                             aux.append("; ");
                         }
 
-                        linguagensProgramacaoAux = aux.substring(0, aux.length() -2);
+                        linguagensProgramacao = aux.substring(0, aux.length() -2);
 
                         break;
 
@@ -126,35 +123,37 @@ public class GameManager {
                         //Adiciona a cor ao HashSet para validar as cores repetidas
                         coresRepetidas.add(playerInfo[i][j]);
                         cor =  playerInfo[i][j];
-
                         break;
 
                 }
             }
+
             countPlayers++;
+
+            // Crio um obj ProgrammerColor  e adiciono ao hashmap
 
             switch (cor) {
                 case "Purple": {
                     ProgrammerColor color = ProgrammerColor.PURPLE;
-                    programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, color));
+                    programmers.put(id, new Programmer(id, nome, linguagensProgramacao, color));
 
                     break;
                 }
                 case "Blue": {
                     ProgrammerColor color = ProgrammerColor.BLUE;
-                    programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, color));
+                    programmers.put(id, new Programmer(id, nome, linguagensProgramacao, color));
 
                     break;
                 }
                 case "Green": {
                     ProgrammerColor color = ProgrammerColor.GREEN;
-                    programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, color));
+                    programmers.put(id, new Programmer(id, nome, linguagensProgramacao, color));
 
                     break;
                 }
                 case "Brown": {
                     ProgrammerColor color = ProgrammerColor.BROWN;
-                    programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, color));
+                    programmers.put(id, new Programmer(id, nome, linguagensProgramacao, color));
                     break;
                 }
                 default:
@@ -164,24 +163,21 @@ public class GameManager {
 
         }
 
+        // O num de players entre 2 - 4
         if (countPlayers <= 1 || countPlayers > 4){
             return false;
         }
 
+        // o tamanho do board tem que ser no minimo 2 peças por player .
         if (boardSize < (countPlayers * 2)){
             return false;
         }
 
+        // Declaro que o Primeiro a jogar é quem tem o ID mais pequeno
         game.setCurrentPlayerID(idMenor);
 
-        for (Programmer p : programmers.values()){
-            if (p.getId() == idMenor){
-                continue;
-            }
-            idsAJogar.add(p.getId());
-        }
+        //Declaro o tamanho do mapa
         board.setTamanho(boardSize);
-
 
         return true;
 
@@ -189,14 +185,13 @@ public class GameManager {
 
     public String getImagePng(int position) {
 
-
         if (position > board.getTamanho() || position < 1) {
             return null;
         }
 
         for (Programmer p : programmers.values()) {
             if (p.getPos() == position) {
-                return "player" + p.getCor() + ".png";
+                return "player" + p.getColor() + ".png";
             }
         }
         if (position == board.getTamanho()) {
@@ -209,20 +204,17 @@ public class GameManager {
             return null;
         }
 
-
-
-
     }
 
     public ArrayList<Programmer> getProgrammers() {
 
+        //Devolve os values do hashmap programmers
         return new ArrayList<>(programmers.values());
     }
 
     public ArrayList<Programmer> getProgrammers(int position) {
 
         ArrayList<Programmer> programmers = new ArrayList<>();
-       // boolean existemProgrammers = false;
 
         if (position < 0 || position > board.getTamanho()){
             return null;
@@ -230,7 +222,6 @@ public class GameManager {
 
         for (Programmer p : this.programmers.values()){
             if (p.getPos() == position){
-               // existemProgrammers = true;
                 programmers.add(p);
             }
         }
