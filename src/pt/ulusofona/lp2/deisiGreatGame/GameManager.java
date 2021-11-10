@@ -185,20 +185,21 @@ public class GameManager {
 
     public String getImagePng(int position) {
 
+        // position = pos no mapa
+
         if (position > board.getTamanho() || position < 1) {
             return null;
         }
 
+        //Se o programmer estiver na posicao POSITION , retorna a imagem do player
         for (Programmer p : programmers.values()) {
             if (p.getPos() == position) {
                 return "player" + p.getColor() + ".png";
             }
         }
+        // Se a POSITION for a ultima posicao do mapa
         if (position == board.getTamanho()) {
-            return board.getUltimaPosicao();
-
-        }else if (position <= board.getTamanho()){
-            return "blank.png";
+            return board.getUltimaPosicaoDoMapa();
 
         }else {
             return null;
@@ -216,31 +217,23 @@ public class GameManager {
 
         ArrayList<Programmer> programmers = new ArrayList<>();
 
-        if (position < 0 || position > board.getTamanho()){
+        if (position < 0 || position > board.getTamanho()) {
             return null;
         }
 
-        for (Programmer p : this.programmers.values()){
-            if (p.getPos() == position){
+        for (Programmer p : this.programmers.values()) {
+            if (p.getPos() == position) {
                 programmers.add(p);
             }
         }
 
         return programmers;
-/*
-
-        if (existemProgrammers){
-            return programmers;
-        }else {
-            return null;
-        }*/
     }
 
     public int getCurrentPlayerID() {
 
         return game.getCurrentPlayerID();
     }
-
 
     public boolean moveCurrentPlayer(int nrPositions) {
 

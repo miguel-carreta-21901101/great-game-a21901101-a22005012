@@ -14,7 +14,6 @@ public class Programmer {
     boolean inGame = true;
     String estado;
     ProgrammerColor color;
-    String cor;
 
 
     public Programmer(){}
@@ -26,15 +25,6 @@ public class Programmer {
         this.color = color;
         pos = 1;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Programmer(int id) {
-        this.id = id;
-    }
-
 
     public int getId(){
         return id;
@@ -52,25 +42,11 @@ public class Programmer {
         this.pos = pos;
     }
 
-
-    public String getCor(){
-        return cor;
-    }
-
     public ProgrammerColor getColor(){
-
         return  color;
     }
 
-    public void stillInGame(){
-        if (inGame){
-            estado = "Em Jogo";
-        } else {
-            estado = "Derrotado";
-        }
-    }
-
-
+    //Nesta primeira fase o player esta sempre Em Jogo
     public String toString() {
         return String.format("%d | %s | %d | %s | Em Jogo", id, name, pos, linguagens);
 

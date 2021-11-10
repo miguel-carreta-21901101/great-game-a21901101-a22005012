@@ -10,8 +10,6 @@ public enum ProgrammerColor {
 
     ProgrammerColor(String color){this.color = color;}
 
-    ProgrammerColor() {
-    }
 
     public String getColor(){
         return color;
