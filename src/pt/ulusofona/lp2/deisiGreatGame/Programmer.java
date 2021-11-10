@@ -19,11 +19,11 @@ public class Programmer {
 
     public Programmer(){}
 
-    public Programmer(int id, String name,  String linguagens , String cor) {
+    public Programmer(int id, String name,  String linguagens ,ProgrammerColor color) {
         this.id = id;
         this.name = name;
         this.linguagens = linguagens;
-        this.cor = cor;
+        this.color = color;
         pos = 1;
     }
 
@@ -61,9 +61,6 @@ public class Programmer {
 
         return  color;
     }
-
-
-
 
     public void stillInGame(){
         if (inGame){

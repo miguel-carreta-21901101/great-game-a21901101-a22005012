@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import javax.swing.*;
 
 import java.awt.*;
@@ -12,6 +14,7 @@ public class GameManager {
     int idMenor = Integer.MAX_VALUE;
     HashMap<Integer, Programmer> programmers = new HashMap<>();
     TreeMap<Integer, String> classF = new TreeMap<>(Collections.reverseOrder());
+
     Board board = new Board();
     Game game = new Game();
 
@@ -39,6 +42,7 @@ public class GameManager {
         }
 
         int i, j;
+
 
         for (i = 0; i < playerInfo.length; i++) {
             if (playerInfo[0] == null){
@@ -131,7 +135,26 @@ public class GameManager {
             }
             countPlayers++;
 
-            programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, cor));
+            if (cor.equals("Purple")){
+                ProgrammerColor color = ProgrammerColor.PURPLE;
+                programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, color));
+
+            }else if (cor.equals("Blue")){
+                ProgrammerColor color = ProgrammerColor.BLUE;
+                programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, color));
+
+            }else if (cor.equals("Green")){
+                ProgrammerColor color = ProgrammerColor.GREEN;
+                programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, color));
+
+            }else if (cor.equals("Brown")){
+                ProgrammerColor color = ProgrammerColor.BROWN;
+                programmers.put(id, new Programmer(id, nome, linguagensProgramacaoAux, color));
+            }else {
+                throw new IllegalArgumentException();
+            }
+
+
         }
 
         if (countPlayers <= 1 || countPlayers > 4){
@@ -265,7 +288,6 @@ public class GameManager {
                 for (Programmer p1: programmers.values()){
                     classF.put(p1.getPos(), p1.getName());
 
-                  //  classificados.put(p1.getName(), p1.getPos());
                 }
                 game.setWinner(p.getName());
                 isOver = true;

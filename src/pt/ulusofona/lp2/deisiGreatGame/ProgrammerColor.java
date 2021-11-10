@@ -7,14 +7,13 @@ public enum ProgrammerColor {
 
 
     String color;
+
     ProgrammerColor(String color){this.color = color;}
 
     ProgrammerColor() {
     }
 
-    public String getColor(){return color;}
-    public void setColor(String cor){
-        color = cor;
-    }
-    public String toString() {return color;}
+
+    public String toString() {
+        return color;}
 }
