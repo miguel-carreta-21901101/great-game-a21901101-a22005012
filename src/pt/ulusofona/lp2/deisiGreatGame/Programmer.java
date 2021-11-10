@@ -18,6 +18,11 @@ public class Programmer {
 
     public Programmer(){}
 
+    public Programmer(String name, int pos){
+        this.name = name;
+        this.pos = pos;
+    }
+
     public Programmer(int id, String name,  String linguagens ,ProgrammerColor color) {
         this.id = id;
         this.name = name;
@@ -25,6 +30,7 @@ public class Programmer {
         this.color = color;
         pos = 1;
     }
+
 
     public int getId(){
         return id;

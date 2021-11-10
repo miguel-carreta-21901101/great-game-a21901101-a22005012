@@ -15,6 +15,10 @@ public class Game {
         this.currentPlayerID = currentPlayerID;
     }
 
+    public void setEndedShifts(int shifts){
+        this.endedShifts = shifts;
+    }
+
     public void setWinner(String winner) {
         this.winner = winner;
     }

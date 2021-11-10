@@ -11,7 +11,7 @@ public class GameManager {
     int count;
     int idMenor = Integer.MAX_VALUE;
     HashMap<Integer, Programmer> programmers = new HashMap<>();
-    TreeMap<Integer, String> classified = new TreeMap<>(Collections.reverseOrder());
+    ArrayList<Programmer> programerList = new ArrayList<>();
     Board board = new Board();
     Game game = new Game();
 
@@ -282,12 +282,7 @@ public class GameManager {
         // Se algum jogador chegar à ultima casa do mapa ,
         for (Programmer p : programmers.values()){
             if (p.getPos() == board.getTamanho()){
-                for (Programmer p1: programmers.values()){
-
-                    //Adiciono ao TreeMap invertido A posicao em que cada jogador estava quando acabou o jogo, e o nome
-                    // < int , String >
-                    classified.put(p1.getPos(), p1.getName());
-                }
+                programerList.addAll(programmers.values());
                 //Declaro o Vencedor
                 game.setWinner(p.getName());
                 return true;
@@ -315,13 +310,29 @@ public class GameManager {
 
 
             // Se o programmer for o vencedor passo à frente porque já o retornei
-            for (Integer i : classified.keySet()){
-                if (classified.get(i).equals(game.getWinner())){
+
+            Collections.sort(programerList, (p1, p2) -> {
+                if (p1.getPos() < p2.getPos()) {
+                    return 1;
+                }
+                else if (p1.getPos() > p2.getPos()) {
+                    return -1;
+                }
+                else {
+                    return 0;
+                }
+            });
+
+
+            for (Programmer i : programerList){
+                //System.out.println(i);
+                //se o nome do programer é o winner
+                if ( i.getName().equals(game.getWinner())){
                     continue;
                 }
 
                 //Adicionar à String o Nome e a Pos  < Nome Pos >
-                gameResults.add(classified.get(i) + " " + i);
+                gameResults.add( i.getName() + " " + i.getPos());
             }
 
 
