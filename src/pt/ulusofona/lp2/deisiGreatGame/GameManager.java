@@ -10,19 +10,19 @@ import java.util.List;
 public class GameManager {
 
     HashMap<Integer, Programmer> programmers = new HashMap<>();
+    ArrayList<Integer> ids = new ArrayList<>();
     List<Programmer> programerList = new ArrayList<>();
     Board board = new Board();
     Game game = new Game();
 
     int count;
-    int idMenor = Integer.MAX_VALUE;
-
 
     public GameManager() {
     }
 
     public void resetGame(){
         programerList.clear();
+        ids.clear();
         programmers.clear();
         game = new Game();
         board = new Board();
@@ -77,14 +77,13 @@ public class GameManager {
 
                             return false;
                         }
-                        //adiciona o ID ao Hashset
+                        //adiciona o ID ao Hashset para validar se ha repetidos
                         idsRepetidos.add(Integer.parseInt(playerInfo[i][j]));
                         id = Integer.parseInt(playerInfo[i][j]);
 
-                        //Procura o ID mais pequeno
-                        if (id < idMenor){
-                            idMenor = id;
-                        }
+                        //Adiciono ao array de ids para facilitar na escolha do CurrentPlayer mais à frente
+                        ids.add(id);
+
                         break;
 
                     // NOME
@@ -185,8 +184,11 @@ public class GameManager {
             return false;
         }
 
-        // Declaro que o Primeiro a jogar é quem tem o ID mais pequeno
-        game.setCurrentPlayerID(idMenor);
+        // Ordeno o array de IDS para saber que está por ordem do mais pequeno para o maior
+        Collections.sort(ids);
+
+        //Declaro que o primeiro player a jogar é o que está em primeiro lugar , pois está ordenado do menor -> maior
+        game.setCurrentPlayerID(ids.get(0));
 
         //Declaro o tamanho do mapa
         board.setTamanho(boardSize);
@@ -256,6 +258,7 @@ public class GameManager {
 
         int aux;
 
+
         // Replico o programmer que esta neste momento a jogar
         Programmer programmerTemp = programmers.get(game.getCurrentPlayerID());
 
@@ -273,20 +276,19 @@ public class GameManager {
             programmers.get(programmerTemp.getId()).setPos(programmerTemp.getPos() + nrPositions);
 
         }
-
-
-        //mudo o ID do jogador que está a jogar
-        game.setCurrentPlayerID(game.getCurrentPlayerID());
+        // Incremento o count para ir buscar o proximo posicao no array IDS
         count ++;
 
-        //Troco de turno incrementando os turnos terminados e o ID do player atual
-        game.nextShift();
-
-        //Dependendo do num players , 2 -4 , vai  trocando o ID de quem esta a jogar
-        if (count == programmers.size()){
+        // Se o count chegar ao ids.size , comeca de novo para nao dar index out of bound
+        if (count == ids.size()){
             count = 0;
-            game.setCurrentPlayerID(idMenor);
         }
+
+        //Declaro o proximo jogador a jogar
+        game.setCurrentPlayerID(ids.get(count));
+
+        //Troco de turno incrementando os turnos terminados
+        game.nextShift();
 
         return true;
     }
@@ -333,7 +335,7 @@ public class GameManager {
                     continue;
                 }
 
-                gameResults.add( i.getName() + " " + i.getPos());
+                gameResults.add(i.getName() + " " + i.getPos());
             }
 
         } catch (Exception e) {

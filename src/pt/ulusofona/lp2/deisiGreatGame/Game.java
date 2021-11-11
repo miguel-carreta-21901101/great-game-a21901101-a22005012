@@ -2,7 +2,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 public class Game {
 
-    private int currentPlayerID= 0;
+    private int currentPlayerID = 0;
     private int endedShifts = 1;
     private String winner;
 
@@ -37,7 +37,7 @@ public class Game {
 
     public void nextShift() {
         endedShifts ++;
-        currentPlayerID++;
+       // currentPlayerID++;
     }
 
 }
