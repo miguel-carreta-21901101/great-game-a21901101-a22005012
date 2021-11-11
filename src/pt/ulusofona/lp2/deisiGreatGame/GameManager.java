@@ -9,10 +9,10 @@ import java.util.List;
 
 public class GameManager {
 
-      HashMap<Integer, Programmer> programmers = new HashMap<>();
-      List<Programmer> programerList = new ArrayList<>();
-      Board board = new Board();
-      Game game = new Game();
+    HashMap<Integer, Programmer> programmers = new HashMap<>();
+    List<Programmer> programerList = new ArrayList<>();
+    Board board = new Board();
+    Game game = new Game();
 
     int count;
     int idMenor = Integer.MAX_VALUE;
@@ -21,14 +21,18 @@ public class GameManager {
     public GameManager() {
     }
 
-    public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
-
-        // Reset ao jogo
+    public void resetGame(){
         programerList.clear();
         programmers.clear();
         game = new Game();
         board = new Board();
         count = 0;
+    }
+
+    public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
+
+        // Reset ao jogo
+        resetGame();
 
         HashSet<Integer> idsRepetidos = new HashSet<>();
         HashSet<String> coresRepetidas = new HashSet<>();
