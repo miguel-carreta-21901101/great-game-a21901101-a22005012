@@ -50,17 +50,16 @@ public class GameManager {
 
 
         for (i = 0; i < playerInfo.length; i++) {
-            if (playerInfo[0] == null){
-
-                return false;
-            }
+            if (playerInfo[0] == null){return false;}
 
             //Percorre as informaçoes de cada programador
             for (j = 0; j <= 3; j++) {
 
+                //Se J for null E o num players inferior a 2, false
                 if (playerInfo[i][j] == null && countPlayers < 2){
-
                     return false;
+
+                //Se J for null E tiver o num players suficiente , true
                 }else if (playerInfo[i][j] == null && countPlayers >= 2){
                     return true;
                 }
@@ -69,7 +68,6 @@ public class GameManager {
 
                     // ID
                     case 0:
-
 
                         // Se o ID  for repetido OU  menor que 0 , false
                         if (idsRepetidos.contains(Integer.parseInt(playerInfo[i][j])) ||
@@ -89,7 +87,7 @@ public class GameManager {
                     // NOME
                     case 1:
 
-                        // Se o NOME for null OU vazios , false
+                        // Se o NOME for null OU vazio , false
                         if (playerInfo[i][j] == null || playerInfo[i][j].length() == 0) {
                             return false;
                         }
@@ -99,21 +97,11 @@ public class GameManager {
 
                     // LISTA LINGUAGENS DE PROGRAMACAO
                     case 2:
-                        if (playerInfo[i][2] == null || playerInfo[i][2].length() == 0){
+                        if (playerInfo[i][j] == null || playerInfo[i][j].length() == 0){
                             return false;
                         }
 
-                        String[] parts = playerInfo[i][j].split(";");
-                        StringBuilder aux = new StringBuilder();
-
-                        Arrays.sort(parts);
-
-                        for (String s: parts){
-                            aux.append(s);
-                            aux.append("; ");
-                        }
-
-                        linguagensProgramacao = aux.substring(0, aux.length() -2);
+                        linguagensProgramacao = AuxFunctions.ordernarLinguagensProgramacao(playerInfo[i][j]);
 
                         break;
 
@@ -193,6 +181,7 @@ public class GameManager {
         //Declaro o tamanho do mapa
         board.setTamanho(boardSize);
 
+        System.out.println(programmers.values());
         return true;
 
     }
@@ -249,7 +238,7 @@ public class GameManager {
         return game.getCurrentPlayerID();
     }
 
-    public boolean moveCurrentPlayer(int nrPositions) {
+    public boolean moveCurrentPlayer(int nrPositions){
 
         // numeros do dado 1 - 6
         if (nrPositions < 1 || nrPositions > 6) {
@@ -276,6 +265,7 @@ public class GameManager {
             programmers.get(programmerTemp.getId()).setPos(programmerTemp.getPos() + nrPositions);
 
         }
+
         // Incremento o count para ir buscar o proximo posicao no array IDS
         count ++;
 
