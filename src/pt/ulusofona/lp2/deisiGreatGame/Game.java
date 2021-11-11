@@ -1,7 +1,5 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
-import java.util.HashMap;
-
 public class Game {
 
     private int currentPlayerID= 0;

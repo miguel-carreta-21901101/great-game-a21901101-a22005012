@@ -1,20 +1,12 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Properties;
-
 public class Programmer {
 
     String name;
     int id;
     int pos;
     String linguagens;
-    boolean inGame = true;
-    String estado;
     ProgrammerColor color;
-
 
     public Programmer(){}
 

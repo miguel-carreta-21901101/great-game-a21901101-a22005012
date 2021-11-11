@@ -5,14 +5,9 @@ public enum ProgrammerColor {
     PURPLE("Purple"),  BLUE("Blue"),
     GREEN("Green"),BROWN("Brown");
 
-
     String color;
 
     ProgrammerColor(String color){this.color = color;}
 
-
-    public String getColor(){
-        return color;
-    }
 
 }

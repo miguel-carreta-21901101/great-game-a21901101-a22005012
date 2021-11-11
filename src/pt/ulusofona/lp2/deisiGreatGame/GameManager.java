@@ -4,21 +4,26 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 
 public class GameManager {
 
+    public static HashMap<Integer, Programmer> programmers = new HashMap<>();
+    public static List<Programmer> programerList = new ArrayList<>();
+    public static Board board = new Board();
+    public static Game game = new Game();
+
     int count;
     int idMenor = Integer.MAX_VALUE;
-    HashMap<Integer, Programmer> programmers = new HashMap<>();
-    ArrayList<Programmer> programerList = new ArrayList<>();
-    Board board = new Board();
-    Game game = new Game();
+
 
     public GameManager() {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
+
+        AuxFunctions.resetGame();
 
         HashSet<Integer> idsRepetidos = new HashSet<>();
         HashSet<String> coresRepetidas = new HashSet<>();
@@ -219,7 +224,7 @@ public class GameManager {
             return null;
         }
 
-        for (Programmer p : this.programmers.values()) {
+        for (Programmer p : GameManager.programmers.values()) {
             if (p.getPos() == position) {
                 programmers.add(p);
             }
@@ -282,7 +287,9 @@ public class GameManager {
         // Se algum jogador chegar à ultima casa do mapa ,
         for (Programmer p : programmers.values()){
             if (p.getPos() == board.getTamanho()){
+
                 programerList.addAll(programmers.values());
+
                 //Declaro o Vencedor
                 game.setWinner(p.getName());
                 return true;
@@ -308,33 +315,17 @@ public class GameManager {
             gameResults.add("");
             gameResults.add("RESTANTES");
 
-
-            // Se o programmer for o vencedor passo à frente porque já o retornei
-
-            Collections.sort(programerList, (p1, p2) -> {
-                if (p1.getPos() < p2.getPos()) {
-                    return 1;
-                }
-                else if (p1.getPos() > p2.getPos()) {
-                    return -1;
-                }
-                else {
-                    return 0;
-                }
-            });
+            programerList.sort((p1, p2) -> Integer.compare(p2.getPos(), p1.getPos()));
 
 
             for (Programmer i : programerList){
-                //System.out.println(i);
-                //se o nome do programer é o winner
+                //se o nome do programer é o winner, passo à frente
                 if ( i.getName().equals(game.getWinner())){
                     continue;
                 }
 
-                //Adicionar à String o Nome e a Pos  < Nome Pos >
                 gameResults.add( i.getName() + " " + i.getPos());
             }
-
 
         } catch (Exception e) {
 
