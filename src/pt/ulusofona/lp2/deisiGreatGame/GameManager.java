@@ -22,11 +22,13 @@ public class GameManager {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int boardSize) {
+
         // Reset ao jogo
         programerList.clear();
         programmers.clear();
         game = new Game();
         board = new Board();
+        count = 0;
 
         HashSet<Integer> idsRepetidos = new HashSet<>();
         HashSet<String> coresRepetidas = new HashSet<>();
