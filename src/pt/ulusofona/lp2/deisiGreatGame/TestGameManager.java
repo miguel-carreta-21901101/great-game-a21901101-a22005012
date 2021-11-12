@@ -88,5 +88,44 @@ public class TestGameManager {
 
     }
 
+    @Test
+    public void testeMoveOnePlayer(){
+        //andar com o jogadorCurrent (index 0 do array programers) 5 casas para a frente
+        GameManager manager = new GameManager();
+        manager.createInitialBoard(getPlayersInfo(), 79);
+        //andar
+        manager.moveCurrentPlayer(5);
+        Programmer programmerThatMoved = manager.getProgrammers().get(0);
+        assertEquals(6, programmerThatMoved.getPos());
+    }
+
+    @Test
+    public void testeMoveOneMultiplePlayers(){
+        //andar com o jogador (index 0 do array programers) 11 casas para a frente
+        //andar com o jogador (index 1 do array programers) 3 casas para a frente
+        GameManager manager = new GameManager();
+        manager.createInitialBoard(getPlayersInfo(), 79);
+        manager.moveCurrentPlayer(5);
+        manager.moveCurrentPlayer(3);
+        manager.moveCurrentPlayer(6);
+        Programmer programmerThatMovedMost = manager.getProgrammers().get(0);
+        assertEquals(12, programmerThatMovedMost.getPos());
+        Programmer programmerThatMovedLeast = manager.getProgrammers().get(1);
+        assertEquals(4, programmerThatMovedLeast.getPos());
+    }
+
+    @Test
+    public void testeMovePlayerPassFinish(){
+        GameManager manager = new GameManager();
+        manager.createInitialBoard(getPlayersInfo(), 80);
+        //andar
+
+        for(int pos = 0; pos <= 159; pos++) {//andar todos os jogadores até o current ficar naquele que queremos e com pos=79
+            manager.moveCurrentPlayer(1);
+        }
+        manager.moveCurrentPlayer(5);//andar o current na poss 79 5 cassas para a frente e como excedeu por 4 cassas o goal ficar no 76
+        Programmer programmerThatMoved = manager.getProgrammers().get(0);
+        assertEquals(76, programmerThatMoved.getPos());
+    }
 
 }
