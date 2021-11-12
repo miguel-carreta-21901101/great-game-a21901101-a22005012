@@ -181,7 +181,6 @@ public class GameManager {
         //Declaro o tamanho do mapa
         board.setTamanho(boardSize);
 
-        System.out.println(programmers.values());
         return true;
 
     }
