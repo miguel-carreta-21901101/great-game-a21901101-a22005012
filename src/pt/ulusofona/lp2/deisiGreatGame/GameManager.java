@@ -700,6 +700,7 @@ public class GameManager {
 
                 switch (idAbyss){
 
+
                     // ERRO SINTAX -  Recya 1 casa
                     case 0:
                         novaPos = posAux -1;
@@ -902,8 +903,17 @@ public class GameManager {
             gameResults.add("");
             gameResults.add("RESTANTES");
 
-            programerList.sort((p1, p2) -> Integer.compare(p2.getPos(), p1.getPos()));
+            //programerList.sort((p1, p2) -> Integer.compare(p2.getPos(), p1.getPos()));
 
+            programerList.sort((p1, p2) -> {
+                if (p1.getPos() < p2.getPos()) {
+                    return 1;
+                } else if (p1.getPos() > p2.getPos()) {
+                    return -1;
+                } else {
+                    return p1.getName().compareTo(p2.getName());
+                }
+            });
 
             for (Programmer i : programerList){
                 //se o nome do programer é o winner, passo à frente

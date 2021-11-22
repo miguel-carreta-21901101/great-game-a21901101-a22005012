@@ -65,7 +65,7 @@ public  class AuxFunctions {
                 return "Herança";
 
             case 1:
-                return "Programação funcional";
+                return "Programação Funcional";
 
             case 2:
                 return "Testes unitários";
