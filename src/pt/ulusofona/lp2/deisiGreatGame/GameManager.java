@@ -568,7 +568,7 @@ public class GameManager {
         return programmers;
     }
 
-    //TODO
+
     public String getProgrammersInfo(){
 
         StringBuilder info = new StringBuilder();
@@ -606,6 +606,7 @@ public class GameManager {
 
     //****************************************************************************************
     // FUNCOES PARA MUDAR DE SITIO TALVEZ
+
     public Tool setTool(int pos) {
         for (Tool toolTemp : tools.values()) {
             if (toolTemp.getPos() == pos) {
@@ -759,6 +760,30 @@ public class GameManager {
         }
 
 
+
+
+        return true;
+    }
+
+    public String reactToAbyssOrTool(){
+
+        boolean isTool = false;
+        boolean isAbyss = false;
+
+        for (Tool tool : tools.values()){
+            if (programmers.get(game.getCurrentPlayerID()).getPos() == tool.getPos()){
+                isTool = true;
+            }
+        }
+
+        if (!isTool){
+            for (Abyss abyss : abysses.values()){
+                if (programmers.get(game.getCurrentPlayerID()).getPos() == abyss.getPos()){
+                    isAbyss = true;
+                }
+            }
+        }
+
         // Incremento o count para ir buscar o proximo posicao no array IDS
         count ++;
 
@@ -771,15 +796,19 @@ public class GameManager {
         game.setCurrentPlayerID(ids.get(count));
 
 
-
-        return true;
-    }
-
-    public String reactToAbyssOrTool(){
-
         //Troco de turno incrementando os turnos terminados
         game.nextShift();
-        return "heyyyyyy";
+
+        if (isTool){
+            return "Parabéns, apanhou uma ferramenta !!";
+
+        } else if (isAbyss){
+            return "Ohhh, caiu num abismo !!";
+        } else {
+            return null;
+        }
+
+
     }
 
     public boolean gameIsOver() {
