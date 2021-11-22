@@ -205,6 +205,12 @@ public class GameManager {
                 switch (j) {
 
                     case 0:
+                        if (!abyssesAndTools[i][0].equals(String.valueOf(0))  && !abyssesAndTools[i][0]
+                                .equals(String.valueOf(1))){
+
+                            return false;
+
+                        }
                         if (abyssesAndTools[i][0].equals(String.valueOf(0))){
                             abyssAlert = true;
                         }
@@ -254,6 +260,7 @@ public class GameManager {
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int worldSize){
+
 
         // Reset ao jogo
         resetGame();
