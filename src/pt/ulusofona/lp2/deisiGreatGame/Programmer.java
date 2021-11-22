@@ -1,5 +1,9 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class Programmer {
 
     String name;
@@ -7,6 +11,11 @@ public class Programmer {
     int pos;
     String linguagens;
     ProgrammerColor color;
+    //       < Turno, Casa >
+    HashMap<Integer, Integer> casasPercorridas = new HashMap<>();
+    List<Tool> tools = new ArrayList<>();
+    boolean outOfGame = false;
+    boolean abyssLastRound = false;
 
     public Programmer(){}
 
@@ -23,8 +32,41 @@ public class Programmer {
         pos = 1;
     }
 
+
+    public void adicionaCasa(int turno, int casa){
+        casasPercorridas.put(turno, casa);
+    }
+
+    public void catchTool(Tool tool){
+        if (tool != null && !tools.contains(tool)){
+            tools.add(tool);
+        }
+
+    }
+
+
+    public void setOutOfGame() {
+        this.outOfGame = true;
+    }
+
+    public void gotAbyssLastRound(){
+        abyssLastRound = true;
+    }
+
+    public boolean isOutOfGame() {
+        return outOfGame;
+    }
+
+    public boolean isGetAbyssLastRound() {
+        return abyssLastRound;
+    }
+
     public int getId(){
         return id;
+    }
+
+    public HashMap<Integer, Integer> getCasasPercorridas() {
+        return casasPercorridas;
     }
 
     public String getName(){
@@ -33,6 +75,10 @@ public class Programmer {
 
     public int getPos(){
         return pos;
+    }
+
+    public List<Tool> getTools() {
+        return tools;
     }
 
     public void setPos(int pos) {
@@ -45,7 +91,25 @@ public class Programmer {
 
     //Nesta primeira fase o player esta sempre Em Jogo
     public String toString() {
-        return String.format("%d | %s | %d | %s | Em Jogo", id, name, pos, linguagens);
+
+        StringBuilder ferramentas = new StringBuilder();
+        String auxTools;
+
+        if (tools.size() == 0){
+            auxTools = "No tools";
+
+        } else {
+
+            for (Tool tool : tools) {
+                ferramentas.append(tool.getTitulo());
+                ferramentas.append(";");
+            }
+
+            auxTools = ferramentas.substring(0, ferramentas.length() - 1);
+        }
+
+
+        return String.format("%d | %s | %d | %s | %s | Em Jogo", id, name, pos, auxTools, linguagens);
 
     }
 }

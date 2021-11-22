@@ -5,11 +5,11 @@ import static org.junit.Assert.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 
 public class TestGameManager {
+
     // fun para 2 jogadores com Infos
     private String[][] getPlayersInfo(){
 
@@ -27,7 +27,6 @@ public class TestGameManager {
         return playersInfo;
 
     }
-
 
     @Test
     public void testGameResultsSortingByPos(){
@@ -65,12 +64,12 @@ public class TestGameManager {
 
         System.out.println(expectedGameResults);
         System.out.println(gameMng.getGameResults());
-        Assert.assertTrue(gameMng.getGameResults().toString().equals(expectedGameResults.toString()));
+        assertEquals(gameMng.getGameResults().toString(), expectedGameResults.toString());
     }
 
 
     //nrPositions está a 0.  tem que ser entre 1 - 6 ( num do dado)
-    @Test
+   /* @Test
     public void teste01Move(){
         GameManager manager = new GameManager();
         manager.createInitialBoard(getPlayersInfo(), 79);
@@ -127,5 +126,5 @@ public class TestGameManager {
         Programmer programmerThatMoved = manager.getProgrammers().get(0);
         assertEquals(76, programmerThatMoved.getPos());
     }
-
+*/
 }
