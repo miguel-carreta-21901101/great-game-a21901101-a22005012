@@ -9,6 +9,7 @@ import java.util.List;
 
 public class GameManager {
 
+    HashMap<Integer, Programmer> programmersOutOfGame = new HashMap<>();
     HashMap<Integer, Programmer> programmers = new HashMap<>();
     ArrayList<Integer> ids = new ArrayList<>();
     List<Programmer> programerList = new ArrayList<>();
@@ -664,6 +665,7 @@ public class GameManager {
         int idAbyss;
 
 
+        //TODO
         // Se o programmer ultrapassar a casa final do jogo :
         if ((programmerTemp.getPos() + nrSpaces) > board.getTamanho()){
 
@@ -677,18 +679,28 @@ public class GameManager {
 
         } else {
 
+            // Insiro na posAux a casa onde o player irá parar
             int posAux = programmerTemp.getPos() + nrSpaces;
             int novaPos;
 
+            // Se houver uma tool nessa casa E o player ainda nao tenha adquirido esta tool , ele apanha a tool.
             if (temTool(posAux)){
                 tool = setTool(posAux);
                 programmerTemp.catchTool(tool);
+
+                // (Se existir uma tool na casa   E   o player já a tenha na sua Lista de Tools )   OU   (Não exista
+                // uma tool na casa) , ele nao faz absolutamente nada.
             }
 
+         //   System.out.println("Player : "+ programmerTemp.getName() +" |  pos AUX : " + posAux);
+
+            // Se existir um abismo na casa
             if (temAbismo(posAux)){
                 idAbyss = setIdAbyss(posAux);
 
                 switch (idAbyss){
+
+                    // ERRO SINTAX -  Recya 1 casa
                     case 0:
                         novaPos = posAux -1;
                         changePosAndCasa(novaPos, programmers, programmerTemp);
@@ -696,59 +708,105 @@ public class GameManager {
                         //programmers.get(programmerTemp.getId()).adicionaCasa(game.getEndedShifts(), novaPos);
                         break;
 
+
+                    // LÓGICA  - Recua N casas, sendo N metade do valor que tiver saído no dado
+                    // arredondado para baixo
                     case 1:
 
                         double auxSpaces = (double) nrSpaces/2;
                         novaPos = posAux - (int)Math.floor(auxSpaces);
                         changePosAndCasa(novaPos, programmers, programmerTemp);
-                      //  programmers.get(programmerTemp.getId()).setPos(novaPos);
-                       // programmers.get(programmerTemp.getId()).adicionaCasa(game.getEndedShifts(), novaPos);
                         break;
 
+
+                    // EXEPTION  -      Recua 2 casas
                     case 2:
                         novaPos = posAux -2;
                         changePosAndCasa(novaPos, programmers, programmerTemp);
-                        //programmers.get(programmerTemp.getId()).setPos(novaPos);
-                        //programmers.get(programmerTemp.getId()).adicionaCasa(game.getEndedShifts(), novaPos);
                         break;
 
+
+                    // FILE NOT FOUND EXCEPTION  -  Recua  3 casas
                     case 3:
                         novaPos = posAux - 3;
                         changePosAndCasa(novaPos, programmers, programmerTemp);
-                        //programmers.get(programmerTemp.getId()).setPos(novaPos);
-                        //programmers.get(programmerTemp.getId()).adicionaCasa(game.getEndedShifts(), novaPos);
                         break;
 
+
+                        // CRASH  - Volta à primeira casa
                     case 4:
                         novaPos = 1;
                         changePosAndCasa(novaPos, programmers, programmerTemp);
-                      //  programmers.get(programmerTemp.getId()).setPos(novaPos);
-                       // programmers.get(programmerTemp.getId()).adicionaCasa(game.getEndedShifts(), novaPos);
                         break;
 
+
+                    // DUPLICATED CODE
+                    // Recua até à casa onde estava antes de chegar a esta casa.
                     case 5:
+/*
+                        if (programmers.get(programmerTemp.getId()).getCasasPercorridas().containsKey(
+                                programmers.get(programmerTemp.getId()).getCasasPercorridas().get(
+                                        game.getEndedShifts() -1))) {
 
-                        novaPos = programmers.get(programmerTemp.getId()).getCasasPercorridas()
-                                .get(game.getEndedShifts() -1);
+                            novaPos = programmers.get(programmerTemp.getId()).getCasasPercorridas()
+                                .get(game.getEndedShifts() -1);*/
 
-                        changePosAndCasa(novaPos, programmers, programmerTemp);
-                       // programmers.get(programmerTemp.getId()).setPos(novaPos);
-                       // programmers.get(programmerTemp.getId()).adicionaCasa(game.getEndedShifts(), novaPos);
+                        if(programmers.get(programmerTemp.getId()).casasPercorridasList.contains(
+                                programmerTemp.casasPercorridasList.size())) {
+
+                            novaPos = programmers.get(programmerTemp.getId()).casasPercorridas.
+                                    get(programmerTemp.casasPercorridasList.size());
+
+                            changePosAndCasa(novaPos, programmers, programmerTemp);
+
+                            programmers.get(programmerTemp.getId()).setPos(1);
+                        }
+
                         break;
 
+
+                     // EFEITOS SECUNDARIOS
+                    //recua para a posição onde estava há 2 movimentos atrás
                     case 6:
-                        novaPos = programmers.get(programmerTemp.getId()).getCasasPercorridas()
-                                .get(game.getEndedShifts() -2);
-                        changePosAndCasa(novaPos, programmers, programmerTemp);
-                      //  programmers.get(programmerTemp.getId()).setPos(novaPos);
-                       // programmers.get(programmerTemp.getId()).adicionaCasa(game.getEndedShifts(), novaPos);
+                        /*novaPos = programmers.get(programmerTemp.getId()).getCasasPercorridas()
+                                .get(game.getEndedShifts() -2);*/
+
+                        if(programmers.get(programmerTemp.getId()).casasPercorridasList.contains(
+                                programmerTemp.casasPercorridasList.size() -1 )) {
+
+                            novaPos = programmers.get(programmerTemp.getId()).casasPercorridas.
+                                    get(programmerTemp.casasPercorridasList.size() -1);
+                            changePosAndCasa(novaPos, programmers, programmerTemp);
+
+                        }
+
                         break;
 
+
+                    //Blue Screen  -   perde imediatamente o jogo
                     case 7:
                         programmers.get(programmerTemp.getId()).setOutOfGame();
+                        programmersOutOfGame.put(programmerTemp.getId(), programmerTemp);
+                        programmers.remove(programmerTemp.getId());
+                        break;
 
+
+
+                     // CICLO INFINITO
+
+                    //O programador fica preso na casa onde está até que
+                        //lá apareça outro programador para o ajudar.
+                        //O programador que aparecer para ajudar, fica ele
+                        //próprio preso (mas liberta o que já lá estava).
+                        //Caso o programador que aparece tenha uma
+                        //ferramenta que permita livrar-se do abismo, ele não
+                        //fica preso mas também já não liberta o programador
+                        //que lá estava.
                     case 8:
+                    break;
+                    // CORE DUMPED
                     case 9:
+                        break;
 
                 }
                // changePosAndCasa(novaPos, programmers, programmerTemp);

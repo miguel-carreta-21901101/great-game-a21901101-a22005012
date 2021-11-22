@@ -13,9 +13,11 @@ public class Programmer {
     ProgrammerColor color;
     //       < Turno, Casa >
     HashMap<Integer, Integer> casasPercorridas = new HashMap<>();
+    List<Integer> casasPercorridasList = new ArrayList<>();
     List<Tool> tools = new ArrayList<>();
     boolean outOfGame = false;
     boolean abyssLastRound = false;
+    boolean stuck = false;
 
     public Programmer(){}
 
@@ -34,14 +36,14 @@ public class Programmer {
 
 
     public void adicionaCasa(int turno, int casa){
-        casasPercorridas.put(turno, casa);
+        casasPercorridasList.add(casa);
+       // casasPercorridas.put(turno, casa);
     }
 
     public void catchTool(Tool tool){
         if (tool != null && !tools.contains(tool)){
             tools.add(tool);
         }
-
     }
 
 
@@ -63,6 +65,14 @@ public class Programmer {
 
     public int getId(){
         return id;
+    }
+
+    public boolean isStuck() {
+        return stuck;
+    }
+
+    public void stuckedByInfiniteCircle(boolean stuck) {
+        this.stuck = stuck;
     }
 
     public HashMap<Integer, Integer> getCasasPercorridas() {
