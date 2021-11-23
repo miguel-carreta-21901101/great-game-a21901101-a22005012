@@ -107,6 +107,7 @@ public class Programmer {
 
         StringBuilder ferramentas = new StringBuilder();
         String auxTools;
+        String emJogo = "Em Jogo";
 
         if (tools.size() == 0){
             auxTools = "No tools";
@@ -121,8 +122,11 @@ public class Programmer {
             auxTools = ferramentas.substring(0, ferramentas.length() - 1);
         }
 
+        if (outOfGame){
+            emJogo = "Derrotado";
+        }
 
-        return String.format("%d | %s | %d | %s | %s | Em Jogo", id, name, pos, auxTools, linguagens);
+        return String.format("%d | %s | %d | %s | %s | %s", id, name, pos, auxTools, linguagens, emJogo);
 
     }
 }

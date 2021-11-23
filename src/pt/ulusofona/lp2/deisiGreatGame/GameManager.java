@@ -234,6 +234,9 @@ public class GameManager {
                         }
                         posTool = Integer.parseInt(abyssesAndTools[i][2]);
                         break;
+
+                    default:
+                        throw new IllegalArgumentException();
                 }
 
                 if (abyssAlert) {
@@ -244,7 +247,6 @@ public class GameManager {
                 tools.put(idTool, new Tool(idTool, AuxFunctions.setTitleTool(idTool), posTool));
 
             }
-
 
         }
 
@@ -735,7 +737,6 @@ public class GameManager {
                     case 1:
                         idsCasas = 1 ;
                         dado = nrSpaces;
-                        double auxSpaces = (double) nrSpaces/2;
                         changePosAndCasa(posAux, programmers, programmerTemp);
                         break;
 
@@ -764,12 +765,6 @@ public class GameManager {
                     // DUPLICATED CODE
                     // Recua até à casa onde estava antes de chegar a esta casa.
                     case 5:
-/*
-                        if (programmers.get(programmerTemp.getId()).getCasasPercorridas().containsKey(
-                                programmers.get(programmerTemp.getId()).getCasasPercorridas().get(
-                                        game.getEndedShifts() -1))) {
-                            novaPos = programmers.get(programmerTemp.getId()).getCasasPercorridas()
-                                .get(game.getEndedShifts() -1);*/
 
                         if(programmers.get(programmerTemp.getId()).casasPercorridasList.contains(
                                 programmerTemp.casasPercorridasList.size())) {
@@ -788,8 +783,6 @@ public class GameManager {
                     // EFEITOS SECUNDARIOS
                     //recua para a posição onde estava há 2 movimentos atrás
                     case 6:
-                        /*novaPos = programmers.get(programmerTemp.getId()).getCasasPercorridas()
-                                .get(game.getEndedShifts() -2);*/
 
                         if(programmers.get(programmerTemp.getId()).casasPercorridasList.contains(
                                 programmerTemp.casasPercorridasList.size() -1 )) {
@@ -850,8 +843,6 @@ public class GameManager {
            //         " || DADO : " + nrSpaces);
 
         }
-
-
 
 
         return true;
