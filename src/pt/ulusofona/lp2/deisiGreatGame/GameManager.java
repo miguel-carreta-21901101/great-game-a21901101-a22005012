@@ -979,7 +979,20 @@ public class GameManager {
     }
 
     public boolean gameIsOver() {
+        // Se algum jogador chegar à ultima casa do mapa ,
+        for (Programmer p : programmers.values()){
+            if (p.getPos() == board.getTamanho()){
 
+                programerList.addAll(programmers.values());
+
+                //Declaro o Vencedor
+                game.setWinner(p.getName());
+                return true;
+            }
+        }
+
+        return false;
+/*
 
         if (programmers.size() == 1){
             return true;
@@ -1006,7 +1019,7 @@ public class GameManager {
             }
         }
 
-        return false;
+        return false;*/
     }
 
     public List<String> getGameResults() {
