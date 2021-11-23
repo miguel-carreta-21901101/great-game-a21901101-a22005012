@@ -17,6 +17,7 @@ public class GameManager {
     Game game = new Game();
     HashMap<Integer, Abyss> abysses = new HashMap<>();
     HashMap<Integer, Tool> tools = new HashMap<>();
+    boolean winnerHasBeenSet = false;
 
 
     int idsCasas;
@@ -26,7 +27,7 @@ public class GameManager {
     public GameManager() {
     }
 
-    public void resetGame(){
+    public void resetGame() {
         programerList.clear();
         ids.clear();
         programmers.clear();
@@ -47,9 +48,8 @@ public class GameManager {
         int countPlayers = 0;
         int idPlayers = 0;
         String nome = "";
-        String linguagensProgramacao  = "";
+        String linguagensProgramacao = "";
         String cor = "";
-
 
 
         if (worldSize < 1) {
@@ -60,17 +60,19 @@ public class GameManager {
 
 
         for (i = 0; i < playerInfo.length; i++) {
-            if (playerInfo[0] == null){return false;}
+            if (playerInfo[0] == null) {
+                return false;
+            }
 
             //Percorre as informaçoes de cada programador
             for (j = 0; j <= 3; j++) {
 
                 //Se J for null E o num players inferior a 2, false
-                if (playerInfo[i][j] == null && countPlayers < 2){
+                if (playerInfo[i][j] == null && countPlayers < 2) {
                     return false;
 
                     //Se J for null E tiver o num players suficiente , true
-                }else if (playerInfo[i][j] == null && countPlayers >= 2){
+                } else if (playerInfo[i][j] == null && countPlayers >= 2) {
                     return true;
                 }
 
@@ -81,7 +83,7 @@ public class GameManager {
 
                         // Se o ID  for repetido OU  menor que 0 , false
                         if (idsRepetidos.contains(Integer.parseInt(playerInfo[i][j])) ||
-                                (Integer.parseInt(playerInfo[i][j]) < 0) ) {
+                                (Integer.parseInt(playerInfo[i][j]) < 0)) {
 
                             return false;
                         }
@@ -107,7 +109,7 @@ public class GameManager {
 
                     // LISTA LINGUAGENS DE PROGRAMACAO
                     case 2:
-                        if (playerInfo[i][j] == null || playerInfo[i][j].length() == 0){
+                        if (playerInfo[i][j] == null || playerInfo[i][j].length() == 0) {
                             return false;
                         }
 
@@ -120,18 +122,18 @@ public class GameManager {
 
                         //Se a cor for diferente das possiveis, false
                         if (!(playerInfo[i][j].equals("Purple") || playerInfo[i][j].equals("Green") ||
-                                playerInfo[i][j].equals("Brown") || playerInfo[i][j].equals("Blue"))){
+                                playerInfo[i][j].equals("Brown") || playerInfo[i][j].equals("Blue"))) {
                             return false;
 
                         }
                         // Se existir uma repetida, false
-                        if (coresRepetidas.contains(playerInfo[i][j])){
+                        if (coresRepetidas.contains(playerInfo[i][j])) {
                             return false;
                         }
 
                         //Adiciona a cor ao HashSet para validar as cores repetidas
                         coresRepetidas.add(playerInfo[i][j]);
-                        cor =  playerInfo[i][j];
+                        cor = playerInfo[i][j];
                         break;
 
                 }
@@ -173,12 +175,12 @@ public class GameManager {
         }
 
         // O num de players entre 2 - 4
-        if (countPlayers <= 1 || countPlayers > 4){
+        if (countPlayers <= 1 || countPlayers > 4) {
             return false;
         }
 
         // o tamanho do board tem que ser no minimo 2 peças por player .
-        if (worldSize < (countPlayers * 2)){
+        if (worldSize < (countPlayers * 2)) {
             return false;
         }
 
@@ -191,35 +193,37 @@ public class GameManager {
         int posAbyss = 0;
         int posTool = 0;
 
-        for (i = 0; i < abyssesAndTools.length; i++){
+        for (i = 0; i < abyssesAndTools.length; i++) {
 
-            if (abyssesAndTools[i] == null) {return false;}
+            if (abyssesAndTools[i] == null) {
+                return false;
+            }
 
 
             boolean abyssAlert = false;
 
-            for (j = 0; j <= 2; j++){
+            for (j = 0; j <= 2; j++) {
 
-                if (abyssesAndTools[i][j] == null){
+                if (abyssesAndTools[i][j] == null) {
                     return false;
                 }
 
                 switch (j) {
 
                     case 0:
-                        if (!abyssesAndTools[i][0].equals(String.valueOf(0))  && !abyssesAndTools[i][0]
-                                .equals(String.valueOf(1))){
+                        if (!abyssesAndTools[i][0].equals(String.valueOf(0)) && !abyssesAndTools[i][0]
+                                .equals(String.valueOf(1))) {
 
                             return false;
 
                         }
-                        if (abyssesAndTools[i][0].equals(String.valueOf(0))){
+                        if (abyssesAndTools[i][0].equals(String.valueOf(0))) {
                             abyssAlert = true;
                         }
                         break;
 
                     case 1:
-                        if (abyssAlert){
+                        if (abyssAlert) {
                             idAbyss = Integer.parseInt(abyssesAndTools[i][1]);
                             break;
                         }
@@ -228,7 +232,7 @@ public class GameManager {
                         break;
 
                     case 2:
-                        if (abyssAlert){
+                        if (abyssAlert) {
                             posAbyss = Integer.parseInt(abyssesAndTools[i][2]);
                             break;
                         }
@@ -263,7 +267,7 @@ public class GameManager {
 
     }
 
-    public boolean createInitialBoard(String[][] playerInfo, int worldSize){
+    public boolean createInitialBoard(String[][] playerInfo, int worldSize) {
 
 
         // Reset ao jogo
@@ -274,7 +278,7 @@ public class GameManager {
         int countPlayers = 0;
         int id = 0;
         String nome = "";
-        String linguagensProgramacao  = "";
+        String linguagensProgramacao = "";
         String cor = "";
 
         if (worldSize < 1) {
@@ -285,17 +289,19 @@ public class GameManager {
 
 
         for (i = 0; i < playerInfo.length; i++) {
-            if (playerInfo[0] == null){return false;}
+            if (playerInfo[0] == null) {
+                return false;
+            }
 
             //Percorre as informaçoes de cada programador
             for (j = 0; j <= 3; j++) {
 
                 //Se J for null E o num players inferior a 2, false
-                if (playerInfo[i][j] == null && countPlayers < 2){
+                if (playerInfo[i][j] == null && countPlayers < 2) {
                     return false;
 
                     //Se J for null E tiver o num players suficiente , true
-                }else if (playerInfo[i][j] == null && countPlayers >= 2){
+                } else if (playerInfo[i][j] == null && countPlayers >= 2) {
                     return true;
                 }
 
@@ -306,7 +312,7 @@ public class GameManager {
 
                         // Se o ID  for repetido OU  menor que 0 , false
                         if (idsRepetidos.contains(Integer.parseInt(playerInfo[i][j])) ||
-                                (Integer.parseInt(playerInfo[i][j]) < 0) ) {
+                                (Integer.parseInt(playerInfo[i][j]) < 0)) {
 
                             return false;
                         }
@@ -332,7 +338,7 @@ public class GameManager {
 
                     // LISTA LINGUAGENS DE PROGRAMACAO
                     case 2:
-                        if (playerInfo[i][j] == null || playerInfo[i][j].length() == 0){
+                        if (playerInfo[i][j] == null || playerInfo[i][j].length() == 0) {
                             return false;
                         }
 
@@ -345,18 +351,18 @@ public class GameManager {
 
                         //Se a cor for diferente das possiveis, false
                         if (!(playerInfo[i][j].equals("Purple") || playerInfo[i][j].equals("Green") ||
-                                playerInfo[i][j].equals("Brown") || playerInfo[i][j].equals("Blue"))){
+                                playerInfo[i][j].equals("Brown") || playerInfo[i][j].equals("Blue"))) {
                             return false;
 
                         }
                         // Se existir uma repetida, false
-                        if (coresRepetidas.contains(playerInfo[i][j])){
+                        if (coresRepetidas.contains(playerInfo[i][j])) {
                             return false;
                         }
 
                         //Adiciona a cor ao HashSet para validar as cores repetidas
                         coresRepetidas.add(playerInfo[i][j]);
-                        cor =  playerInfo[i][j];
+                        cor = playerInfo[i][j];
                         break;
 
                 }
@@ -398,12 +404,12 @@ public class GameManager {
         }
 
         // O num de players entre 2 - 4
-        if (countPlayers <= 1 || countPlayers > 4){
+        if (countPlayers <= 1 || countPlayers > 4) {
             return false;
         }
 
         // o tamanho do board tem que ser no minimo 2 peças por player .
-        if (worldSize < (countPlayers * 2)){
+        if (worldSize < (countPlayers * 2)) {
             return false;
         }
 
@@ -435,6 +441,7 @@ public class GameManager {
 
         }
 
+
         //Se o programmer estiver na posicao POSITION , retorna a imagem do player
         for (Programmer p : programmers.values()) {
             if (p.getPos() == position) {
@@ -443,10 +450,10 @@ public class GameManager {
         }
 
         // Se houver um abismo na posicao POSITION , retorna a img que pertence
-        for ( Abyss abyss : abysses.values()){
-            if (abyss.getPos() == position){
+        for (Abyss abyss : abysses.values()) {
+            if (abyss.getPos() == position) {
 
-                switch(abyss.getId()){
+                switch (abyss.getId()) {
 
                     case 0:
                         return "syntax.png";
@@ -485,10 +492,10 @@ public class GameManager {
         }
 
         // Se houver uma tool na posicao POSITION , retorna a img que pertence
-        for (Tool tool: tools.values()){
-            if (tool.getPos() == position){
+        for (Tool tool : tools.values()) {
+            if (tool.getPos() == position) {
 
-                switch(tool.getId()){
+                switch (tool.getId()) {
 
                     case 0:
                         return "inheritance.png";
@@ -520,28 +527,27 @@ public class GameManager {
     }
 
 
-    public String getTitle(int position){
+    public String getTitle(int position) {
 
-        if (position > board.getTamanho() || position < 1){
+        if (position > board.getTamanho() || position < 1) {
             return null;
         }
 
-        for (Abyss a: abysses.values()){
-            if (a.getPos() == position){
+        for (Abyss a : abysses.values()) {
+            if (a.getPos() == position) {
                 return a.getTitulo();
             }
         }
 
 
-        for (Tool t : tools.values()){
-            if (t.getPos() == position){
+        for (Tool t : tools.values()) {
+            if (t.getPos() == position) {
                 return t.getTitulo();
             }
         }
 
         return null;
     }
-
 
 
     //TODO
@@ -554,8 +560,8 @@ public class GameManager {
         List<Programmer> noDefeatedProgrammers = new ArrayList<>();
 
 
-        for (Programmer p : programmers.values()){
-            if (!p.isOutOfGame()){
+        for (Programmer p : programmers.values()) {
+            if (!p.isOutOfGame()) {
                 noDefeatedProgrammers.add(p);
             }
         }
@@ -572,6 +578,7 @@ public class GameManager {
         }
 
         for (Programmer p : this.programmers.values()) {
+
             if (p.getPos() == position) {
                 programmers.add(p);
             }
@@ -581,12 +588,12 @@ public class GameManager {
     }
 
 
-    public String getProgrammersInfo(){
+    public String getProgrammersInfo() {
 
         StringBuilder info = new StringBuilder();
 
-        for (Integer i : ids){
-            Programmer p =  programmers.get(i);
+        for (Integer i : ids) {
+            Programmer p = programmers.get(i);
 
             if (p != null) {
 
@@ -612,7 +619,7 @@ public class GameManager {
             }
 
         }
-        return info.substring(0, info.length() -3);
+        return info.substring(0, info.length() - 3);
     }
 
     public int getCurrentPlayerID() {
@@ -621,7 +628,7 @@ public class GameManager {
     }
 
     //****************************************************************************************
-    // FUNCOES PARA MUDAR DE SITIO TALVEZ
+    // FUNCOES PARA MUDAR DE SITIO
 
     public Tool setTool(int pos) {
         for (Tool toolTemp : tools.values()) {
@@ -632,8 +639,9 @@ public class GameManager {
 
         return null;
     }
-    public boolean temTool(int pos){
-        for (Tool toolTemp : tools.values()){
+
+    public boolean temTool(int pos) {
+        for (Tool toolTemp : tools.values()) {
             if (toolTemp.getPos() == pos) {
 
                 return true;
@@ -641,30 +649,33 @@ public class GameManager {
         }
         return false;
     }
-    public boolean temAbismo(int pos){
-        for (Abyss abyss : abysses.values()){
-            if (abyss.getPos() == pos){
+
+    public boolean temAbismo(int pos) {
+        for (Abyss abyss : abysses.values()) {
+            if (abyss.getPos() == pos) {
                 return true;
             }
         }
         return false;
     }
-    public int setIdAbyss (int pos){
-        for (Abyss abyss : abysses.values()){
-            if (abyss.getPos() == pos){
+
+    public int setIdAbyss(int pos) {
+        for (Abyss abyss : abysses.values()) {
+            if (abyss.getPos() == pos) {
                 return abyss.getId();
             }
         }
         return -1;
     }
-    public void changePosAndCasa(int pos, HashMap<Integer, Programmer> programmers, Programmer programmer){
+
+    public void changePosAndCasa(int pos, HashMap<Integer, Programmer> programmers, Programmer programmer) {
         programmers.get(programmer.getId()).setPos(pos);
         programmers.get(programmer.getId()).adicionaCasa(game.getEndedShifts(), pos);
     }
     //****************************************************************************************
 
 
-    public boolean moveCurrentPlayer(int nrSpaces){
+    public boolean moveCurrentPlayer(int nrSpaces) {
 
         // numeros do dado 1 - 6
         if (nrSpaces < 1 || nrSpaces > 6) {
@@ -676,7 +687,7 @@ public class GameManager {
 
         // Replico o programmer que esta neste momento a jogar
         Programmer programmerTemp = programmers.get(game.getCurrentPlayerID());
-        if (programmerTemp.isStuck()){
+        if (programmerTemp.isStuck()) {
             programmerTemp.stuckedByInfiniteCircle(false);
         }
         Tool tool;
@@ -686,7 +697,7 @@ public class GameManager {
 
         //TODO
         // Se o programmer ultrapassar a casa final do jogo :
-        if ((programmerTemp.getPos() + nrSpaces) > board.getTamanho()){
+        if ((programmerTemp.getPos() + nrSpaces) > board.getTamanho()) {
 
 
             // Recua o numero de casas em excesso
@@ -704,7 +715,7 @@ public class GameManager {
 
 
             // Se houver uma tool nessa casa E o player ainda nao tenha adquirido esta tool , ele apanha a tool.
-            if (temTool(posAux)){
+            if (temTool(posAux)) {
                 tool = setTool(posAux);
                 programmerTemp.catchTool(tool);
 
@@ -715,66 +726,61 @@ public class GameManager {
             //   System.out.println("Player : "+ programmerTemp.getName() +" |  pos AUX : " + posAux);
 
             // Se existir um abismo na casa
-            if (temAbismo(posAux)){
+            if (temAbismo(posAux)) {
                 idAbyss = setIdAbyss(posAux);
 
-              //  System.out.println("ABISMO POS : " + posAux);
+                //  System.out.println("ABISMO POS : " + posAux);
 
                 alertAbyss = true;
-                switch (idAbyss){
+                switch (idAbyss) {
 
 
                     // ERRO SINTAX -  Recya 1 casa
                     case 0:
                         idsCasas = 0;
-
-                        changePosAndCasa(posAux, programmers, programmerTemp);
+                     //   changePosAndCasa(posAux, programmers, programmerTemp);
                         break;
 
 
-                    // LÓGICA  - Recua N casas, sendo N metade do valor que tiver saído no dado
-                    // arredondado para baixo
                     case 1:
-                        idsCasas = 1 ;
+                        idsCasas = 1;
                         dado = nrSpaces;
-                        changePosAndCasa(posAux, programmers, programmerTemp);
+                       // changePosAndCasa(posAux, programmers, programmerTemp);
                         break;
 
 
-                    // EXEPTION  -      Recua 2 casas
                     case 2:
                         idsCasas = 2;
-                        changePosAndCasa(posAux, programmers, programmerTemp);
+                       // changePosAndCasa(posAux, programmers, programmerTemp);
                         break;
 
 
-                    // FILE NOT FOUND EXCEPTION  -  Recua  3 casas
                     case 3:
                         idsCasas = 3;
-                        changePosAndCasa(posAux, programmers, programmerTemp);
+                       // changePosAndCasa(posAux, programmers, programmerTemp);
                         break;
 
 
-                    // CRASH  - Volta à primeira casa
                     case 4:
-                        idsCasas  = 4;
-                        changePosAndCasa(posAux, programmers, programmerTemp);
+                        idsCasas = 4;
+                       // changePosAndCasa(posAux, programmers, programmerTemp);
                         break;
 
 
                     // DUPLICATED CODE
                     // Recua até à casa onde estava antes de chegar a esta casa.
                     case 5:
+                        idsCasas = 5;
 
-                        if(programmers.get(programmerTemp.getId()).casasPercorridasList.contains(
-                                programmerTemp.casasPercorridasList.size())) {
+                        if (programmers.get(programmerTemp.getId()).getCasasPercorridasList().contains(
+                                programmerTemp.getCasasPercorridasList().size())) {
 
-                            novaPos = programmers.get(programmerTemp.getId()).casasPercorridas.
-                                    get(programmerTemp.casasPercorridasList.size());
+                            novaPos = programmers.get(programmerTemp.getId()).getCasasPercorridasList().
+                                    get(programmerTemp.getCasasPercorridasList().size());
 
-                            changePosAndCasa(novaPos, programmers, programmerTemp);
+                           // changePosAndCasa(posAux, programmers, programmerTemp);
 
-                            programmers.get(programmerTemp.getId()).setPos(1);
+                           // programmers.get(programmerTemp.getId()).setPos(1);
                         }
 
                         break;
@@ -784,12 +790,14 @@ public class GameManager {
                     //recua para a posição onde estava há 2 movimentos atrás
                     case 6:
 
-                        if(programmers.get(programmerTemp.getId()).casasPercorridasList.contains(
-                                programmerTemp.casasPercorridasList.size() -1 )) {
+                        idsCasas = 6;
+
+                        if (programmers.get(programmerTemp.getId()).getCasasPercorridasList().contains(
+                                programmerTemp.getCasasPercorridasList().size() - 1)) {
 
                             novaPos = programmers.get(programmerTemp.getId()).casasPercorridas.
-                                    get(programmerTemp.casasPercorridasList.size() -1);
-                            changePosAndCasa(novaPos, programmers, programmerTemp);
+                                    get(programmerTemp.getCasasPercorridasList().size() - 1);
+                         //   changePosAndCasa(posAux, programmers, programmerTemp);
 
                         }
 
@@ -804,8 +812,8 @@ public class GameManager {
                      /*   programmers.get(programmerTemp.getId()).setOutOfGame();
                         programmersOutOfGame.put(programmerTemp.getId(), programmerTemp);
                         programmers.remove(programmerTemp.getId());
-                       */ break;
-
+                       */
+                        break;
 
 
                     // CICLO INFINITO
@@ -821,13 +829,13 @@ public class GameManager {
                     case 8:
                         idsCasas = 8;
 
-                        changePosAndCasa(posAux, programmers, programmerTemp);
+                     //   changePosAndCasa(posAux, programmers, programmerTemp);
                         break;
                     // CORE DUMPED
                     case 9:
                         idsCasas = 9;
 
-                        changePosAndCasa(posAux, programmers, programmerTemp);
+                    //    changePosAndCasa(posAux, programmers, programmerTemp);
                         break;
 
                 }
@@ -836,11 +844,12 @@ public class GameManager {
             }
 
             // Adiciono ao verdadeiro programmer a sua posicao atual
-            if (!alertAbyss) {
-                programmers.get(programmerTemp.getId()).setPos(programmerTemp.getPos() + nrSpaces);
-            }
+                changePosAndCasa(posAux, programmers, programmerTemp);
+               // programmers.get(programmerTemp.getId()).setPos(programmerTemp.getPos() + nrSpaces);
+
+
             //System.out.println("Programmer : " + programmerTemp.getName() + "  ||  POS : " + programmerTemp.getPos() +
-           //         " || DADO : " + nrSpaces);
+            //         " || DADO : " + nrSpaces);
 
         }
 
@@ -849,59 +858,74 @@ public class GameManager {
     }
 
 
-
-    public String reactToAbyssOrTool(){
+    public String reactToAbyssOrTool() {
 
         boolean isTool = false;
         boolean isAbyss = false;
 
-        for (Tool tool : tools.values()){
-            if (programmers.get(game.getCurrentPlayerID()).getPos() == tool.getPos()){
+        Programmer programmerTemp = programmers.get(game.getCurrentPlayerID());
+
+        for (Tool tool : tools.values()) {
+            if (programmerTemp.getPos() == tool.getPos()) {
                 isTool = true;
+                break;
             }
         }
 
-        if (!isTool){
-            for (Abyss abyss : abysses.values()){
-                if (programmers.containsKey(game.getCurrentPlayerID())){
+        if (!isTool) {
+            for (Abyss abyss : abysses.values()) {
+                if (programmers.containsKey(programmerTemp.getId())) {
 
-                    if (programmers.get(game.getCurrentPlayerID()).getPos() == abyss.getPos()) {
+                    if (programmerTemp.getPos() == abyss.getPos()) {
                         isAbyss = true;
 
                         switch (idsCasas) {
-                            // SYNTAX
+                            // SYNTAX - Recua 1 casa
                             case 0:
-                                changePosAndCasa(programmers.get(game.getCurrentPlayerID()).getPos(),
-                                        programmers, programmers.get(game.getCurrentPlayerID()));
+                                changePosAndCasa(programmerTemp.getPos() -1,
+                                        programmers, programmerTemp);
                                 break;
 
-                            //LOGICA
+                            //LOGICA - Recua metado do valor que tiver saido no dado
                             case 1:
                                 double auxSpaces = (double) dado / 2;
-                                changePosAndCasa(programmers.get(game.getCurrentPlayerID()).getPos() -
+                                changePosAndCasa(programmerTemp.getPos() -
                                                 (int) Math.floor(auxSpaces),
-                                        programmers, programmers.get(game.getCurrentPlayerID()));
+                                        programmers, programmerTemp);
                                 break;
 
-                            //EXCEPTION
+                            //EXCEPTION - recua 2 casas
                             case 2:
-                                changePosAndCasa(programmers.get(game.getCurrentPlayerID()).getPos() - 2,
-                                        programmers, programmers.get(game.getCurrentPlayerID()));
+                                changePosAndCasa(programmerTemp.getPos() - 2,
+                                        programmers, programmerTemp);
 
                                 break;
 
-                            // FILE NOT FOUND
+                            // FILE NOT FOUND - recua 3 casas
                             case 3:
-                                changePosAndCasa(programmers.get(game.getCurrentPlayerID()).getPos() - 3,
-                                        programmers, programmers.get(game.getCurrentPlayerID()));
+                                changePosAndCasa(programmerTemp.getPos() - 3,
+                                        programmers, programmerTemp);
                                 break;
 
-                            //CRASH
+                            //CRASH - volta à primeira casa
                             case 4:
-                                changePosAndCasa(1, programmers, programmers.get(game.getCurrentPlayerID()));
+                                changePosAndCasa(1, programmers, programmerTemp);
                                 break;
 
-                            // BLUE SCREEN
+                            // DUPLICATED CODE - Recuar ate à antiga casa onde o plauer estava
+                            case 5:
+
+                                changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
+                                            programmerTemp.getCasasPercorridasList().size()-2), programmers, programmerTemp);
+                                break;
+
+                            // EFEITOS SECUNDARIOS
+                            case 6:
+                                changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
+                                        programmerTemp.getCasasPercorridasList().size()-3), programmers, programmerTemp);
+                                break;
+
+                            // BLUE SCREEN - perde imediatamente o jogo
                             case 7:
 
                                 if (programmers.containsKey(game.getCurrentPlayerID())) {
@@ -911,13 +935,15 @@ public class GameManager {
                                     programmersOutOfGame.put(game.getCurrentPlayerID(),
                                             programmers.get(game.getCurrentPlayerID()));
 
-                                    programerList.remove(programmers.get(game.getCurrentPlayerID()));
-                                    programmers.remove(game.getCurrentPlayerID());
+                                    programmers.get(game.getCurrentPlayerID()).setOutOfGame();
+                                    ids.remove(game.getCurrentPlayerID());
+                                   // programerList.remove(programmers.get(game.getCurrentPlayerID()));
+                                    //programmers.remove(game.getCurrentPlayerID());
                                 }
                                 break;
 
                             default:
-                                throw new IllegalArgumentException();
+                                break;
                         }
                     }
                 }
@@ -925,24 +951,25 @@ public class GameManager {
         }
 
         // Incremento o count para ir buscar o proximo posicao no array IDS
-        count ++;
+        count++;
 
         // Se o count chegar ao ids.size , comeca de novo para nao dar index out of bound
-        if (count == ids.size()){
+        if (count == ids.size()) {
             count = 0;
         }
 
         //Declaro o proximo jogador a jogar
+
         game.setCurrentPlayerID(ids.get(count));
 
 
         //Troco de turno incrementando os turnos terminados
         game.nextShift();
 
-        if (isTool){
+        if (isTool) {
             return "Parabéns, apanhou uma ferramenta !!";
 
-        } else if (isAbyss){
+        } else if (isAbyss) {
             return "Ohhh, caiu num abismo !!";
         } else {
             return null;
@@ -953,15 +980,29 @@ public class GameManager {
 
     public boolean gameIsOver() {
 
+
+        if (programmers.size() == 1){
+            return true;
+        }
+
         // Se algum jogador chegar à ultima casa do mapa ,
-        for (Programmer p : programmers.values()){
-            if (p.getPos() == board.getTamanho()){
+        for (Programmer p : programmers.values()) {
+            if (p.getPos() == board.getTamanho()) {
 
-                programerList.addAll(programmers.values());
+                //programerList.addAll(programmers.values());
 
-                //Declaro o Vencedor
-                game.setWinner(p.getName());
-                return true;
+                if (!winnerHasBeenSet) {
+
+                    //Declaro o Vencedor
+                    game.setWinner(p.getName());
+                    winnerHasBeenSet = true;
+                    programerList.add(p);
+
+                    return false;
+                }
+
+                programerList.add(p);
+                programmers.remove(p.getId());
             }
         }
 
@@ -996,9 +1037,9 @@ public class GameManager {
                 }
             });
 
-            for (Programmer i : programerList){
+            for (Programmer i : programerList) {
                 //se o nome do programer é o winner, passo à frente
-                if ( i.getName().equals(game.getWinner())){
+                if (i.getName().equals(game.getWinner())) {
                     continue;
                 }
 
@@ -1019,7 +1060,7 @@ public class GameManager {
 
         JPanel painel = new JPanel();
 
-        painel.setPreferredSize(new Dimension(300,300));
+        painel.setPreferredSize(new Dimension(300, 300));
         painel.setBackground(Color.LIGHT_GRAY);
         JLabel miguel = new JLabel("Miguel Carreta     21901101");
         JLabel traco = new JLabel("_________________________________________");

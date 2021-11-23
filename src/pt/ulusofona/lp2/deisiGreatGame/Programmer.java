@@ -12,10 +12,12 @@ public class Programmer {
     int pos;
     String linguagens;
     ProgrammerColor color;
-    //       < Turno, Casa >
+
+    // Teste - < Turno, Casa >*******************************************
     HashMap<Integer, Integer> casasPercorridas = new HashMap<>();
     HashSet<Integer> casasPercorridasHashSet = new HashSet<>();
-    List<Integer> casasPercorridasList = new ArrayList<>();
+    private List<Integer> casasPercorridasList = new ArrayList<>();
+    //**********************************************************************
     List<Tool> tools = new ArrayList<>();
     boolean outOfGame = false;
     boolean abyssLastRound = false;
@@ -38,9 +40,17 @@ public class Programmer {
 
 
     public void adicionaCasa(int turno, int casa){
-        casasPercorridasHashSet.add(casa);
+       // casasPercorridasHashSet.add(casa);
         casasPercorridasList.add(casa);
-       // casasPercorridas.put(turno, casa);
+        /*System.out.println("CASAS PERCORRIDAS DO : "+ name +"  | LIST - " + casasPercorridasList);
+
+        if (casasPercorridasList.size() %2 == 0){
+            System.out.println("ULTIMA CASA DO : "+ name +"  | LIST - " + casasPercorridasList.
+                    get(casasPercorridasList.size() -1));
+        }*/
+        //System.out.println("CASAS PERCORRIDAS DO : "+ name +"  | HASH - " + casasPercorridasHashSet);
+
+
     }
 
     public void catchTool(Tool tool){
@@ -49,9 +59,12 @@ public class Programmer {
         }
     }
 
-
     public void setOutOfGame() {
         this.outOfGame = true;
+    }
+
+    public List<Integer> getCasasPercorridasList() {
+        return casasPercorridasList;
     }
 
     public void gotAbyssLastRound(){
