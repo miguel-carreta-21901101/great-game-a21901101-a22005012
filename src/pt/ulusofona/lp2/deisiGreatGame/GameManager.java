@@ -19,6 +19,8 @@ public class GameManager {
     HashMap<Integer, Tool> tools = new HashMap<>();
 
 
+    int idsCasas;
+    int dado;
     int count;
 
     public GameManager() {
@@ -67,7 +69,7 @@ public class GameManager {
                 if (playerInfo[i][j] == null && countPlayers < 2){
                     return false;
 
-                //Se J for null E tiver o num players suficiente , true
+                    //Se J for null E tiver o num players suficiente , true
                 }else if (playerInfo[i][j] == null && countPlayers >= 2){
                     return true;
                 }
@@ -524,7 +526,7 @@ public class GameManager {
 
         for (Abyss a: abysses.values()){
             if (a.getPos() == position){
-               return a.getTitulo();
+                return a.getTitulo();
             }
         }
 
@@ -584,24 +586,28 @@ public class GameManager {
         for (Integer i : ids){
             Programmer p =  programmers.get(i);
 
-            info.append(p.getName()).append(" : ");
+            if (p != null) {
 
-            if (p.getTools().size() == 0){
-                info.append("No tools | ");
-            } else {
 
-                StringBuilder auxBuilder = new StringBuilder();
+                info.append(p.getName()).append(" : ");
 
-                for (Tool t : p.getTools()){
-                    auxBuilder.append(t.getTitulo());
-                    auxBuilder.append(";");
+                if (p.getTools().size() == 0) {
+                    info.append("No tools | ");
+
+                } else {
+
+                    StringBuilder auxBuilder = new StringBuilder();
+
+                    for (Tool t : p.getTools()) {
+                        auxBuilder.append(t.getTitulo());
+                        auxBuilder.append(";");
+                    }
+
+                    info.append(auxBuilder.substring(0, auxBuilder.length() - 1));
+
+                    info.append(" | ");
                 }
-
-                info.append(auxBuilder.substring(0, auxBuilder.length() -1));
-
-                info.append(" | ");
             }
-
 
         }
         return info.substring(0, info.length() -3);
@@ -668,8 +674,12 @@ public class GameManager {
 
         // Replico o programmer que esta neste momento a jogar
         Programmer programmerTemp = programmers.get(game.getCurrentPlayerID());
+        if (programmerTemp.isStuck()){
+            programmerTemp.stuckedByInfiniteCircle(false);
+        }
         Tool tool;
         int idAbyss;
+        boolean alertAbyss = false;
 
 
         //TODO
@@ -690,6 +700,7 @@ public class GameManager {
             int posAux = programmerTemp.getPos() + nrSpaces;
             int novaPos;
 
+
             // Se houver uma tool nessa casa E o player ainda nao tenha adquirido esta tool , ele apanha a tool.
             if (temTool(posAux)){
                 tool = setTool(posAux);
@@ -699,52 +710,54 @@ public class GameManager {
                 // uma tool na casa) , ele nao faz absolutamente nada.
             }
 
-         //   System.out.println("Player : "+ programmerTemp.getName() +" |  pos AUX : " + posAux);
+            //   System.out.println("Player : "+ programmerTemp.getName() +" |  pos AUX : " + posAux);
 
             // Se existir um abismo na casa
             if (temAbismo(posAux)){
                 idAbyss = setIdAbyss(posAux);
 
+              //  System.out.println("ABISMO POS : " + posAux);
+
+                alertAbyss = true;
                 switch (idAbyss){
 
 
                     // ERRO SINTAX -  Recya 1 casa
                     case 0:
-                        novaPos = posAux -1;
-                        changePosAndCasa(novaPos, programmers, programmerTemp);
-                        //programmers.get(programmerTemp.getId()).setPos(novaPos);
-                        //programmers.get(programmerTemp.getId()).adicionaCasa(game.getEndedShifts(), novaPos);
+                        idsCasas = 0;
+
+                        changePosAndCasa(posAux, programmers, programmerTemp);
                         break;
 
 
                     // LÓGICA  - Recua N casas, sendo N metade do valor que tiver saído no dado
                     // arredondado para baixo
                     case 1:
-
+                        idsCasas = 1 ;
+                        dado = nrSpaces;
                         double auxSpaces = (double) nrSpaces/2;
-                        novaPos = posAux - (int)Math.floor(auxSpaces);
-                        changePosAndCasa(novaPos, programmers, programmerTemp);
+                        changePosAndCasa(posAux, programmers, programmerTemp);
                         break;
 
 
                     // EXEPTION  -      Recua 2 casas
                     case 2:
-                        novaPos = posAux -2;
-                        changePosAndCasa(novaPos, programmers, programmerTemp);
+                        idsCasas = 2;
+                        changePosAndCasa(posAux, programmers, programmerTemp);
                         break;
 
 
                     // FILE NOT FOUND EXCEPTION  -  Recua  3 casas
                     case 3:
-                        novaPos = posAux - 3;
-                        changePosAndCasa(novaPos, programmers, programmerTemp);
+                        idsCasas = 3;
+                        changePosAndCasa(posAux, programmers, programmerTemp);
                         break;
 
 
-                        // CRASH  - Volta à primeira casa
+                    // CRASH  - Volta à primeira casa
                     case 4:
-                        novaPos = 1;
-                        changePosAndCasa(novaPos, programmers, programmerTemp);
+                        idsCasas  = 4;
+                        changePosAndCasa(posAux, programmers, programmerTemp);
                         break;
 
 
@@ -755,7 +768,6 @@ public class GameManager {
                         if (programmers.get(programmerTemp.getId()).getCasasPercorridas().containsKey(
                                 programmers.get(programmerTemp.getId()).getCasasPercorridas().get(
                                         game.getEndedShifts() -1))) {
-
                             novaPos = programmers.get(programmerTemp.getId()).getCasasPercorridas()
                                 .get(game.getEndedShifts() -1);*/
 
@@ -773,7 +785,7 @@ public class GameManager {
                         break;
 
 
-                     // EFEITOS SECUNDARIOS
+                    // EFEITOS SECUNDARIOS
                     //recua para a posição onde estava há 2 movimentos atrás
                     case 6:
                         /*novaPos = programmers.get(programmerTemp.getId()).getCasasPercorridas()
@@ -793,35 +805,49 @@ public class GameManager {
 
                     //Blue Screen  -   perde imediatamente o jogo
                     case 7:
-                        programmers.get(programmerTemp.getId()).setOutOfGame();
+                        idsCasas = 7;
+
+                        changePosAndCasa(posAux, programmers, programmerTemp);
+                     /*   programmers.get(programmerTemp.getId()).setOutOfGame();
                         programmersOutOfGame.put(programmerTemp.getId(), programmerTemp);
                         programmers.remove(programmerTemp.getId());
-                        break;
+                       */ break;
 
 
 
-                     // CICLO INFINITO
+                    // CICLO INFINITO
 
                     //O programador fica preso na casa onde está até que
-                        //lá apareça outro programador para o ajudar.
-                        //O programador que aparecer para ajudar, fica ele
-                        //próprio preso (mas liberta o que já lá estava).
-                        //Caso o programador que aparece tenha uma
-                        //ferramenta que permita livrar-se do abismo, ele não
-                        //fica preso mas também já não liberta o programador
-                        //que lá estava.
+                    //lá apareça outro programador para o ajudar.
+                    //O programador que aparecer para ajudar, fica ele
+                    //próprio preso (mas liberta o que já lá estava).
+                    //Caso o programador que aparece tenha uma
+                    //ferramenta que permita livrar-se do abismo, ele não
+                    //fica preso mas também já não liberta o programador
+                    //que lá estava.
                     case 8:
-                    break;
+                        idsCasas = 8;
+
+                        changePosAndCasa(posAux, programmers, programmerTemp);
+                        break;
                     // CORE DUMPED
                     case 9:
+                        idsCasas = 9;
+
+                        changePosAndCasa(posAux, programmers, programmerTemp);
                         break;
 
                 }
-               // changePosAndCasa(novaPos, programmers, programmerTemp);
+                // changePosAndCasa(novaPos, programmers, programmerTemp);
                 programmers.get(programmerTemp.getId()).gotAbyssLastRound();
             }
+
             // Adiciono ao verdadeiro programmer a sua posicao atual
-            programmers.get(programmerTemp.getId()).setPos(programmerTemp.getPos() + nrSpaces);
+            if (!alertAbyss) {
+                programmers.get(programmerTemp.getId()).setPos(programmerTemp.getPos() + nrSpaces);
+            }
+            //System.out.println("Programmer : " + programmerTemp.getName() + "  ||  POS : " + programmerTemp.getPos() +
+           //         " || DADO : " + nrSpaces);
 
         }
 
@@ -830,6 +856,8 @@ public class GameManager {
 
         return true;
     }
+
+
 
     public String reactToAbyssOrTool(){
 
@@ -844,8 +872,63 @@ public class GameManager {
 
         if (!isTool){
             for (Abyss abyss : abysses.values()){
-                if (programmers.get(game.getCurrentPlayerID()).getPos() == abyss.getPos()){
-                    isAbyss = true;
+                if (programmers.containsKey(game.getCurrentPlayerID())){
+
+                    if (programmers.get(game.getCurrentPlayerID()).getPos() == abyss.getPos()) {
+                        isAbyss = true;
+
+                        switch (idsCasas) {
+                            // SYNTAX
+                            case 0:
+                                changePosAndCasa(programmers.get(game.getCurrentPlayerID()).getPos(),
+                                        programmers, programmers.get(game.getCurrentPlayerID()));
+                                break;
+
+                            //LOGICA
+                            case 1:
+                                double auxSpaces = (double) dado / 2;
+                                changePosAndCasa(programmers.get(game.getCurrentPlayerID()).getPos() -
+                                                (int) Math.floor(auxSpaces),
+                                        programmers, programmers.get(game.getCurrentPlayerID()));
+                                break;
+
+                            //EXCEPTION
+                            case 2:
+                                changePosAndCasa(programmers.get(game.getCurrentPlayerID()).getPos() - 2,
+                                        programmers, programmers.get(game.getCurrentPlayerID()));
+
+                                break;
+
+                            // FILE NOT FOUND
+                            case 3:
+                                changePosAndCasa(programmers.get(game.getCurrentPlayerID()).getPos() - 3,
+                                        programmers, programmers.get(game.getCurrentPlayerID()));
+                                break;
+
+                            //CRASH
+                            case 4:
+                                changePosAndCasa(1, programmers, programmers.get(game.getCurrentPlayerID()));
+                                break;
+
+                            // BLUE SCREEN
+                            case 7:
+
+                                if (programmers.containsKey(game.getCurrentPlayerID())) {
+
+                                    programmers.get(game.getCurrentPlayerID()).setOutOfGame();
+
+                                    programmersOutOfGame.put(game.getCurrentPlayerID(),
+                                            programmers.get(game.getCurrentPlayerID()));
+
+                                    programerList.remove(programmers.get(game.getCurrentPlayerID()));
+                                    programmers.remove(game.getCurrentPlayerID());
+                                }
+                                break;
+
+                            default:
+                                throw new IllegalArgumentException();
+                        }
+                    }
                 }
             }
         }

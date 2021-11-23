@@ -2,6 +2,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class Programmer {
@@ -13,6 +14,7 @@ public class Programmer {
     ProgrammerColor color;
     //       < Turno, Casa >
     HashMap<Integer, Integer> casasPercorridas = new HashMap<>();
+    HashSet<Integer> casasPercorridasHashSet = new HashSet<>();
     List<Integer> casasPercorridasList = new ArrayList<>();
     List<Tool> tools = new ArrayList<>();
     boolean outOfGame = false;
@@ -36,6 +38,7 @@ public class Programmer {
 
 
     public void adicionaCasa(int turno, int casa){
+        casasPercorridasHashSet.add(casa);
         casasPercorridasList.add(casa);
        // casasPercorridas.put(turno, casa);
     }
