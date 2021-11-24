@@ -994,7 +994,7 @@ public class GameManager {
         } else if (isAbyss) {
             return "Ohhh, caiu num abismo !!";
         } else {
-            return null;
+            return "";
         }
 
 
