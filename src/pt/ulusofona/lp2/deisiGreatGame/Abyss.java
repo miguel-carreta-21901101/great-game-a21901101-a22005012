@@ -16,11 +16,10 @@ public class Abyss {
         return id;
     }
 
-    public String getTitulo() {
-        return titulo;
-    }
 
     public int getPos() {
         return pos;
     }
+
+    public String toString(){return titulo;}
 }

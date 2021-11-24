@@ -17,15 +17,212 @@ public class GameManager {
     Game game = new Game();
     HashMap<Integer, Abyss> abysses = new HashMap<>();
     HashMap<Integer, Tool> tools = new HashMap<>();
-    boolean winnerHasBeenSet = false;
 
 
+    // mudar as vars de sitio
     int idsCasas;
     int dado;
     int count;
 
     public GameManager() {
     }
+
+    //********************************************** GETTERS *************************************
+    public String getImagePng(int position) {
+
+        // position = pos no mapa
+
+        if (position > board.getTamanho() || position < 1) {
+            return null;
+        }
+
+        if (position == board.getTamanho()) {
+            return board.getUltimaPosicaoDoMapa();
+
+        }
+
+
+
+
+        // Se houver um abismo na posicao POSITION , retorna a img que pertence
+        for (Abyss abyss : abysses.values()) {
+            if (abyss.getPos() == position) {
+
+                switch (abyss.getId()) {
+
+                    case 0:
+                        return "syntax.png";
+
+                    case 1:
+                        return "logic.png";
+
+                    case 2:
+                        return "exception.png";
+
+                    case 3:
+                        return "file-not-found-exception.png";
+
+                    case 4:
+                        return "crash.png";
+
+                    case 5:
+                        return "duplicated-code.png";
+
+                    case 6:
+                        return "secondary-effects.png";
+
+                    case 7:
+                        return "bsod.png";
+
+                    case 8:
+                        return "infinite-loop.png";
+
+                    case 9:
+                        return "core-dumped.png";
+
+                    default:
+                        throw new IllegalArgumentException();
+                }
+            }
+        }
+
+        // Se houver uma tool na posicao POSITION , retorna a img que pertence
+        for (Tool tool : tools.values()) {
+            if (tool.getPos() == position) {
+
+                switch (tool.getId()) {
+
+                    case 0:
+                        return "inheritance.png";
+
+                    case 1:
+                        return "functional.png";
+
+                    case 2:
+                        return "unit-tests.png";
+
+                    case 3:
+                        return "catch.png";
+
+                    case 4:
+                        return "IDE.png";
+
+                    case 5:
+                        return "ajuda-professor.png";
+
+                    default:
+                        throw new IllegalArgumentException();
+
+                }
+            }
+        }
+
+        //Se o programmer estiver na posicao POSITION , retorna a imagem do player
+        for (Programmer p : programmers.values()) {
+            if (p.getPos() == position) {
+                return "player" + p.getColor() + ".png";
+            }
+        }
+
+        return null;
+
+    }
+    public String getTitle(int position) {
+
+        if (position > board.getTamanho() || position < 1) {
+            return null;
+        }
+
+        for (Abyss a : abysses.values()) {
+            if (a.getPos() == position) {
+                return a.toString();
+            }
+        }
+
+
+        for (Tool t : tools.values()) {
+            if (t.getPos() == position) {
+                return t.toString();
+            }
+        }
+
+        return null;
+    }
+
+    //TODO
+    public List<Programmer> getProgrammers(boolean includeDefeated) {
+
+        //Devolve os values do hashmap programmers
+        if (includeDefeated) {
+            return new ArrayList<>(programmers.values());
+        }
+        List<Programmer> noDefeatedProgrammers = new ArrayList<>();
+
+
+        for (Programmer p : programmers.values()) {
+            if (!p.isOutOfGame()) {
+                noDefeatedProgrammers.add(p);
+            }
+        }
+        return noDefeatedProgrammers;
+
+    }
+    public List<Programmer> getProgrammers(int position) {
+
+        ArrayList<Programmer> programmers = new ArrayList<>();
+
+        if (position < 0 || position > board.getTamanho()) {
+            return null;
+        }
+
+        for (Programmer p : this.programmers.values()) {
+
+            if (p.getPos() == position) {
+                programmers.add(p);
+            }
+        }
+
+        return programmers;
+    }
+    public String getProgrammersInfo() {
+
+        StringBuilder info = new StringBuilder();
+
+        for (Integer i : ids) {
+            Programmer p = programmers.get(i);
+
+            if (p != null) {
+
+
+                info.append(p.getName()).append(" : ");
+
+                if (p.getTools().size() == 0) {
+                    info.append("No tools | ");
+
+                } else {
+
+                    StringBuilder auxBuilder = new StringBuilder();
+
+                    for (Tool tool : p.getTools()) {
+                        auxBuilder.append(tool);
+                        auxBuilder.append(";");
+                    }
+
+                    info.append(auxBuilder.substring(0, auxBuilder.length() - 1));
+
+                    info.append(" | ");
+                }
+            }
+
+        }
+        return info.substring(0, info.length() - 3);
+    }
+    public int getCurrentPlayerID() {
+
+        return game.getCurrentPlayerID();
+    }
+    //**********************************************************************************************
+
 
     public void resetGame() {
         programerList.clear();
@@ -136,6 +333,9 @@ public class GameManager {
                         cor = playerInfo[i][j];
                         break;
 
+                    default:
+                        break;
+
                 }
             }
 
@@ -167,8 +367,10 @@ public class GameManager {
                     programmers.put(idPlayers, new Programmer(idPlayers, nome, linguagensProgramacao, color));
                     break;
                 }
+
                 default:
-                    throw new IllegalArgumentException();
+                    break;
+
             }
 
 
@@ -200,6 +402,7 @@ public class GameManager {
             }
 
 
+            // Var para detetar se é Abyss
             boolean abyssAlert = false;
 
             for (j = 0; j <= 2; j++) {
@@ -210,13 +413,18 @@ public class GameManager {
 
                 switch (j) {
 
+                    // 0 -> Abismo  ||  1 -> Ferramenta
                     case 0:
+
+                        // se nao for nenhum dos dois , false
                         if (!abyssesAndTools[i][0].equals(String.valueOf(0)) && !abyssesAndTools[i][0]
                                 .equals(String.valueOf(1))) {
 
                             return false;
 
                         }
+
+                        // Se for 0 (abismo) o detetor da true
                         if (abyssesAndTools[i][0].equals(String.valueOf(0))) {
                             abyssAlert = true;
                         }
@@ -240,7 +448,8 @@ public class GameManager {
                         break;
 
                     default:
-                        throw new IllegalArgumentException();
+                        break;
+
                 }
 
                 if (abyssAlert) {
@@ -249,6 +458,8 @@ public class GameManager {
                 }
 
                 tools.put(idTool, new Tool(idTool, AuxFunctions.setTitleTool(idTool), posTool));
+
+
 
             }
 
@@ -266,6 +477,7 @@ public class GameManager {
         return true;
 
     }
+
 
     public boolean createInitialBoard(String[][] playerInfo, int worldSize) {
 
@@ -365,6 +577,9 @@ public class GameManager {
                         cor = playerInfo[i][j];
                         break;
 
+                    default:
+                        break;
+
                 }
             }
 
@@ -396,8 +611,10 @@ public class GameManager {
                     programmers.put(id, new Programmer(id, nome, linguagensProgramacao, color));
                     break;
                 }
+
                 default:
-                    throw new IllegalArgumentException();
+                    break;
+
             }
 
 
@@ -427,205 +644,6 @@ public class GameManager {
 
     }
 
-
-    public String getImagePng(int position) {
-
-        // position = pos no mapa
-
-        if (position > board.getTamanho() || position < 1) {
-            return null;
-        }
-
-        if (position == board.getTamanho()) {
-            return board.getUltimaPosicaoDoMapa();
-
-        }
-
-
-        //Se o programmer estiver na posicao POSITION , retorna a imagem do player
-        for (Programmer p : programmers.values()) {
-            if (p.getPos() == position) {
-                return "player" + p.getColor() + ".png";
-            }
-        }
-
-        // Se houver um abismo na posicao POSITION , retorna a img que pertence
-        for (Abyss abyss : abysses.values()) {
-            if (abyss.getPos() == position) {
-
-                switch (abyss.getId()) {
-
-                    case 0:
-                        return "syntax.png";
-
-                    case 1:
-                        return "logic.png";
-
-                    case 2:
-                        return "exception.png";
-
-                    case 3:
-                        return "file-not-found-exception.png";
-
-                    case 4:
-                        return "crash.png";
-
-                    case 5:
-                        return "duplicated-code.png";
-
-                    case 6:
-                        return "secondary-effects.png";
-
-                    case 7:
-                        return "bsod.png";
-
-                    case 8:
-                        return "infinite-loop.png";
-
-                    case 9:
-                        return "core-dumped.png";
-
-                    default:
-                        throw new IllegalArgumentException();
-                }
-            }
-        }
-
-        // Se houver uma tool na posicao POSITION , retorna a img que pertence
-        for (Tool tool : tools.values()) {
-            if (tool.getPos() == position) {
-
-                switch (tool.getId()) {
-
-                    case 0:
-                        return "inheritance.png";
-
-                    case 1:
-                        return "functional.png";
-
-                    case 2:
-                        return "unit-tests.png";
-
-                    case 3:
-                        return "catch.png";
-
-                    case 4:
-                        return "IDE.png";
-
-                    case 5:
-                        return "ajuda-professor.png";
-
-                    default:
-                        throw new IllegalArgumentException();
-
-                }
-            }
-        }
-
-        return null;
-
-    }
-
-
-    public String getTitle(int position) {
-
-        if (position > board.getTamanho() || position < 1) {
-            return null;
-        }
-
-        for (Abyss a : abysses.values()) {
-            if (a.getPos() == position) {
-                return a.getTitulo();
-            }
-        }
-
-
-        for (Tool t : tools.values()) {
-            if (t.getPos() == position) {
-                return t.getTitulo();
-            }
-        }
-
-        return null;
-    }
-
-
-    //TODO
-    public List<Programmer> getProgrammers(boolean includeDefeated) {
-
-        //Devolve os values do hashmap programmers
-        if (includeDefeated) {
-            return new ArrayList<>(programmers.values());
-        }
-        List<Programmer> noDefeatedProgrammers = new ArrayList<>();
-
-
-        for (Programmer p : programmers.values()) {
-            if (!p.isOutOfGame()) {
-                noDefeatedProgrammers.add(p);
-            }
-        }
-        return noDefeatedProgrammers;
-
-    }
-
-    public List<Programmer> getProgrammers(int position) {
-
-        ArrayList<Programmer> programmers = new ArrayList<>();
-
-        if (position < 0 || position > board.getTamanho()) {
-            return null;
-        }
-
-        for (Programmer p : this.programmers.values()) {
-
-            if (p.getPos() == position) {
-                programmers.add(p);
-            }
-        }
-
-        return programmers;
-    }
-
-
-    public String getProgrammersInfo() {
-
-        StringBuilder info = new StringBuilder();
-
-        for (Integer i : ids) {
-            Programmer p = programmers.get(i);
-
-            if (p != null) {
-
-
-                info.append(p.getName()).append(" : ");
-
-                if (p.getTools().size() == 0) {
-                    info.append("No tools | ");
-
-                } else {
-
-                    StringBuilder auxBuilder = new StringBuilder();
-
-                    for (Tool t : p.getTools()) {
-                        auxBuilder.append(t.getTitulo());
-                        auxBuilder.append(";");
-                    }
-
-                    info.append(auxBuilder.substring(0, auxBuilder.length() - 1));
-
-                    info.append(" | ");
-                }
-            }
-
-        }
-        return info.substring(0, info.length() - 3);
-    }
-
-    public int getCurrentPlayerID() {
-
-        return game.getCurrentPlayerID();
-    }
 
     //****************************************************************************************
     // FUNCOES PARA MUDAR DE SITIO
@@ -668,10 +686,7 @@ public class GameManager {
         return -1;
     }
 
-    public void changePosAndCasa(int pos, HashMap<Integer, Programmer> programmers, Programmer programmer) {
-        programmers.get(programmer.getId()).setPos(pos);
-        programmers.get(programmer.getId()).adicionaCasa(game.getEndedShifts(), pos);
-    }
+
     //****************************************************************************************
 
 
@@ -687,9 +702,13 @@ public class GameManager {
 
         // Replico o programmer que esta neste momento a jogar
         Programmer programmerTemp = programmers.get(game.getCurrentPlayerID());
+
+        if (programmerTemp.isOutOfGame()){return false;}
+
         if (programmerTemp.isStuck()) {
-            programmerTemp.stuckedByInfiniteCircle(false);
+            return false;
         }
+
         Tool tool;
         int idAbyss;
         boolean alertAbyss = false;
@@ -711,11 +730,11 @@ public class GameManager {
 
             // Insiro na posAux a casa onde o player irá parar
             int posAux = programmerTemp.getPos() + nrSpaces;
-            int novaPos;
 
 
             // Se houver uma tool nessa casa E o player ainda nao tenha adquirido esta tool , ele apanha a tool.
             if (temTool(posAux)) {
+              //  Inheritance iasdx = (Inheritance) setTool(posAux);
                 tool = setTool(posAux);
                 programmerTemp.catchTool(tool);
 
@@ -772,17 +791,6 @@ public class GameManager {
                     case 5:
                         idsCasas = 5;
 
-                        if (programmers.get(programmerTemp.getId()).getCasasPercorridasList().contains(
-                                programmerTemp.getCasasPercorridasList().size())) {
-
-                            novaPos = programmers.get(programmerTemp.getId()).getCasasPercorridasList().
-                                    get(programmerTemp.getCasasPercorridasList().size());
-
-                           // changePosAndCasa(posAux, programmers, programmerTemp);
-
-                           // programmers.get(programmerTemp.getId()).setPos(1);
-                        }
-
                         break;
 
 
@@ -791,72 +799,42 @@ public class GameManager {
                     case 6:
 
                         idsCasas = 6;
-
-                        if (programmers.get(programmerTemp.getId()).getCasasPercorridasList().contains(
-                                programmerTemp.getCasasPercorridasList().size() - 1)) {
-
-                            novaPos = programmers.get(programmerTemp.getId()).casasPercorridas.
-                                    get(programmerTemp.getCasasPercorridasList().size() - 1);
-                         //   changePosAndCasa(posAux, programmers, programmerTemp);
-
-                        }
-
                         break;
 
 
                     //Blue Screen  -   perde imediatamente o jogo
                     case 7:
                         idsCasas = 7;
-
-                        changePosAndCasa(posAux, programmers, programmerTemp);
-                     /*   programmers.get(programmerTemp.getId()).setOutOfGame();
-                        programmersOutOfGame.put(programmerTemp.getId(), programmerTemp);
-                        programmers.remove(programmerTemp.getId());
-                       */
                         break;
 
 
                     // CICLO INFINITO
-
-                    //O programador fica preso na casa onde está até que
-                    //lá apareça outro programador para o ajudar.
-                    //O programador que aparecer para ajudar, fica ele
-                    //próprio preso (mas liberta o que já lá estava).
-                    //Caso o programador que aparece tenha uma
-                    //ferramenta que permita livrar-se do abismo, ele não
-                    //fica preso mas também já não liberta o programador
-                    //que lá estava.
                     case 8:
                         idsCasas = 8;
-
-                     //   changePosAndCasa(posAux, programmers, programmerTemp);
                         break;
                     // CORE DUMPED
                     case 9:
                         idsCasas = 9;
+                        break;
 
-                    //    changePosAndCasa(posAux, programmers, programmerTemp);
+                    default:
                         break;
 
                 }
-                // changePosAndCasa(novaPos, programmers, programmerTemp);
+
                 programmers.get(programmerTemp.getId()).gotAbyssLastRound();
             }
 
-            // Adiciono ao verdadeiro programmer a sua posicao atual
-                changePosAndCasa(posAux, programmers, programmerTemp);
-               // programmers.get(programmerTemp.getId()).setPos(programmerTemp.getPos() + nrSpaces);
+                AuxFunctions.changePosAndCasa(posAux, programmers, programmerTemp);
 
-
-            //System.out.println("Programmer : " + programmerTemp.getName() + "  ||  POS : " + programmerTemp.getPos() +
-            //         " || DADO : " + nrSpaces);
+           // System.out.println("Programmer : " + programmerTemp.getName() + "  ||  POS : " + programmerTemp.getPos() +
+         //            " || DADO : " + nrSpaces);
 
         }
 
 
         return true;
     }
-
 
     public String reactToAbyssOrTool() {
 
@@ -882,65 +860,92 @@ public class GameManager {
                         switch (idsCasas) {
                             // SYNTAX - Recua 1 casa
                             case 0:
-                                changePosAndCasa(programmerTemp.getPos() -1,
+                                AuxFunctions.changePosAndCasa(programmerTemp.getPos() -1,
                                         programmers, programmerTemp);
                                 break;
 
                             //LOGICA - Recua metado do valor que tiver saido no dado
                             case 1:
                                 double auxSpaces = (double) dado / 2;
-                                changePosAndCasa(programmerTemp.getPos() -
+                                AuxFunctions.changePosAndCasa(programmerTemp.getPos() -
                                                 (int) Math.floor(auxSpaces),
                                         programmers, programmerTemp);
                                 break;
 
                             //EXCEPTION - recua 2 casas
                             case 2:
-                                changePosAndCasa(programmerTemp.getPos() - 2,
+                                AuxFunctions.changePosAndCasa(programmerTemp.getPos() - 2,
                                         programmers, programmerTemp);
 
                                 break;
 
                             // FILE NOT FOUND - recua 3 casas
                             case 3:
-                                changePosAndCasa(programmerTemp.getPos() - 3,
+                                AuxFunctions.changePosAndCasa(programmerTemp.getPos() - 3,
                                         programmers, programmerTemp);
                                 break;
 
                             //CRASH - volta à primeira casa
                             case 4:
-                                changePosAndCasa(1, programmers, programmerTemp);
+                                AuxFunctions.changePosAndCasa(1, programmers, programmerTemp);
                                 break;
 
                             // DUPLICATED CODE - Recuar ate à antiga casa onde o plauer estava
                             case 5:
 
-                                changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
-                                            programmerTemp.getCasasPercorridasList().size()-2), programmers, programmerTemp);
+                                AuxFunctions.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
+                                            programmerTemp.getCasasPercorridasList().size()-2), programmers,
+                                        programmerTemp);
                                 break;
 
                             // EFEITOS SECUNDARIOS
                             case 6:
-                                changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
-                                        programmerTemp.getCasasPercorridasList().size()-3), programmers, programmerTemp);
+                                AuxFunctions.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
+                                        programmerTemp.getCasasPercorridasList().size()-3), programmers,
+                                        programmerTemp);
                                 break;
 
                             // BLUE SCREEN - perde imediatamente o jogo
                             case 7:
-
+                                int countAux = 0;
+                                for(Integer i : ids){
+                                    if (i == game.getCurrentPlayerID()){
+                                        break;
+                                    }
+                                    countAux++;
+                                }
                                 if (programmers.containsKey(game.getCurrentPlayerID())) {
 
-                                    programmers.get(game.getCurrentPlayerID()).setOutOfGame();
 
                                     programmersOutOfGame.put(game.getCurrentPlayerID(),
                                             programmers.get(game.getCurrentPlayerID()));
 
                                     programmers.get(game.getCurrentPlayerID()).setOutOfGame();
-                                    ids.remove(game.getCurrentPlayerID());
+                                    ids.remove(countAux);
                                    // programerList.remove(programmers.get(game.getCurrentPlayerID()));
                                     //programmers.remove(game.getCurrentPlayerID());
                                 }
                                 break;
+
+
+                            case 8:
+
+                                break;
+
+
+
+                            case 9:
+                                List<Programmer> programmersInThisPositions;
+                                programmersInThisPositions = getProgrammers(programmerTemp.getPos());
+
+                                if (programmersInThisPositions.size() > 1){
+                                    for (Programmer p : programmersInThisPositions){
+                                        AuxFunctions.changePosAndCasa(p.getPos() -3, programmers, p);
+                                    }
+                                }
+
+                                break;
+
 
                             default:
                                 break;

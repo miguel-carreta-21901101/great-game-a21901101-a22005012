@@ -5,6 +5,7 @@ public class Tool {
     String titulo;
     int pos;
 
+
     public Tool(){}
 
     public Tool(int id, String titulo, int pos){
@@ -15,10 +16,6 @@ public class Tool {
 
     public int getId() {
         return id;
-    }
-
-    public String getTitulo() {
-        return titulo;
     }
 
     public int getPos() {

@@ -7,21 +7,18 @@ import java.util.List;
 
 public class Programmer {
 
-    String name;
-    int id;
-    int pos;
-    String linguagens;
-    ProgrammerColor color;
-
-    // Teste - < Turno, Casa >*******************************************
-    HashMap<Integer, Integer> casasPercorridas = new HashMap<>();
-    HashSet<Integer> casasPercorridasHashSet = new HashSet<>();
+    private String name;
+    private int id;
+    private int pos;
+    private String linguagens;
+    private ProgrammerColor color;
     private List<Integer> casasPercorridasList = new ArrayList<>();
-    //**********************************************************************
-    List<Tool> tools = new ArrayList<>();
-    boolean outOfGame = false;
-    boolean abyssLastRound = false;
-    boolean stuck = false;
+    private List<Tool> tools = new ArrayList<>();
+    private boolean outOfGame = false;
+    private boolean abyssLastRound = false;
+    private boolean stuck = false;
+
+    //************* Constructors ************************
 
     public Programmer(){}
 
@@ -37,85 +34,76 @@ public class Programmer {
         this.color = color;
         pos = 1;
     }
+    //*********************************************************************************
 
 
-    public void adicionaCasa(int turno, int casa){
-       // casasPercorridasHashSet.add(casa);
-        casasPercorridasList.add(casa);
-        /*System.out.println("CASAS PERCORRIDAS DO : "+ name +"  | LIST - " + casasPercorridasList);
 
-        if (casasPercorridasList.size() %2 == 0){
-            System.out.println("ULTIMA CASA DO : "+ name +"  | LIST - " + casasPercorridasList.
-                    get(casasPercorridasList.size() -1));
-        }*/
-        //System.out.println("CASAS PERCORRIDAS DO : "+ name +"  | HASH - " + casasPercorridasHashSet);
+    //**************************  GETTERS *****************************************************
 
-
+    public int getId(){
+        return id;
+    }
+    public String getName(){
+        return name;
+    }
+    public int getPos(){
+        return pos;
+    }
+    public List<Tool> getTools() {
+        return tools;
+    }
+    public List<Integer> getCasasPercorridasList() {
+        return casasPercorridasList;
+    }
+    public ProgrammerColor getColor(){
+        return  color;
+    }
+    public boolean isOutOfGame() {
+        return outOfGame;
+    }
+    public boolean isGetAbyssLastRound() {
+        return abyssLastRound;
+    }
+    public boolean isStuck() {
+        return stuck;
     }
 
+    //**********************************************************************************************
+
+
+
+    // ************************************ SETTERS ***************************************************
+
+    public void setOutOfGame() {
+        this.outOfGame = true;
+    }
+    public void gotAbyssLastRound(){
+        abyssLastRound = true;
+    }
+    public void stuckedByInfiniteCircle(boolean stuck) {
+        this.stuck = stuck;
+    }
+    public void setPos(int pos) {
+        this.pos = pos;
+    }
+
+    //***************************************************************************************************
+
+
+
+    // *********************************** FUNCTIONS **************************************************
+    public void adicionaCasa(int casa){
+        casasPercorridasList.add(casa);
+    }
     public void catchTool(Tool tool){
         if (tool != null && !tools.contains(tool)){
             tools.add(tool);
         }
     }
 
-    public void setOutOfGame() {
-        this.outOfGame = true;
-    }
 
-    public List<Integer> getCasasPercorridasList() {
-        return casasPercorridasList;
-    }
 
-    public void gotAbyssLastRound(){
-        abyssLastRound = true;
-    }
 
-    public boolean isOutOfGame() {
-        return outOfGame;
-    }
-
-    public boolean isGetAbyssLastRound() {
-        return abyssLastRound;
-    }
-
-    public int getId(){
-        return id;
-    }
-
-    public boolean isStuck() {
-        return stuck;
-    }
-
-    public void stuckedByInfiniteCircle(boolean stuck) {
-        this.stuck = stuck;
-    }
-
-    public HashMap<Integer, Integer> getCasasPercorridas() {
-        return casasPercorridas;
-    }
-
-    public String getName(){
-        return name;
-    }
-
-    public int getPos(){
-        return pos;
-    }
-
-    public List<Tool> getTools() {
-        return tools;
-    }
-
-    public void setPos(int pos) {
-        this.pos = pos;
-    }
-
-    public ProgrammerColor getColor(){
-        return  color;
-    }
-
-    //Nesta primeira fase o player esta sempre Em Jogo
     public String toString() {
 
         StringBuilder ferramentas = new StringBuilder();
@@ -128,7 +116,7 @@ public class Programmer {
         } else {
 
             for (Tool tool : tools) {
-                ferramentas.append(tool.getTitulo());
+                ferramentas.append(tool);
                 ferramentas.append(";");
             }
 

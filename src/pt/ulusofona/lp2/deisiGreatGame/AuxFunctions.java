@@ -1,6 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public  class AuxFunctions {
 
@@ -83,5 +84,10 @@ public  class AuxFunctions {
                 throw new IllegalArgumentException();
 
         }
+    }
+
+    public static void changePosAndCasa(int pos, HashMap<Integer, Programmer> programmers, Programmer programmer) {
+        programmers.get(programmer.getId()).setPos(pos);
+        programmers.get(programmer.getId()).adicionaCasa(pos);
     }
 }
