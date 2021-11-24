@@ -80,8 +80,11 @@ public class Programmer {
     public void gotAbyssLastRound(){
         abyssLastRound = true;
     }
-    public void stuckedByInfiniteCircle(boolean stuck) {
-        this.stuck = stuck;
+    public void stuckedByInfiniteCircle() {
+        this.stuck = true;
+    }
+    public void freeFromInfiniteCircle(){
+        this.stuck = false;
     }
     public void setPos(int pos) {
         this.pos = pos;
