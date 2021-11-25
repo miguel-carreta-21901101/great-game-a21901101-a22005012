@@ -42,8 +42,6 @@ public class GameManager {
         }
 
 
-
-
         // Se houver um abismo na posicao POSITION , retorna a img que pertence
         for (Abyss abyss : abysses.values()) {
             if (abyss.getPos() == position) {
@@ -127,6 +125,7 @@ public class GameManager {
         return null;
 
     }
+
     public String getTitle(int position) {
 
         if (position > board.getTamanho() || position < 1) {
@@ -167,6 +166,7 @@ public class GameManager {
         return noDefeatedProgrammers;
 
     }
+
     public List<Programmer> getProgrammers(int position) {
 
         ArrayList<Programmer> programmers = new ArrayList<>();
@@ -184,6 +184,7 @@ public class GameManager {
 
         return programmers;
     }
+
     public String getProgrammersInfo() {
 
         StringBuilder info = new StringBuilder();
@@ -217,6 +218,7 @@ public class GameManager {
         }
         return info.substring(0, info.length() - 3);
     }
+
     public int getCurrentPlayerID() {
 
         return game.getCurrentPlayerID();
@@ -458,7 +460,6 @@ public class GameManager {
                 }
 
                 tools.put(idTool, new Tool(idTool, AuxFunctions.setTitleTool(idTool), posTool));
-
 
 
             }
@@ -703,7 +704,9 @@ public class GameManager {
         // Replico o programmer que esta neste momento a jogar
         Programmer programmerTemp = programmers.get(game.getCurrentPlayerID());
 
-        if (programmerTemp.isOutOfGame()){return false;}
+        if (programmerTemp.isOutOfGame()) {
+            return false;
+        }
 
         if (programmerTemp.isStuck()) {
             return false;
@@ -734,7 +737,7 @@ public class GameManager {
 
             // Se houver uma tool nessa casa E o player ainda nao tenha adquirido esta tool , ele apanha a tool.
             if (temTool(posAux)) {
-              //  Inheritance iasdx = (Inheritance) setTool(posAux);
+                //  Inheritance iasdx = (Inheritance) setTool(posAux);
                 tool = setTool(posAux);
                 programmerTemp.catchTool(tool);
 
@@ -817,11 +820,10 @@ public class GameManager {
                 programmers.get(programmerTemp.getId()).gotAbyssLastRound();
             }
 
-                AuxFunctions.changePosAndCasa(posAux, programmers, programmerTemp);
+            AuxFunctions.changePosAndCasa(posAux, programmers, programmerTemp);
 
-         //  System.out.println("Programmer : " + programmerTemp.getName() + "  ||  POS : " + programmerTemp.getPos() +
-           //          " || DADO : " + nrSpaces);
-
+            //  System.out.println("Programmer : " + programmerTemp.getName() + "  ||  POS : " + programmerTemp.getPos() +
+            //          " || DADO : " + nrSpaces);
 
 
         }
@@ -856,77 +858,162 @@ public class GameManager {
                                 break;
                             }
                             List<Programmer> programmersInThisPositions;
+                            boolean blocks = false;
                             switch (idsCasas) {
 
                                 // SYNTAX - Recua 1 casa
                                 case 0:
-                                    AuxFunctions.changePosAndCasa(programmerTemp.getPos() - 1,
-                                            programmers, programmerTemp);
+                                    for (Tool tool : programmerTemp.getTools()) {
+                                        if (tool.getId() == 5) {
+                                            blocks = true;
+                                            programmerTemp.dropTool(tool);
+                                            break;
+                                        }
+                                    }
+                                    if (!blocks) {
+                                        AuxFunctions.changePosAndCasa(programmerTemp.getPos() - 1,
+                                                programmers, programmerTemp);
+                                    }
                                     break;
+
 
                                 //LOGICA - Recua metado do valor que tiver saido no dado
                                 case 1:
-                                    double auxSpaces = (double) dado / 2;
-                                    AuxFunctions.changePosAndCasa(programmerTemp.getPos() -
-                                                    (int) Math.floor(auxSpaces),
-                                            programmers, programmerTemp);
+                                    for (Tool tool : programmerTemp.getTools()) {
+                                        if (tool.getId() == 1) {
+                                            blocks = true;
+                                            programmerTemp.dropTool(tool);
+                                            break;
+                                        }
+                                    }
+
+                                    if (!blocks) {
+                                        double auxSpaces = (double) dado / 2;
+                                        AuxFunctions.changePosAndCasa(programmerTemp.getPos() -
+                                                        (int) Math.floor(auxSpaces),
+                                                programmers, programmerTemp);
+                                    }
                                     break;
+
 
                                 //EXCEPTION - recua 2 casas
                                 case 2:
-                                    AuxFunctions.changePosAndCasa(programmerTemp.getPos() - 2,
-                                            programmers, programmerTemp);
+                                    for (Tool tool : programmerTemp.getTools()) {
+                                        if (tool.getId() == 5 || tool.getId() == 3) {
+                                            blocks = true;
+                                            programmerTemp.dropTool(tool);
+                                            break;
+                                        }
+                                    }
+                                    if (!blocks) {
 
+
+                                        AuxFunctions.changePosAndCasa(programmerTemp.getPos() - 2,
+                                                programmers, programmerTemp);
+                                    }
                                     break;
+
 
                                 // FILE NOT FOUND - recua 3 casas
                                 case 3:
-                                    AuxFunctions.changePosAndCasa(programmerTemp.getPos() - 3,
-                                            programmers, programmerTemp);
+                                    for (Tool tool : programmerTemp.getTools()) {
+                                        if (tool.getId() == 5 || tool.getId() == 3) {
+                                            blocks = true;
+                                            programmerTemp.dropTool(tool);
+                                            break;
+                                        }
+                                    }
+
+                                    if (!blocks) {
+                                        AuxFunctions.changePosAndCasa(programmerTemp.getPos() - 3,
+                                                programmers, programmerTemp);
+                                    }
                                     break;
+
 
                                 //CRASH - volta à primeira casa
                                 case 4:
-                                    AuxFunctions.changePosAndCasa(1, programmers, programmerTemp);
+                                    for (Tool tool : programmerTemp.getTools()) {
+                                        if (tool.getId() == 2) {
+                                            blocks = true;
+                                            programmerTemp.dropTool(tool);
+                                            break;
+                                        }
+                                    }
+                                    if (!blocks) {
+                                        AuxFunctions.changePosAndCasa(1, programmers, programmerTemp);
+                                    }
                                     break;
+
 
                                 // DUPLICATED CODE - Recuar ate à antiga casa onde o plauer estava
                                 case 5:
 
-                                    AuxFunctions.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
-                                            programmerTemp.getCasasPercorridasList().size() - 2), programmers,
-                                            programmerTemp);
+                                    for (Tool tool : programmerTemp.getTools()) {
+                                        if (tool.getId() == 5) {
+                                            blocks = true;
+                                            break;
+                                        }
+                                    }
+
+                                    if (!blocks) {
+                                        AuxFunctions.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
+                                                programmerTemp.getCasasPercorridasList().size() - 2), programmers,
+                                                programmerTemp);
+                                    }
                                     break;
 
                                 // EFEITOS SECUNDARIOS
                                 case 6:
-                                    AuxFunctions.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
-                                            programmerTemp.getCasasPercorridasList().size() - 3), programmers,
-                                            programmerTemp);
+                                    for (Tool tool : programmerTemp.getTools()) {
+                                        if (tool.getId() == 0) {
+                                            blocks = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!blocks) {
+                                        AuxFunctions.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
+                                                programmerTemp.getCasasPercorridasList().size() - 3), programmers,
+                                                programmerTemp);
+                                    }
                                     break;
 
                                 // BLUE SCREEN - perde imediatamente o jogo
                                 case 7:
-                                    int indexAuxToRemoveID = 0;
-                                    for (Integer i : ids) {
-                                        if (i == game.getCurrentPlayerID()) {
+
+                                    for (Tool tool : programmerTemp.getTools()) {
+                                        if (tool.getId() == 4) {
+                                            blocks = true;
+                                            programmerTemp.dropTool(tool);
                                             break;
                                         }
-                                        indexAuxToRemoveID++;
                                     }
 
-                                   // System.out.println("Index AUX = " + indexAuxToRemoveID + " gameCurrent ID = " + game.getCurrentPlayerID());
-                                    if (programmers.containsKey(game.getCurrentPlayerID())) {
+                                    if (!blocks) {
+                                        int indexAuxToRemoveID = 0;
+                                        for (Integer i : ids) {
+                                            if (i == game.getCurrentPlayerID()) {
+                                                break;
+                                            }
+                                            indexAuxToRemoveID++;
+                                        }
+
+                                        // System.out.println("Index AUX = " + indexAuxToRemoveID + " gameCurrent ID = " + game.getCurrentPlayerID());
+                                        if (programmers.containsKey(game.getCurrentPlayerID())) {
 
 
-                                        programmersOutOfGame.put(game.getCurrentPlayerID(),
-                                                programmers.get(game.getCurrentPlayerID()));
+                                            programmersOutOfGame.put(game.getCurrentPlayerID(),
+                                                    programmers.get(game.getCurrentPlayerID()));
 
-                                        programmers.get(game.getCurrentPlayerID()).setOutOfGame();
+                                            programmers.get(game.getCurrentPlayerID()).setOutOfGame();
 
-                                        ids.remove(indexAuxToRemoveID);
-                                       // programerList.remove(programmers.get(game.getCurrentPlayerID()));
-                                        programmers.remove(game.getCurrentPlayerID());
+                                            ids.remove(indexAuxToRemoveID);
+                                            // programerList.remove(programmers.get(game.getCurrentPlayerID()));
+                                            programmers.remove(game.getCurrentPlayerID());
+
+
+                                        }
+
                                     }
                                     break;
 
@@ -967,7 +1054,7 @@ public class GameManager {
                 }
             }
         }
-     //   System.out.println("Current player ID = " + game.getCurrentPlayerID() + " STUCK = " + programmerTemp.isStuck());
+        //   System.out.println("Current player ID = " + game.getCurrentPlayerID() + " STUCK = " + programmerTemp.isStuck());
 
 
         // Incremento o count para ir buscar o proximo posicao no array IDS
@@ -980,7 +1067,7 @@ public class GameManager {
 
         //Declaro o proximo jogador a jogar
 
-      //  System.out.println("COUNT : " + count);
+        //  System.out.println("COUNT : " + count);
 
         game.setCurrentPlayerID(ids.get(count));
 
@@ -994,7 +1081,7 @@ public class GameManager {
         } else if (isAbyss) {
             return "Ohhh, caiu num abismo !!";
         } else {
-            return "";
+            return null;
         }
 
 
@@ -1002,8 +1089,8 @@ public class GameManager {
 
     public boolean gameIsOver() {
         // Se algum jogador chegar à ultima casa do mapa ,
-        for (Programmer p : programmers.values()){
-            if (p.getPos() == board.getTamanho()){
+        for (Programmer p : programmers.values()) {
+            if (p.getPos() == board.getTamanho()) {
 
                 programerList.addAll(programmers.values());
 

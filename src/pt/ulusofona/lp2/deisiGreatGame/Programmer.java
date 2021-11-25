@@ -2,7 +2,6 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 public class Programmer {
@@ -13,7 +12,8 @@ public class Programmer {
     private String linguagens;
     private ProgrammerColor color;
     private List<Integer> casasPercorridasList = new ArrayList<>();
-    private List<Tool> tools = new ArrayList<>();
+    private HashMap<Integer, Tool> tools = new HashMap<>();
+   //private List<Tool> toolsToString = new ArrayList<>();
     private boolean outOfGame = false;
     private boolean abyssLastRound = false;
     private boolean stuck = false;
@@ -50,7 +50,7 @@ public class Programmer {
         return pos;
     }
     public List<Tool> getTools() {
-        return tools;
+        return new ArrayList<>(tools.values());
     }
     public List<Integer> getCasasPercorridasList() {
         return casasPercorridasList;
@@ -99,11 +99,16 @@ public class Programmer {
         casasPercorridasList.add(casa);
     }
     public void catchTool(Tool tool){
-        if (tool != null && !tools.contains(tool)){
-            tools.add(tool);
+        if (tool != null && !tools.containsKey(tool.getId())){/*!toolsToString.contains(tool))*/
+            tools.put(tool.getId(), tool);
+           // toolsToString.add(tool);
         }
     }
-
+    public void dropTool(Tool tool){
+        if (tool != null){
+            tools.remove(tool.getId());
+        }
+    }
 
 
 
@@ -118,7 +123,7 @@ public class Programmer {
 
         } else {
 
-            for (Tool tool : tools) {
+            for (Tool tool : tools.values()) {
                 ferramentas.append(tool);
                 ferramentas.append(";");
             }
