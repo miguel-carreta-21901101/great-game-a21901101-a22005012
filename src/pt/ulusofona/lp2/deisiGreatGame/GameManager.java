@@ -976,7 +976,7 @@ public class GameManager {
                                 // EFEITOS SECUNDARIOS
                                 case 6:
                                     for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 5) {
+                                        if (tool.getId() == 1) {
                                             counterAbyss = true;
                                             break;
                                         }
@@ -1029,19 +1029,25 @@ public class GameManager {
 
 
                                 case 8:
+
+                                    // Ciclo Infinito
                                     for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 5) {
                                             counterAbyss = true;
                                             break;
                                         }
                                     }
-
+                                    int count = 0;
                                     if (!counterAbyss) {
                                         programmerTemp.stuckedByInfiniteCircle();
 
                                         programmersInThisPositions = getProgrammers(programmerTemp.getPos());
                                         if (programmersInThisPositions.size() > 1) {
                                             for (Programmer p : programmersInThisPositions) {
+                                                if (!p.isStuck()){
+                                                    programmersInThisPositions.remove(count);
+                                                }
+                                                count ++;
                                                 if (p.getId() == programmerTemp.getId()) {
                                                     continue;
                                                 }
