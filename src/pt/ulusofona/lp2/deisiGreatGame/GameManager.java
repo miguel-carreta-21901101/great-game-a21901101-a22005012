@@ -852,9 +852,13 @@ public class GameManager {
             }
 
             if (!isTool) {
+
                 if (verbose){
                 System.out.println(programmerTemp);
-                System.out.println(programmerTemp.getTools());}
+                System.out.println(programmerTemp.getTools());
+                }
+
+
                 for (Abyss abyss : abysses.values()) {
                     if (programmers.containsKey(programmerTemp.getId())) {
 
@@ -864,19 +868,19 @@ public class GameManager {
                                 break;
                             }
                             List<Programmer> programmersInThisPositions;
-                            boolean blocks = false;
+                            boolean counterAbyss = false;
                             switch (idsCasas) {
 
                                 // SYNTAX - Recua 1 casa
                                 case 0:
                                     for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 5 || tool.getId() == 4) {
-                                            blocks = true;
+                                            counterAbyss = true;
                                             programmerTemp.dropTool(tool);
                                             break;
                                         }
                                     }
-                                    if (!blocks) {
+                                    if (!counterAbyss) {
                                         AuxFunctions.changePosAndCasa(programmerTemp.getPos() - 1,
                                                 programmers, programmerTemp);
                                     }
@@ -887,13 +891,13 @@ public class GameManager {
                                 case 1:
                                     for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 1 || tool.getId() == 2) {
-                                            blocks = true;
+                                            counterAbyss = true;
                                             programmerTemp.dropTool(tool);
                                             break;
                                         }
                                     }
 
-                                    if (!blocks) {
+                                    if (!counterAbyss) {
                                         double auxSpaces = (double) dado / 2;
                                         AuxFunctions.changePosAndCasa(programmerTemp.getPos() -
                                                         (int) Math.floor(auxSpaces),
@@ -906,12 +910,12 @@ public class GameManager {
                                 case 2:
                                     for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 5 || tool.getId() == 3) {
-                                            blocks = true;
+                                            counterAbyss = true;
                                             programmerTemp.dropTool(tool);
                                             break;
                                         }
                                     }
-                                    if (!blocks) {
+                                    if (!counterAbyss) {
 
 
                                         AuxFunctions.changePosAndCasa(programmerTemp.getPos() - 2,
@@ -924,13 +928,13 @@ public class GameManager {
                                 case 3:
                                     for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 5 || tool.getId() == 3) {
-                                            blocks = true;
+                                            counterAbyss = true;
                                             programmerTemp.dropTool(tool);
                                             break;
                                         }
                                     }
 
-                                    if (!blocks) {
+                                    if (!counterAbyss) {
                                         AuxFunctions.changePosAndCasa(programmerTemp.getPos() - 3,
                                                 programmers, programmerTemp);
                                     }
@@ -941,12 +945,12 @@ public class GameManager {
                                 case 4:
                                     for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 2) {
-                                            blocks = true;
+                                            counterAbyss = true;
                                             programmerTemp.dropTool(tool);
                                             break;
                                         }
                                     }
-                                    if (!blocks) {
+                                    if (!counterAbyss) {
                                         AuxFunctions.changePosAndCasa(1, programmers, programmerTemp);
                                     }
                                     break;
@@ -957,12 +961,12 @@ public class GameManager {
 
                                     for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 5) {
-                                            blocks = true;
+                                            counterAbyss = true;
                                             break;
                                         }
                                     }
 
-                                    if (!blocks) {
+                                    if (!counterAbyss) {
                                         AuxFunctions.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
                                                 programmerTemp.getCasasPercorridasList().size() - 2), programmers,
                                                 programmerTemp);
@@ -972,12 +976,12 @@ public class GameManager {
                                 // EFEITOS SECUNDARIOS
                                 case 6:
                                     for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 2) {
-                                            blocks = true;
+                                        if (tool.getId() == 5) {
+                                            counterAbyss = true;
                                             break;
                                         }
                                     }
-                                    if (!blocks) {
+                                    if (!counterAbyss) {
                                         AuxFunctions.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
                                                 programmerTemp.getCasasPercorridasList().size() - 3), programmers,
                                                 programmerTemp);
@@ -989,13 +993,13 @@ public class GameManager {
 
                                     for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 4) {
-                                            blocks = true;
+                                            counterAbyss = true;
                                             programmerTemp.dropTool(tool);
                                             break;
                                         }
                                     }
 
-                                    if (!blocks) {
+                                    if (!counterAbyss) {
                                         int indexAuxToRemoveID = 0;
                                         for (Integer i : ids) {
                                             if (i == game.getCurrentPlayerID()) {
@@ -1025,15 +1029,24 @@ public class GameManager {
 
 
                                 case 8:
-                                    programmerTemp.stuckedByInfiniteCircle();
+                                    for (Tool tool : programmerTemp.getTools()) {
+                                        if (tool.getId() == 5) {
+                                            counterAbyss = true;
+                                            break;
+                                        }
+                                    }
 
-                                    programmersInThisPositions = getProgrammers(programmerTemp.getPos());
-                                    if (programmersInThisPositions.size() > 1) {
-                                        for (Programmer p : programmersInThisPositions) {
-                                            if (p.getId() == programmerTemp.getId()) {
-                                                continue;
+                                    if (!counterAbyss) {
+                                        programmerTemp.stuckedByInfiniteCircle();
+
+                                        programmersInThisPositions = getProgrammers(programmerTemp.getPos());
+                                        if (programmersInThisPositions.size() > 1) {
+                                            for (Programmer p : programmersInThisPositions) {
+                                                if (p.getId() == programmerTemp.getId()) {
+                                                    continue;
+                                                }
+                                                p.freeFromInfiniteCircle();
                                             }
-                                            p.freeFromInfiniteCircle();
                                         }
                                     }
                                     break;

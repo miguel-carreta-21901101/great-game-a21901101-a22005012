@@ -69,7 +69,7 @@ public class TestGameManager {
 
 
     //nrPositions está a 0.  tem que ser entre 1 - 6 ( num do dado)
-   /* @Test
+   @Test
     public void teste01Move(){
         GameManager manager = new GameManager();
         manager.createInitialBoard(getPlayersInfo(), 79);
@@ -94,7 +94,7 @@ public class TestGameManager {
         manager.createInitialBoard(getPlayersInfo(), 79);
         //andar
         manager.moveCurrentPlayer(5);
-        Programmer programmerThatMoved = manager.getProgrammers().get(0);
+        Programmer programmerThatMoved = manager.getProgrammers(false).get(0);
         assertEquals(6, programmerThatMoved.getPos());
     }
 
@@ -107,9 +107,9 @@ public class TestGameManager {
         manager.moveCurrentPlayer(5);
         manager.moveCurrentPlayer(3);
         manager.moveCurrentPlayer(6);
-        Programmer programmerThatMovedMost = manager.getProgrammers().get(0);
+        Programmer programmerThatMovedMost = manager.getProgrammers(false).get(0);
         assertEquals(12, programmerThatMovedMost.getPos());
-        Programmer programmerThatMovedLeast = manager.getProgrammers().get(1);
+        Programmer programmerThatMovedLeast = manager.getProgrammers(false).get(1);
         assertEquals(4, programmerThatMovedLeast.getPos());
     }
 
@@ -123,8 +123,8 @@ public class TestGameManager {
             manager.moveCurrentPlayer(1);
         }
         manager.moveCurrentPlayer(5);//andar o current na poss 79 5 cassas para a frente e como excedeu por 4 cassas o goal ficar no 76
-        Programmer programmerThatMoved = manager.getProgrammers().get(0);
+        Programmer programmerThatMoved = manager.getProgrammers(false).get(0);
         assertEquals(76, programmerThatMoved.getPos());
     }
-*/
+
 }
