@@ -99,9 +99,10 @@ public class Programmer {
         casasPercorridasList.add(casa);
     }
     public void catchTool(Tool tool){
-        if (tool != null && !tools.containsKey(tool.getId())){/*!toolsToString.contains(tool))*/
+
+
+        if (tool != null && !tools.containsKey(tool.getId())){
             tools.put(tool.getId(), tool);
-           // toolsToString.add(tool);
         }
     }
     public void dropTool(Tool tool){

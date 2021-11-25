@@ -22,6 +22,8 @@ public  class AuxFunctions {
 
     public static String setTitleAbyss(int id){
 
+
+
         switch (id){
 
             case 0:
@@ -55,7 +57,7 @@ public  class AuxFunctions {
                 return "Segmentation Fault";
 
             default:
-                throw new IllegalArgumentException();
+                return  "";
         }
     }
 

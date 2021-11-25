@@ -9,6 +9,8 @@ import java.util.List;
 
 public class GameManager {
 
+    boolean verbose = false;
+
     HashMap<Integer, Programmer> programmersOutOfGame = new HashMap<>();
     HashMap<Integer, Programmer> programmers = new HashMap<>();
     ArrayList<Integer> ids = new ArrayList<>();
@@ -433,6 +435,7 @@ public class GameManager {
                         break;
 
                     case 1:
+                        if (abyssesAndTools[i][1] == null){return false;}
                         if (abyssAlert) {
                             idAbyss = Integer.parseInt(abyssesAndTools[i][1]);
                             break;
@@ -849,6 +852,9 @@ public class GameManager {
             }
 
             if (!isTool) {
+                if (verbose){
+                System.out.println(programmerTemp);
+                System.out.println(programmerTemp.getTools());}
                 for (Abyss abyss : abysses.values()) {
                     if (programmers.containsKey(programmerTemp.getId())) {
 
@@ -864,7 +870,7 @@ public class GameManager {
                                 // SYNTAX - Recua 1 casa
                                 case 0:
                                     for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 5) {
+                                        if (tool.getId() == 5 || tool.getId() == 4) {
                                             blocks = true;
                                             programmerTemp.dropTool(tool);
                                             break;
@@ -880,7 +886,7 @@ public class GameManager {
                                 //LOGICA - Recua metado do valor que tiver saido no dado
                                 case 1:
                                     for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 1) {
+                                        if (tool.getId() == 1 || tool.getId() == 2) {
                                             blocks = true;
                                             programmerTemp.dropTool(tool);
                                             break;
@@ -966,7 +972,7 @@ public class GameManager {
                                 // EFEITOS SECUNDARIOS
                                 case 6:
                                     for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 0) {
+                                        if (tool.getId() == 2) {
                                             blocks = true;
                                             break;
                                         }
