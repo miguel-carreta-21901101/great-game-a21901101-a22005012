@@ -960,7 +960,7 @@ public class GameManager {
                                 case 5:
 
                                     for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 5) {
+                                        if (tool.getId() == 5 && tool.getId() == 0) {
                                             counterAbyss = true;
                                             break;
                                         }
