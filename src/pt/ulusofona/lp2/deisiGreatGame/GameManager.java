@@ -435,7 +435,9 @@ public class GameManager {
                         break;
 
                     case 1:
-                        if (abyssesAndTools[i][1] == null){return false;}
+                        if (abyssesAndTools[i][1] == null) {
+                            return false;
+                        }
                         if (abyssAlert) {
                             idAbyss = Integer.parseInt(abyssesAndTools[i][1]);
                             break;
@@ -695,8 +697,9 @@ public class GameManager {
 
 
     public boolean moveCurrentPlayer(int nrSpaces) {
-
-        // numeros do dado 1 - 6
+        if (verbose) {
+            System.out.println("before move : current player : " + getCurrentPlayerID());
+        }// numeros do dado 1 - 6
         if (nrSpaces < 1 || nrSpaces > 6) {
             return false;
         }
@@ -706,6 +709,8 @@ public class GameManager {
 
         // Replico o programmer que esta neste momento a jogar
         Programmer programmerTemp = programmers.get(game.getCurrentPlayerID());
+
+       // System.out.println(programmerTemp);
 
         if (programmerTemp.isOutOfGame()) {
             return false;
@@ -842,20 +847,20 @@ public class GameManager {
 
         Programmer programmerTemp = programmers.get(game.getCurrentPlayerID());
 
-        if (!programmerTemp.isStuck()) {
 
-            for (Tool tool : tools.values()) {
-                if (programmerTemp.getPos() == tool.getPos()) {
-                    isTool = true;
-                    break;
-                }
+        for (Tool tool : tools.values()) {
+            if (programmerTemp.getPos() == tool.getPos()) {
+                isTool = true;
+                break;
             }
+        }
 
+        if (!programmerTemp.isStuck()) {
             if (!isTool) {
 
-                if (verbose){
-                System.out.println(programmerTemp);
-                System.out.println(programmerTemp.getTools());
+                if (verbose) {
+                    System.out.println(programmerTemp);
+                    System.out.println(programmerTemp.getTools());
                 }
 
 
@@ -1009,20 +1014,21 @@ public class GameManager {
                                         }
 
                                         // System.out.println("Index AUX = " + indexAuxToRemoveID + " gameCurrent ID = " + game.getCurrentPlayerID());
-                                        if (programmers.containsKey(game.getCurrentPlayerID())) {
+                                        // if (programmers.containsKey(game.getCurrentPlayerID())) {
 
 
-                                            programmersOutOfGame.put(game.getCurrentPlayerID(),
-                                                    programmers.get(game.getCurrentPlayerID()));
+                                        programerList.add(programmerTemp);
+                                        programmersOutOfGame.put(game.getCurrentPlayerID(),
+                                                programmers.get(game.getCurrentPlayerID()));
 
-                                            programmers.get(game.getCurrentPlayerID()).setOutOfGame();
+                                        programmers.get(game.getCurrentPlayerID()).setOutOfGame();
 
-                                            ids.remove(indexAuxToRemoveID);
-                                            // programerList.remove(programmers.get(game.getCurrentPlayerID()));
-                                            programmers.remove(game.getCurrentPlayerID());
+                                        ids.remove(indexAuxToRemoveID);
+                                        // programerList.remove(programmers.get(game.getCurrentPlayerID()));
+                                        programmers.remove(game.getCurrentPlayerID());
 
 
-                                        }
+                                        //   }
 
                                     }
                                     break;
@@ -1044,10 +1050,10 @@ public class GameManager {
                                         programmersInThisPositions = getProgrammers(programmerTemp.getPos());
                                         if (programmersInThisPositions.size() > 1) {
                                             for (Programmer p : programmersInThisPositions) {
-                                                if (!p.isStuck()){
+                                                if (!p.isStuck()) {
                                                     programmersInThisPositions.remove(count);
                                                 }
-                                                count ++;
+                                                count++;
                                                 if (p.getId() == programmerTemp.getId()) {
                                                     continue;
                                                 }
@@ -1086,7 +1092,7 @@ public class GameManager {
         count++;
 
         // Se o count chegar ao ids.size , comeca de novo para nao dar index out of bound
-        if (count == ids.size()) {
+        if (count >= ids.size()) {
             count = 0;
         }
 
@@ -1094,9 +1100,17 @@ public class GameManager {
 
         //  System.out.println("COUNT : " + count);
 
+        if (verbose) {
+            System.out.println(getImagePng(programmerTemp.getPos()));
+        }
         game.setCurrentPlayerID(ids.get(count));
-
-
+        if (verbose) {
+            System.out.println(getImagePng(programmerTemp.getPos()));
+        }
+        if (verbose) {
+            System.out.println("after move :  next player = " + getCurrentPlayerID());
+            System.out.println("__________________________________________________________");
+        }
         //Troco de turno incrementando os turnos terminados
         game.nextShift();
 
@@ -1113,6 +1127,8 @@ public class GameManager {
     }
 
     public boolean gameIsOver() {
+
+
         // Se algum jogador chegar à ultima casa do mapa ,
         for (Programmer p : programmers.values()) {
             if (p.getPos() == board.getTamanho()) {
