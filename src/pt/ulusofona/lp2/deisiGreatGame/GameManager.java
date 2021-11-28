@@ -223,6 +223,7 @@ public class GameManager {
 
     public int getCurrentPlayerID() {
 
+       // System.out.println("current player id = " + game.getCurrentPlayerID());
         return game.getCurrentPlayerID();
     }
     //**********************************************************************************************
@@ -956,13 +957,13 @@ public class GameManager {
 
                                 //CRASH - volta à primeira casa
                                 case 4:
-                                    for (Tool tool : programmerTemp.getTools()) {
+                                   /* for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 2) {
                                             counterAbyss = true;
                                             programmerTemp.dropTool(tool);
                                             break;
                                         }
-                                    }
+                                    }*/
                                     if (!counterAbyss) {
                                         AuxFunctions.changePosAndCasa(1, programmers, programmerTemp);
                                     }
@@ -1012,7 +1013,7 @@ public class GameManager {
                                         }
                                     }*/
 
-                                    if (!counterAbyss) {
+                               //     if (!counterAbyss) {
                                         int indexAuxToRemoveID = 0;
                                         for (Integer i : ids) {
                                             if (i == game.getCurrentPlayerID()) {
@@ -1034,11 +1035,11 @@ public class GameManager {
                                         ids.remove(indexAuxToRemoveID);
                                         // programerList.remove(programmers.get(game.getCurrentPlayerID()));
                                         programmers.remove(game.getCurrentPlayerID());
-
+                                        count --;
 
                                         //   }
 
-                                    }
+                                  //  }
                                     break;
 
 
@@ -1122,12 +1123,14 @@ public class GameManager {
         //Troco de turno incrementando os turnos terminados
         game.nextShift();
 
+
         if (isTool) {
             return "Parabéns, apanhou uma ferramenta !!";
 
         } else if (isAbyss) {
             return "Ohhh, caiu num abismo !!";
         } else {
+          //  System.out.println("REACT = null");
             return null;
         }
 
@@ -1135,7 +1138,6 @@ public class GameManager {
     }
 
     public boolean gameIsOver() {
-
 
         // Se algum jogador chegar à ultima casa do mapa ,
         for (Programmer p : programmers.values()) {
