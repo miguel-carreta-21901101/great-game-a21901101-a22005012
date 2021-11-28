@@ -439,10 +439,18 @@ public class GameManager {
                             return false;
                         }
                         if (abyssAlert) {
+                            if (Integer.parseInt(abyssesAndTools[i][1]) < 0 ||
+                                    Integer.parseInt(abyssesAndTools[i][1]) >9 ){
+                                return false;
+                            }
                             idAbyss = Integer.parseInt(abyssesAndTools[i][1]);
                             break;
                         }
 
+                        if (Integer.parseInt(abyssesAndTools[i][1]) < 0 ||
+                                Integer.parseInt(abyssesAndTools[i][1]) > 5){
+                            return false;
+                        }
                         idTool = Integer.parseInt(abyssesAndTools[i][1]);
                         break;
 
