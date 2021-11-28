@@ -13,8 +13,10 @@ public class GameManager {
 
     HashMap<Integer, Programmer> programmersOutOfGame = new HashMap<>();
     HashMap<Integer, Programmer> programmers = new HashMap<>();
-    ArrayList<Integer> ids = new ArrayList<>();
     List<Programmer> programerList = new ArrayList<>();
+    List<Programmer> allPlayersPlayed = new ArrayList<>();
+    ArrayList<Integer> ids = new ArrayList<>();
+
     Board board = new Board();
     Game game = new Game();
     HashMap<Integer, Abyss> abysses = new HashMap<>();
@@ -155,7 +157,7 @@ public class GameManager {
 
         //Devolve os values do hashmap programmers
         if (includeDefeated) {
-            return new ArrayList<>(programmers.values());
+            return  allPlayersPlayed;
         }
         List<Programmer> noDefeatedProgrammers = new ArrayList<>();
 
@@ -381,6 +383,7 @@ public class GameManager {
 
         }
 
+        allPlayersPlayed.addAll(programmers.values());
         // O num de players entre 2 - 4
         if (countPlayers <= 1 || countPlayers > 4) {
             return false;
@@ -904,7 +907,7 @@ public class GameManager {
                                 //LOGICA - Recua metado do valor que tiver saido no dado
                                 case 1:
                                     for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 5  || tool.getId() == 2) { // estava 1 e 2
+                                        if (tool.getId() == 5  || tool.getId() == 2) {
                                             counterAbyss = true;
                                             programmerTemp.dropTool(tool);
                                             break;
@@ -957,16 +960,9 @@ public class GameManager {
 
                                 //CRASH - volta à primeira casa
                                 case 4:
-                                   /* for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 2) {
-                                            counterAbyss = true;
-                                            programmerTemp.dropTool(tool);
-                                            break;
-                                        }
-                                    }*/
-                                    if (!counterAbyss) {
-                                        AuxFunctions.changePosAndCasa(1, programmers, programmerTemp);
-                                    }
+
+                                    AuxFunctions.changePosAndCasa(1, programmers, programmerTemp);
+
                                     break;
 
 
@@ -974,7 +970,7 @@ public class GameManager {
                                 case 5:
 
                                     for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 0) { // tinha o 5 tambem
+                                        if (tool.getId() == 0) {
                                             counterAbyss = true;
                                             break;
                                         }
@@ -986,6 +982,7 @@ public class GameManager {
                                                 programmerTemp);
                                     }
                                     break;
+
 
                                 // EFEITOS SECUNDARIOS
                                 case 6:
@@ -1004,16 +1001,7 @@ public class GameManager {
 
                                 // BLUE SCREEN - perde imediatamente o jogo
                                 case 7:
-/*
-                                    for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 4) {
-                                            counterAbyss = true;
-                                            programmerTemp.dropTool(tool);
-                                            break;
-                                        }
-                                    }*/
 
-                               //     if (!counterAbyss) {
                                         int indexAuxToRemoveID = 0;
                                         for (Integer i : ids) {
                                             if (i == game.getCurrentPlayerID()) {
@@ -1021,10 +1009,6 @@ public class GameManager {
                                             }
                                             indexAuxToRemoveID++;
                                         }
-
-                                        // System.out.println("Index AUX = " + indexAuxToRemoveID + " gameCurrent ID = " + game.getCurrentPlayerID());
-                                        // if (programmers.containsKey(game.getCurrentPlayerID())) {
-
 
                                         programerList.add(programmerTemp);
                                         programmersOutOfGame.put(game.getCurrentPlayerID(),
@@ -1037,9 +1021,7 @@ public class GameManager {
                                         programmers.remove(game.getCurrentPlayerID());
                                         count --;
 
-                                        //   }
 
-                                  //  }
                                     break;
 
 
@@ -1094,7 +1076,6 @@ public class GameManager {
                 }
             }
         }
-        //   System.out.println("Current player ID = " + game.getCurrentPlayerID() + " STUCK = " + programmerTemp.isStuck());
 
 
         // Incremento o count para ir buscar o proximo posicao no array IDS
