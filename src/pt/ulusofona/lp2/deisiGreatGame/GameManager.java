@@ -157,7 +157,9 @@ public class GameManager {
 
         //Devolve os values do hashmap programmers
         if (includeDefeated) {
-            return  allPlayersPlayed;
+         //   System.out.println("INCLUED");
+           // System.out.println(programmers.values());
+            return new ArrayList<>(programmers.values());
         }
         List<Programmer> noDefeatedProgrammers = new ArrayList<>();
 
@@ -167,6 +169,8 @@ public class GameManager {
                 noDefeatedProgrammers.add(p);
             }
         }
+      //  System.out.println("NO");
+       // System.out.println(noDefeatedProgrammers);
         return noDefeatedProgrammers;
 
     }
