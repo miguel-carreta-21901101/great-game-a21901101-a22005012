@@ -903,7 +903,7 @@ public class GameManager {
                                 //LOGICA - Recua metado do valor que tiver saido no dado
                                 case 1:
                                     for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 1 || tool.getId() == 2) {
+                                        if (tool.getId() == 5  || tool.getId() == 2) { // estava 1 e 2
                                             counterAbyss = true;
                                             programmerTemp.dropTool(tool);
                                             break;
@@ -973,7 +973,7 @@ public class GameManager {
                                 case 5:
 
                                     for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 5 && tool.getId() == 0) {
+                                        if (tool.getId() == 0) { // tinha o 5 tambem
                                             counterAbyss = true;
                                             break;
                                         }
@@ -1003,14 +1003,14 @@ public class GameManager {
 
                                 // BLUE SCREEN - perde imediatamente o jogo
                                 case 7:
-
+/*
                                     for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 4) {
                                             counterAbyss = true;
                                             programmerTemp.dropTool(tool);
                                             break;
                                         }
-                                    }
+                                    }*/
 
                                     if (!counterAbyss) {
                                         int indexAuxToRemoveID = 0;
@@ -1046,7 +1046,7 @@ public class GameManager {
 
                                     // Ciclo Infinito
                                     for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 5) {
+                                        if (tool.getId() == 1) {
                                             counterAbyss = true;
                                             break;
                                         }
