@@ -13,8 +13,8 @@ public class Programmer {
     private ProgrammerColor color;
     private List<Integer> casasPercorridasList = new ArrayList<>();
     private List<Tool> tools = new ArrayList<>();
-   //private List<Tool> toolsToString = new ArrayList<>();
     private boolean outOfGame = false;
+    private boolean toolAlreadyExists = false;
     private boolean abyssLastRound = false;
     private boolean stuck = false;
 
@@ -68,7 +68,10 @@ public class Programmer {
         return stuck;
     }
 
-    //**********************************************************************************************
+    public boolean isToolAlreadyExists() {
+        return toolAlreadyExists;
+    }
+//**********************************************************************************************
 
 
 
@@ -100,6 +103,10 @@ public class Programmer {
     }
     public void catchTool(Tool tool){
 
+
+        if (tools.contains(tool)){
+            toolAlreadyExists = true;
+        }
 
         if (tool != null && !tools.contains(tool)){
 

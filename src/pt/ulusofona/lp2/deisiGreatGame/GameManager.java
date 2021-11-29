@@ -723,6 +723,7 @@ public class GameManager {
         // Replico o programmer que esta neste momento a jogar
         Programmer programmerTemp = programmers.get(game.getCurrentPlayerID());
 
+
         // System.out.println(programmerTemp);
 
         if (programmerTemp.isOutOfGame()) {
@@ -839,11 +840,11 @@ public class GameManager {
                 programmers.get(programmerTemp.getId()).gotAbyssLastRound();
             }
 
+            //  if (programmerTemp.getPos() >= 31){
+            //  AuxFunctions.changePosAndCasa(1, programmers, programmerTemp);
+            //  }else {
             AuxFunctions.changePosAndCasa(posAux, programmers, programmerTemp);
-
-            //  System.out.println("Programmer : " + programmerTemp.getName() + "  ||  POS : " + programmerTemp.getPos() +
-            //          " || DADO : " + nrSpaces);
-
+            //  }
 
         }
 
@@ -1083,30 +1084,32 @@ public class GameManager {
         }
 
         //Declaro o proximo jogador a jogar
-
-        //  System.out.println("COUNT : " + count);
-
-
         game.setCurrentPlayerID(ids.get(count));
 
 
         //Troco de turno incrementando os turnos terminados
         game.nextShift();
 
-      //  System.out.println(programmerTemp);
+        //  System.out.println(programmerTemp);
 
-        if (isTool) {
-           //System.out.println("TOOL");
+        if (isTool && programmerTemp.isToolAlreadyExists()) {
+          //  System.out.println("Já tens isto zé");
+            return "Já tens esta ferramenta !";
+
+        } else if (isTool) {
+            //  System.out.println("TOOL");
             return "Parabéns, apanhaste uma ferramenta !!";
 
         } else if (isAbyss) {
-       //   System.out.println("ABISMO");
+            //   System.out.println("ABISMO");
             return "Ohhh, caiste num abismo !!";
-        } else if(programmerTemp.isStuck()) {
-         //   System.out.println("PRESO");
+
+        } else if (programmerTemp.isStuck()) {
+            //   System.out.println("PRESO");
             return "Estás preso! Pode ser que tenhas sorte e alguém te tire daí !";
+
         } else {
-          //  System.out.println("NULL");
+            //   System.out.println("NULL");
             return null;
         }
 
