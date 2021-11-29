@@ -67,9 +67,6 @@ public class Programmer {
         return stuck;
     }
 
-    public boolean isToolAlreadyExists() {
-        return toolAlreadyExists;
-    }
 //**********************************************************************************************
 
 
@@ -118,6 +115,9 @@ public class Programmer {
         }
     }
 
+    public boolean isToolAlreadyExists() {
+        return toolAlreadyExists;
+    }
 
 
     public String toString() {
