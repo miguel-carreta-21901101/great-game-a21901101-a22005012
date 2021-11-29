@@ -157,21 +157,20 @@ public class GameManager {
 
         //Devolve os values do hashmap programmers
         if (includeDefeated) {
-         //   System.out.println("INCLUED");
-           // System.out.println(programmers.values());
-            return new ArrayList<>(programmers.values());
+            List<Programmer> allProgrammers = new ArrayList<>(programmers.values());
+            allProgrammers.addAll(programmersOutOfGame.values());
+            return allProgrammers;
         }
-        List<Programmer> noDefeatedProgrammers = new ArrayList<>();
+        List<Programmer> programmersAlive = new ArrayList<>();
 
 
         for (Programmer p : programmers.values()) {
             if (!p.isOutOfGame()) {
-                noDefeatedProgrammers.add(p);
+                programmersAlive.add(p);
             }
         }
-      //  System.out.println("NO");
-       // System.out.println(noDefeatedProgrammers);
-        return noDefeatedProgrammers;
+
+        return programmersAlive;
 
     }
 
@@ -713,6 +712,7 @@ public class GameManager {
 
 
     public boolean moveCurrentPlayer(int nrSpaces) {
+
         if (verbose) {
             System.out.println("before move : current player : " + getCurrentPlayerID());
         }// numeros do dado 1 - 6
