@@ -4,6 +4,7 @@ public class Tool {
     private int id;
     private String titulo;
     private int pos;
+    private boolean isRepeated;
 
 
 
@@ -22,6 +23,15 @@ public class Tool {
 
     public int getPos() {
         return pos;
+    }
+
+    public boolean getRepeated() {
+        return isRepeated;
+    }
+
+
+    public void setIsRepeated(){
+        isRepeated = true;
     }
 
     public String toString(){

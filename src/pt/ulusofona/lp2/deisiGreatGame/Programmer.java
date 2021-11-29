@@ -15,7 +15,7 @@ public class Programmer {
     private List<Tool> tools = new ArrayList<>();
     private boolean outOfGame = false;
     private boolean toolAlreadyExists = false;
-    private boolean abyssLastRound = false;
+
     private boolean stuck = false;
 
     //************* Constructors ************************
@@ -60,9 +60,7 @@ public class Programmer {
     public boolean isOutOfGame() {
         return outOfGame;
     }
-    public boolean isGetAbyssLastRound() {
-        return abyssLastRound;
-    }
+
     public boolean isStuck() {
         return stuck;
     }
@@ -76,9 +74,7 @@ public class Programmer {
     public void setOutOfGame() {
         this.outOfGame = true;
     }
-    public void gotAbyssLastRound(){
-        abyssLastRound = true;
-    }
+
     public void stuckedByInfiniteCircle() {
         this.stuck = true;
     }
@@ -97,17 +93,19 @@ public class Programmer {
     public void adicionaCasa(int casa){
         casasPercorridasList.add(casa);
     }
-    public void catchTool(Tool tool){
+    public boolean catchTool(Tool tool){
 
 
         if (tools.contains(tool)){
-            toolAlreadyExists = true;
+            return false;
         }
 
         if (tool != null && !tools.contains(tool)){
 
             tools.add(tool);
+            return true;
         }
+        return false;
     }
     public void dropTool(Tool tool){
         if (tool != null){

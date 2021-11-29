@@ -24,12 +24,10 @@ public class GameManager {
     // Hash< ID , TOOL > de ferramentas
     HashMap<Integer, Tool> tools = new HashMap<>();
     int idsCasas;
+    boolean canCatch = false;
     Board board = new Board();
     Game game = new Game();
 
-
-
-    //int count;
 
     public GameManager() {
     }
@@ -155,7 +153,6 @@ public class GameManager {
         return null;
     }
 
-    //TODO
     public List<Programmer> getProgrammers(boolean includeDefeated) {
 
         //Devolve os values do hashmap programmers
@@ -179,7 +176,7 @@ public class GameManager {
 
     public List<Programmer> getProgrammers(int position) {
 
-        ArrayList<Programmer> programmers = new ArrayList<>();
+        List<Programmer> programmers = new ArrayList<>();
 
         if (position < 0 || position > board.getTamanho()) {
             return null;
@@ -686,7 +683,6 @@ public class GameManager {
         }
 
 
-
         if ((programmerTemp.getPos() + nrSpaces) > board.getTamanho()) {
 
 
@@ -701,11 +697,15 @@ public class GameManager {
 
             // Insiro na posAux a casa onde o player irá parar
             int posAux = programmerTemp.getPos() + nrSpaces;
-
+            canCatch = false;
 
             // Se houver uma tool nessa casa E o player ainda nao tenha adquirido esta tool , ele apanha a tool.
             if (AuxFunctions.isTool(tools, posAux)) {
-                programmerTemp.catchTool(AuxFunctions.setTool(tools, posAux));
+                if (programmerTemp.catchTool(AuxFunctions.setTool(tools, posAux))) {
+                    programmerTemp.catchTool(AuxFunctions.setTool(tools, posAux));
+                    canCatch = true;
+                }
+
 
                 // (Se existir uma tool na casa   E   o player já a tenha na sua Lista de Tools )   OU   (Não exista
                 // uma tool na casa) , ele nao faz absolutamente nada.
@@ -783,14 +783,10 @@ public class GameManager {
 
                 }
 
-                programmers.get(programmerTemp.getId()).gotAbyssLastRound();
+
             }
 
-            //  if (programmerTemp.getPos() >= 31){
-            //  AuxFunctions.changePosAndCasa(1, programmers, programmerTemp);
-            //  }else {
             AuxFunctions.changePosAndCasa(posAux, programmers, programmerTemp);
-            //  }
 
         }
 
@@ -802,7 +798,6 @@ public class GameManager {
 
         boolean isTool = false;
         boolean isAbyss = false;
-
         Programmer programmerTemp = programmers.get(game.getCurrentPlayerID());
 
 
@@ -1021,59 +1016,65 @@ public class GameManager {
             }
         }
 
+       /* if (programmerTemp.getPos() >= 31) {
+            programmerTemp.setPos(1);
+        }*/
 
         // Incremento o count para ir buscar o proximo posicao no array IDS
-        game.addOneCount(); //count++;
+        game.addOneCount();
 
         // Se o count chegar ao ids.size , comeca de novo para nao dar index out of bound
-        if (game.getCount() /*count*/ >= idProgrammers.size()) {
+        if (game.getCount() >= idProgrammers.size()) {
             game.setCount(0);
-            //count = 0;
+
         }
 
         //Declaro o proximo jogador a jogar
-        game.setCurrentPlayerID(idProgrammers.get(game.getCount()/*count)*/));
+        game.setCurrentPlayerID(idProgrammers.get(game.getCount()));
 
 
         //Troco de turno incrementando os turnos terminados
         game.nextShift();
 
-        //  System.out.println(programmerTemp);
+       // System.out.println(programmerTemp);
+       // System.out.println(programmerTemp.getTools().size());
 
-        if (isTool && programmerTemp.isToolAlreadyExists()) {
-          //  System.out.println("Já tens isto zé");
-            return "Já tens esta ferramenta !";
+        if (isTool && !canCatch) {
+
+           // System.out.println("Já tens isto zé");
+            return "Já tens esta ferramenta, siga para a próxima !";
+
 
         } else if (isTool) {
-            //  System.out.println("TOOL");
+         //   System.out.println("TOOL");
             return "Parabéns, apanhaste uma ferramenta !!";
 
         } else if (isAbyss) {
-            //   System.out.println("ABISMO");
+           // System.out.println("ABISMO");
             return "Ohhh, caiste num abismo !!";
 
         } else if (programmerTemp.isStuck()) {
-            //   System.out.println("PRESO");
-            return "Estás preso! Pode ser que tenhas sorte e alguém te tire daí !";
+          //  System.out.println("PRESO");
+            return "Estás preso em Ciclos Infinitos! Pode ser que tenhas sorte e alguém te tire daí !";
 
-        } else {
-            //   System.out.println("NULL");
-            return null;
         }
+      //  System.out.println("NULL");
+        return null;
 
 
     }
 
+
     public boolean gameIsOver() {
 
         // Se algum jogador chegar à ultima casa do mapa ,
-        for (Programmer p : programmers.values()) {
-            if (p.getPos() == board.getTamanho() || programmers.size() <= 1) {
+        for (Programmer programmer : programmers.values()) {
+            if (programmer.getPos() == board.getTamanho() || programmers.size() <= 1) {
 
                 programmerListGameResults.addAll(programmers.values());
 
                 //Declaro o Vencedor
-                game.setWinner(p.getName());
+                game.setWinner(programmer.getName());
                 return true;
             }
         }

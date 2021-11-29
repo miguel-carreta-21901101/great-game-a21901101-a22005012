@@ -6,6 +6,7 @@ public class Abyss {
     int pos;
 
 
+
     public Abyss(int id, String titulo, int pos){
         this.id = id;
         this.titulo = titulo;
