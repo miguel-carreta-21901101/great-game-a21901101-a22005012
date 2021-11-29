@@ -733,7 +733,7 @@ public class GameManager {
             return false;
         }
 
-        Tool tool;
+
         int idAbyss;
         boolean alertAbyss = false;
 
@@ -758,9 +758,7 @@ public class GameManager {
 
             // Se houver uma tool nessa casa E o player ainda nao tenha adquirido esta tool , ele apanha a tool.
             if (temTool(posAux)) {
-                //  Inheritance iasdx = (Inheritance) setTool(posAux);
-                tool = setTool(posAux);
-                programmerTemp.catchTool(tool);
+                programmerTemp.catchTool(setTool(posAux));
 
                 // (Se existir uma tool na casa   E   o player já a tenha na sua Lista de Tools )   OU   (Não exista
                 // uma tool na casa) , ele nao faz absolutamente nada.
@@ -1095,20 +1093,20 @@ public class GameManager {
         //Troco de turno incrementando os turnos terminados
         game.nextShift();
 
-       // System.out.println(programmerTemp);
+      //  System.out.println(programmerTemp);
 
         if (isTool) {
-           // System.out.println("TOOL");
+           //System.out.println("TOOL");
             return "Parabéns, apanhaste uma ferramenta !!";
 
         } else if (isAbyss) {
-            //System.out.println("ABISMO");
+       //   System.out.println("ABISMO");
             return "Ohhh, caiste num abismo !!";
         } else if(programmerTemp.isStuck()) {
-            //System.out.println("PRESO");
+         //   System.out.println("PRESO");
             return "Estás preso! Pode ser que tenhas sorte e alguém te tire daí !";
         } else {
-           // System.out.println("NULL");
+          //  System.out.println("NULL");
             return null;
         }
 

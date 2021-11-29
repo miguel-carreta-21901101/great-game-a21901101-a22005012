@@ -12,7 +12,7 @@ public class Programmer {
     private String linguagens;
     private ProgrammerColor color;
     private List<Integer> casasPercorridasList = new ArrayList<>();
-    private HashMap<Integer, Tool> tools = new HashMap<>();
+    private List<Tool> tools = new ArrayList<>();
    //private List<Tool> toolsToString = new ArrayList<>();
     private boolean outOfGame = false;
     private boolean abyssLastRound = false;
@@ -50,7 +50,7 @@ public class Programmer {
         return pos;
     }
     public List<Tool> getTools() {
-        return new ArrayList<>(tools.values());
+        return tools;
     }
     public List<Integer> getCasasPercorridasList() {
         return casasPercorridasList;
@@ -101,13 +101,14 @@ public class Programmer {
     public void catchTool(Tool tool){
 
 
-        if (tool != null && !tools.containsKey(tool.getId())){
-            tools.put(tool.getId(), tool);
+        if (tool != null && !tools.contains(tool)){
+
+            tools.add(tool);
         }
     }
     public void dropTool(Tool tool){
         if (tool != null){
-            tools.remove(tool.getId());
+            tools.remove(tool);
         }
     }
 
@@ -124,7 +125,7 @@ public class Programmer {
 
         } else {
 
-            for (Tool tool : tools.values()) {
+            for (Tool tool : tools) {
                 ferramentas.append(tool);
                 ferramentas.append(";");
             }
