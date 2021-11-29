@@ -2,7 +2,6 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 import static org.junit.Assert.*;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -45,7 +44,7 @@ public class TestGameManager {
         map.add(new Programmer("Bruninho", 9));
 
 
-        gameMng.programerList = map;
+        gameMng.programmerListGameResults = map;
         gameMng.game = gm;
 
 

@@ -9,23 +9,27 @@ import java.util.List;
 
 public class GameManager {
 
-
-    HashMap<Integer, Programmer> programmersOutOfGame = new HashMap<>();
+    //HashMap que vou manipulando
     HashMap<Integer, Programmer> programmers = new HashMap<>();
-    List<Programmer> programerList = new ArrayList<>();
-    List<Programmer> allPlayersPlayed = new ArrayList<>();
-    ArrayList<Integer> ids = new ArrayList<>();
-
+    //Hash que guarda os que caiem no blue screen
+    HashMap<Integer, Programmer> programmersOutOfGame = new HashMap<>();
+    // List Auxiliar para a funcao GameResults
+    List<Programmer> programmerListGameResults = new ArrayList<>();
+    //List Com o total de programmers iniciais
+    List<Programmer> totalProgrammers = new ArrayList<>();
+    //Lista de Ids dos programmers que uso para manipular
+    List<Integer> IDProgrammers = new ArrayList<>();
+    // Hash< ID , ABYSS > de abismos
+    HashMap<Integer, Abyss> abysses = new HashMap<>();
+    // Hash< ID , TOOL > de ferramentas
+    HashMap<Integer, Tool> tools = new HashMap<>();
+    int idsCasas;
     Board board = new Board();
     Game game = new Game();
-    HashMap<Integer, Abyss> abysses = new HashMap<>();
-    HashMap<Integer, Tool> tools = new HashMap<>();
 
 
-    // mudar as vars de sitio
-    int idsCasas;
-    int dado;
-    int count;
+
+    //int count;
 
     public GameManager() {
     }
@@ -195,7 +199,7 @@ public class GameManager {
 
         StringBuilder info = new StringBuilder();
 
-        for (Integer i : ids) {
+        for (Integer i : IDProgrammers) {
             Programmer p = programmers.get(i);
 
             if (p != null) {
@@ -226,22 +230,20 @@ public class GameManager {
     }
 
     public int getCurrentPlayerID() {
-
-        // System.out.println("current player id = " + game.getCurrentPlayerID());
         return game.getCurrentPlayerID();
     }
     //**********************************************************************************************
 
 
     public void resetGame() {
-        programerList.clear();
-        ids.clear();
+        programmerListGameResults.clear();
+        IDProgrammers.clear();
         programmers.clear();
         abysses.clear();
         tools.clear();
         game = new Game();
         board = new Board();
-        count = 0;
+
     }
 
     public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) {
@@ -298,7 +300,7 @@ public class GameManager {
                         idPlayers = Integer.parseInt(playerInfo[i][j]);
 
                         //Adiciono ao array de ids para facilitar na escolha do CurrentPlayer mais à frente
-                        ids.add(idPlayers);
+                        IDProgrammers.add(idPlayers);
 
                         break;
 
@@ -385,7 +387,7 @@ public class GameManager {
 
         }
 
-        allPlayersPlayed.addAll(programmers.values());
+        totalProgrammers.addAll(programmers.values());
         // O num de players entre 2 - 4
         if (countPlayers <= 1 || countPlayers > 4) {
             return false;
@@ -486,10 +488,10 @@ public class GameManager {
         }
 
         // Ordeno o array de IDS para saber que está por ordem do mais pequeno para o maior
-        Collections.sort(ids);
+        Collections.sort(IDProgrammers);
 
         //Declaro que o primeiro player a jogar é o que está em primeiro lugar , pois está ordenado do menor -> maior
-        game.setCurrentPlayerID(ids.get(0));
+        game.setCurrentPlayerID(IDProgrammers.get(0));
 
         //Declaro o tamanho do mapa
         board.setTamanho(worldSize);
@@ -553,7 +555,7 @@ public class GameManager {
                         id = Integer.parseInt(playerInfo[i][j]);
 
                         //Adiciono ao array de ids para facilitar na escolha do CurrentPlayer mais à frente
-                        ids.add(id);
+                        IDProgrammers.add(id);
 
                         break;
 
@@ -652,10 +654,10 @@ public class GameManager {
 
 
         // Ordeno o array de IDS para saber que está por ordem do mais pequeno para o maior
-        Collections.sort(ids);
+        Collections.sort(IDProgrammers);
 
         //Declaro que o primeiro player a jogar é o que está em primeiro lugar , pois está ordenado do menor -> maior
-        game.setCurrentPlayerID(ids.get(0));
+        game.setCurrentPlayerID(IDProgrammers.get(0));
 
         //Declaro o tamanho do mapa
         board.setTamanho(worldSize);
@@ -663,51 +665,6 @@ public class GameManager {
         return true;
 
     }
-
-
-    //****************************************************************************************
-    // FUNCOES PARA MUDAR DE SITIO
-
-    public Tool setTool(int pos) {
-        for (Tool toolTemp : tools.values()) {
-            if (toolTemp.getPos() == pos) {
-                return toolTemp;
-            }
-        }
-
-        return null;
-    }
-
-    public boolean temTool(int pos) {
-        for (Tool toolTemp : tools.values()) {
-            if (toolTemp.getPos() == pos) {
-
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean temAbismo(int pos) {
-        for (Abyss abyss : abysses.values()) {
-            if (abyss.getPos() == pos) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public int setIdAbyss(int pos) {
-        for (Abyss abyss : abysses.values()) {
-            if (abyss.getPos() == pos) {
-                return abyss.getId();
-            }
-        }
-        return -1;
-    }
-
-
-    //****************************************************************************************
 
 
     public boolean moveCurrentPlayer(int nrSpaces) {
@@ -718,29 +675,18 @@ public class GameManager {
         }
 
         int aux;
-
+        int idAbyss;
 
         // Replico o programmer que esta neste momento a jogar
-        Programmer programmerTemp = programmers.get(game.getCurrentPlayerID());
+        Programmer programmerTemp = programmers.get(getCurrentPlayerID());
 
 
-        // System.out.println(programmerTemp);
-
-        if (programmerTemp.isOutOfGame()) {
-            return false;
-        }
-
-        if (programmerTemp.isStuck()) {
+        if (programmerTemp.isOutOfGame() || programmerTemp.isStuck()) {
             return false;
         }
 
 
-        int idAbyss;
-        boolean alertAbyss = false;
 
-
-        //TODO
-        // Se o programmer ultrapassar a casa final do jogo :
         if ((programmerTemp.getPos() + nrSpaces) > board.getTamanho()) {
 
 
@@ -758,16 +704,16 @@ public class GameManager {
 
 
             // Se houver uma tool nessa casa E o player ainda nao tenha adquirido esta tool , ele apanha a tool.
-            if (temTool(posAux)) {
-                programmerTemp.catchTool(setTool(posAux));
+            if (AuxFunctions.isTool(tools, posAux)) {
+                programmerTemp.catchTool(AuxFunctions.setTool(tools, posAux));
 
                 // (Se existir uma tool na casa   E   o player já a tenha na sua Lista de Tools )   OU   (Não exista
                 // uma tool na casa) , ele nao faz absolutamente nada.
             }
 
             // Se existir um abismo na casa
-            if (temAbismo(posAux)) {
-                idAbyss = setIdAbyss(posAux);
+            if (AuxFunctions.isAbyss(abysses, posAux)) {
+                idAbyss = AuxFunctions.setIdAbyss(abysses, posAux);
 
                 //  System.out.println("ABISMO POS : " + posAux);
 
@@ -782,7 +728,7 @@ public class GameManager {
 
                     case 1:
                         idsCasas = 1;
-                        dado = nrSpaces;
+                        game.setDiceShoot(nrSpaces);
                         break;
 
 
@@ -909,7 +855,7 @@ public class GameManager {
                                     }
 
                                     if (!counterAbyss) {
-                                        double auxSpaces = (double) dado / 2;
+                                        double auxSpaces = (double) game.getCurrentDiceShoot() / 2;
                                         AuxFunctions.changePosAndCasa(programmerTemp.getPos() -
                                                         (int) Math.floor(auxSpaces),
                                                 programmers, programmerTemp);
@@ -999,23 +945,24 @@ public class GameManager {
                                 case 7:
 
                                     int indexAuxToRemoveID = 0;
-                                    for (Integer i : ids) {
+                                    for (Integer i : IDProgrammers) {
                                         if (i == game.getCurrentPlayerID()) {
                                             break;
                                         }
                                         indexAuxToRemoveID++;
                                     }
 
-                                    programerList.add(programmerTemp);
+                                    programmerListGameResults.add(programmerTemp);
                                     programmersOutOfGame.put(game.getCurrentPlayerID(),
                                             programmers.get(game.getCurrentPlayerID()));
 
                                     programmers.get(game.getCurrentPlayerID()).setOutOfGame();
 
-                                    ids.remove(indexAuxToRemoveID);
+                                    IDProgrammers.remove(indexAuxToRemoveID);
                                     // programerList.remove(programmers.get(game.getCurrentPlayerID()));
                                     programmers.remove(game.getCurrentPlayerID());
-                                    count--;
+                                    game.removeOneCount();
+                                    //game.count--;
 
 
                                     break;
@@ -1076,15 +1023,16 @@ public class GameManager {
 
 
         // Incremento o count para ir buscar o proximo posicao no array IDS
-        count++;
+        game.addOneCount(); //count++;
 
         // Se o count chegar ao ids.size , comeca de novo para nao dar index out of bound
-        if (count >= ids.size()) {
-            count = 0;
+        if (game.getCount() /*count*/ >= IDProgrammers.size()) {
+            game.setCount(0);
+            //count = 0;
         }
 
         //Declaro o proximo jogador a jogar
-        game.setCurrentPlayerID(ids.get(count));
+        game.setCurrentPlayerID(IDProgrammers.get(game.getCount()/*count)*/));
 
 
         //Troco de turno incrementando os turnos terminados
@@ -1120,9 +1068,9 @@ public class GameManager {
 
         // Se algum jogador chegar à ultima casa do mapa ,
         for (Programmer p : programmers.values()) {
-            if (p.getPos() == board.getTamanho()) {
+            if (p.getPos() == board.getTamanho() || programmers.size() <= 1) {
 
-                programerList.addAll(programmers.values());
+                programmerListGameResults.addAll(programmers.values());
 
                 //Declaro o Vencedor
                 game.setWinner(p.getName());
@@ -1150,7 +1098,7 @@ public class GameManager {
             gameResults.add("RESTANTES");
 
 
-            programerList.sort((p1, p2) -> {
+            programmerListGameResults.sort((p1, p2) -> {
                 if (p1.getPos() < p2.getPos()) {
                     return 1;
                 } else if (p1.getPos() > p2.getPos()) {
@@ -1160,7 +1108,7 @@ public class GameManager {
                 }
             });
 
-            for (Programmer i : programerList) {
+            for (Programmer i : programmerListGameResults) {
                 //se o nome do programer é o winner, passo à frente
                 if (i.getName().equals(game.getWinner())) {
                     continue;

@@ -20,7 +20,6 @@ public class Programmer {
 
     //************* Constructors ************************
 
-    public Programmer(){}
 
     public Programmer(String name, int pos){
         this.name = name;

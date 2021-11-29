@@ -20,6 +20,11 @@ public  class AuxFunctions {
         return linguagensOrdenadas.substring(0, linguagensOrdenadas.length() -2);
     }
 
+    public static void changePosAndCasa(int pos, HashMap<Integer, Programmer> programmers, Programmer programmer) {
+        programmers.get(programmer.getId()).setPos(pos);
+        programmers.get(programmer.getId()).adicionaCasa(pos);
+    }
+
     public static String setTitleAbyss(int id){
 
 
@@ -60,7 +65,32 @@ public  class AuxFunctions {
                 return  "";
         }
     }
+    public static boolean isAbyss(HashMap<Integer, Abyss> hashAbyss, int pos) {
+        for (Abyss abyss : hashAbyss.values()) {
+            if (abyss.getPos() == pos) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static int setIdAbyss(HashMap<Integer, Abyss> hashAbyss,int pos) {
+        for (Abyss abyss : hashAbyss.values()) {
+            if (abyss.getPos() == pos) {
+                return abyss.getId();
+            }
+        }
+        return -1;
+    }
 
+    public static Tool setTool(HashMap<Integer, Tool> hashTools,int pos) {
+        for (Tool toolTemp : hashTools.values()) {
+            if (toolTemp.getPos() == pos) {
+                return toolTemp;
+            }
+        }
+
+        return null;
+    }
     public static String setTitleTool(int id){
 
         switch(id){
@@ -87,9 +117,15 @@ public  class AuxFunctions {
 
         }
     }
+    public static boolean isTool(HashMap<Integer, Tool> hashTools,int pos) {
+        for (Tool toolTemp : hashTools.values()) {
+            if (toolTemp.getPos() == pos) {
 
-    public static void changePosAndCasa(int pos, HashMap<Integer, Programmer> programmers, Programmer programmer) {
-        programmers.get(programmer.getId()).setPos(pos);
-        programmers.get(programmer.getId()).adicionaCasa(pos);
+                return true;
+            }
+        }
+        return false;
     }
+
+
 }

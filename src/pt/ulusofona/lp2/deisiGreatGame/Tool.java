@@ -1,10 +1,10 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 public class Tool {
-    int id;
-    String titulo;
-    int pos;
-    boolean blocksEnabled;
+    private int id;
+    private String titulo;
+    private int pos;
+
 
 
     public Tool(){}
@@ -15,16 +15,6 @@ public class Tool {
         this.pos = pos;
     }
 
-    boolean blockSyntax(Abyss abyss){
-        if (abyss.getId() == 0){
-            blocksEnabled = true;
-        }
-        return false;
-    }
-
-    public boolean isBlocksEnabled() {
-        return blocksEnabled;
-    }
 
     public int getId() {
         return id;
