@@ -18,7 +18,7 @@ public class GameManager {
     //List Com o total de programmers iniciais
     List<Programmer> totalProgrammers = new ArrayList<>();
     //Lista de Ids dos programmers que uso para manipular
-    List<Integer> IDProgrammers = new ArrayList<>();
+    List<Integer> idProgrammers = new ArrayList<>();
     // Hash< ID , ABYSS > de abismos
     HashMap<Integer, Abyss> abysses = new HashMap<>();
     // Hash< ID , TOOL > de ferramentas
@@ -199,7 +199,7 @@ public class GameManager {
 
         StringBuilder info = new StringBuilder();
 
-        for (Integer i : IDProgrammers) {
+        for (Integer i : idProgrammers) {
             Programmer p = programmers.get(i);
 
             if (p != null) {
@@ -237,7 +237,7 @@ public class GameManager {
 
     public void resetGame() {
         programmerListGameResults.clear();
-        IDProgrammers.clear();
+        idProgrammers.clear();
         programmers.clear();
         abysses.clear();
         tools.clear();
@@ -300,7 +300,7 @@ public class GameManager {
                         idPlayers = Integer.parseInt(playerInfo[i][j]);
 
                         //Adiciono ao array de ids para facilitar na escolha do CurrentPlayer mais à frente
-                        IDProgrammers.add(idPlayers);
+                        idProgrammers.add(idPlayers);
 
                         break;
 
@@ -488,10 +488,10 @@ public class GameManager {
         }
 
         // Ordeno o array de IDS para saber que está por ordem do mais pequeno para o maior
-        Collections.sort(IDProgrammers);
+        Collections.sort(idProgrammers);
 
         //Declaro que o primeiro player a jogar é o que está em primeiro lugar , pois está ordenado do menor -> maior
-        game.setCurrentPlayerID(IDProgrammers.get(0));
+        game.setCurrentPlayerID(idProgrammers.get(0));
 
         //Declaro o tamanho do mapa
         board.setTamanho(worldSize);
@@ -555,7 +555,7 @@ public class GameManager {
                         id = Integer.parseInt(playerInfo[i][j]);
 
                         //Adiciono ao array de ids para facilitar na escolha do CurrentPlayer mais à frente
-                        IDProgrammers.add(id);
+                        idProgrammers.add(id);
 
                         break;
 
@@ -654,10 +654,10 @@ public class GameManager {
 
 
         // Ordeno o array de IDS para saber que está por ordem do mais pequeno para o maior
-        Collections.sort(IDProgrammers);
+        Collections.sort(idProgrammers);
 
         //Declaro que o primeiro player a jogar é o que está em primeiro lugar , pois está ordenado do menor -> maior
-        game.setCurrentPlayerID(IDProgrammers.get(0));
+        game.setCurrentPlayerID(idProgrammers.get(0));
 
         //Declaro o tamanho do mapa
         board.setTamanho(worldSize);
@@ -945,7 +945,7 @@ public class GameManager {
                                 case 7:
 
                                     int indexAuxToRemoveID = 0;
-                                    for (Integer i : IDProgrammers) {
+                                    for (Integer i : idProgrammers) {
                                         if (i == game.getCurrentPlayerID()) {
                                             break;
                                         }
@@ -958,7 +958,7 @@ public class GameManager {
 
                                     programmers.get(game.getCurrentPlayerID()).setOutOfGame();
 
-                                    IDProgrammers.remove(indexAuxToRemoveID);
+                                    idProgrammers.remove(indexAuxToRemoveID);
                                     // programerList.remove(programmers.get(game.getCurrentPlayerID()));
                                     programmers.remove(game.getCurrentPlayerID());
                                     game.removeOneCount();
@@ -1026,13 +1026,13 @@ public class GameManager {
         game.addOneCount(); //count++;
 
         // Se o count chegar ao ids.size , comeca de novo para nao dar index out of bound
-        if (game.getCount() /*count*/ >= IDProgrammers.size()) {
+        if (game.getCount() /*count*/ >= idProgrammers.size()) {
             game.setCount(0);
             //count = 0;
         }
 
         //Declaro o proximo jogador a jogar
-        game.setCurrentPlayerID(IDProgrammers.get(game.getCount()/*count)*/));
+        game.setCurrentPlayerID(idProgrammers.get(game.getCount()/*count)*/));
 
 
         //Troco de turno incrementando os turnos terminados
