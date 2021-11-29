@@ -9,7 +9,6 @@ import java.util.List;
 
 public class GameManager {
 
-    boolean verbose = false;
 
     HashMap<Integer, Programmer> programmersOutOfGame = new HashMap<>();
     HashMap<Integer, Programmer> programmers = new HashMap<>();
@@ -228,7 +227,7 @@ public class GameManager {
 
     public int getCurrentPlayerID() {
 
-       // System.out.println("current player id = " + game.getCurrentPlayerID());
+        // System.out.println("current player id = " + game.getCurrentPlayerID());
         return game.getCurrentPlayerID();
     }
     //**********************************************************************************************
@@ -447,7 +446,7 @@ public class GameManager {
                         }
                         if (abyssAlert) {
                             if (Integer.parseInt(abyssesAndTools[i][1]) < 0 ||
-                                    Integer.parseInt(abyssesAndTools[i][1]) >9 ){
+                                    Integer.parseInt(abyssesAndTools[i][1]) > 9) {
                                 return false;
                             }
                             idAbyss = Integer.parseInt(abyssesAndTools[i][1]);
@@ -455,7 +454,7 @@ public class GameManager {
                         }
 
                         if (Integer.parseInt(abyssesAndTools[i][1]) < 0 ||
-                                Integer.parseInt(abyssesAndTools[i][1]) > 5){
+                                Integer.parseInt(abyssesAndTools[i][1]) > 5) {
                             return false;
                         }
                         idTool = Integer.parseInt(abyssesAndTools[i][1]);
@@ -713,9 +712,7 @@ public class GameManager {
 
     public boolean moveCurrentPlayer(int nrSpaces) {
 
-        if (verbose) {
-            System.out.println("before move : current player : " + getCurrentPlayerID());
-        }// numeros do dado 1 - 6
+        // numeros do dado 1 - 6
         if (nrSpaces < 1 || nrSpaces > 6) {
             return false;
         }
@@ -726,7 +723,7 @@ public class GameManager {
         // Replico o programmer que esta neste momento a jogar
         Programmer programmerTemp = programmers.get(game.getCurrentPlayerID());
 
-       // System.out.println(programmerTemp);
+        // System.out.println(programmerTemp);
 
         if (programmerTemp.isOutOfGame()) {
             return false;
@@ -874,12 +871,6 @@ public class GameManager {
         if (!programmerTemp.isStuck()) {
             if (!isTool) {
 
-                if (verbose) {
-                    System.out.println(programmerTemp);
-                    System.out.println(programmerTemp.getTools());
-                }
-
-
                 for (Abyss abyss : abysses.values()) {
                     if (programmers.containsKey(programmerTemp.getId())) {
 
@@ -911,7 +902,7 @@ public class GameManager {
                                 //LOGICA - Recua metado do valor que tiver saido no dado
                                 case 1:
                                     for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 5  || tool.getId() == 2) {
+                                        if (tool.getId() == 5 || tool.getId() == 2) {
                                             counterAbyss = true;
                                             programmerTemp.dropTool(tool);
                                             break;
@@ -976,6 +967,7 @@ public class GameManager {
                                     for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 0) {
                                             counterAbyss = true;
+                                            programmerTemp.dropTool(tool);
                                             break;
                                         }
                                     }
@@ -993,6 +985,7 @@ public class GameManager {
                                     for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 1) {
                                             counterAbyss = true;
+                                            programmerTemp.dropTool(tool);
                                             break;
                                         }
                                     }
@@ -1006,24 +999,24 @@ public class GameManager {
                                 // BLUE SCREEN - perde imediatamente o jogo
                                 case 7:
 
-                                        int indexAuxToRemoveID = 0;
-                                        for (Integer i : ids) {
-                                            if (i == game.getCurrentPlayerID()) {
-                                                break;
-                                            }
-                                            indexAuxToRemoveID++;
+                                    int indexAuxToRemoveID = 0;
+                                    for (Integer i : ids) {
+                                        if (i == game.getCurrentPlayerID()) {
+                                            break;
                                         }
+                                        indexAuxToRemoveID++;
+                                    }
 
-                                        programerList.add(programmerTemp);
-                                        programmersOutOfGame.put(game.getCurrentPlayerID(),
-                                                programmers.get(game.getCurrentPlayerID()));
+                                    programerList.add(programmerTemp);
+                                    programmersOutOfGame.put(game.getCurrentPlayerID(),
+                                            programmers.get(game.getCurrentPlayerID()));
 
-                                        programmers.get(game.getCurrentPlayerID()).setOutOfGame();
+                                    programmers.get(game.getCurrentPlayerID()).setOutOfGame();
 
-                                        ids.remove(indexAuxToRemoveID);
-                                        // programerList.remove(programmers.get(game.getCurrentPlayerID()));
-                                        programmers.remove(game.getCurrentPlayerID());
-                                        count --;
+                                    ids.remove(indexAuxToRemoveID);
+                                    // programerList.remove(programmers.get(game.getCurrentPlayerID()));
+                                    programmers.remove(game.getCurrentPlayerID());
+                                    count--;
 
 
                                     break;
@@ -1035,6 +1028,7 @@ public class GameManager {
                                     for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 1) {
                                             counterAbyss = true;
+                                            programmerTemp.dropTool(tool);
                                             break;
                                         }
                                     }
@@ -1094,28 +1088,27 @@ public class GameManager {
 
         //  System.out.println("COUNT : " + count);
 
-        if (verbose) {
-            System.out.println(getImagePng(programmerTemp.getPos()));
-        }
+
         game.setCurrentPlayerID(ids.get(count));
-        if (verbose) {
-            System.out.println(getImagePng(programmerTemp.getPos()));
-        }
-        if (verbose) {
-            System.out.println("after move :  next player = " + getCurrentPlayerID());
-            System.out.println("__________________________________________________________");
-        }
+
+
         //Troco de turno incrementando os turnos terminados
         game.nextShift();
 
+       // System.out.println(programmerTemp);
 
         if (isTool) {
-            return "Parabéns, apanhou uma ferramenta !!";
+           // System.out.println("TOOL");
+            return "Parabéns, apanhaste uma ferramenta !!";
 
         } else if (isAbyss) {
-            return "Ohhh, caiu num abismo !!";
+            //System.out.println("ABISMO");
+            return "Ohhh, caiste num abismo !!";
+        } else if(programmerTemp.isStuck()) {
+            //System.out.println("PRESO");
+            return "Estás preso! Pode ser que tenhas sorte e alguém te tire daí !";
         } else {
-          //  System.out.println("REACT = null");
+           // System.out.println("NULL");
             return null;
         }
 
@@ -1137,34 +1130,6 @@ public class GameManager {
         }
 
         return false;
-/*
-
-        if (programmers.size() == 1){
-            return true;
-        }
-
-        // Se algum jogador chegar à ultima casa do mapa ,
-        for (Programmer p : programmers.values()) {
-            if (p.getPos() == board.getTamanho()) {
-
-                //programerList.addAll(programmers.values());
-
-                if (!winnerHasBeenSet) {
-
-                    //Declaro o Vencedor
-                    game.setWinner(p.getName());
-                    winnerHasBeenSet = true;
-                    programerList.add(p);
-
-                    return false;
-                }
-
-                programerList.add(p);
-                programmers.remove(p.getId());
-            }
-        }
-
-        return false;*/
     }
 
     public List<String> getGameResults() {
@@ -1183,7 +1148,6 @@ public class GameManager {
             gameResults.add("");
             gameResults.add("RESTANTES");
 
-            //programerList.sort((p1, p2) -> Integer.compare(p2.getPos(), p1.getPos()));
 
             programerList.sort((p1, p2) -> {
                 if (p1.getPos() < p2.getPos()) {
