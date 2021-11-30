@@ -14,8 +14,6 @@ public class Programmer {
     private List<Integer> casasPercorridasList = new ArrayList<>();
     private List<Tool> tools = new ArrayList<>();
     private boolean outOfGame = false;
-    private boolean toolAlreadyExists = false;
-
     private boolean stuck = false;
 
     //************* Constructors ************************
@@ -95,7 +93,6 @@ public class Programmer {
     }
     public boolean catchTool(Tool tool){
 
-
         if (tools.contains(tool)){
             return false;
         }
@@ -113,9 +110,6 @@ public class Programmer {
         }
     }
 
-    public boolean isToolAlreadyExists() {
-        return toolAlreadyExists;
-    }
 
 
     public String toString() {

@@ -2,6 +2,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public  class AuxFunctions {
 
@@ -65,16 +66,16 @@ public  class AuxFunctions {
                 return  "";
         }
     }
-    public static boolean isAbyss(HashMap<Integer, Abyss> hashAbyss, int pos) {
-        for (Abyss abyss : hashAbyss.values()) {
+    public static boolean isAbyss(List<Abyss> listAbyss, int pos) {
+        for (Abyss abyss : listAbyss) {
             if (abyss.getPos() == pos) {
                 return true;
             }
         }
         return false;
     }
-    public static int setIdAbyss(HashMap<Integer, Abyss> hashAbyss,int pos) {
-        for (Abyss abyss : hashAbyss.values()) {
+    public static int setIdAbyss(List<Abyss> listAbyss,int pos) {
+        for (Abyss abyss : listAbyss) {
             if (abyss.getPos() == pos) {
                 return abyss.getId();
             }
@@ -82,8 +83,8 @@ public  class AuxFunctions {
         return -1;
     }
 
-    public static Tool setTool(HashMap<Integer, Tool> hashTools,int pos) {
-        for (Tool toolTemp : hashTools.values()) {
+    public static Tool setTool(List<Tool> listTools,int pos) {
+        for (Tool toolTemp : listTools) {
             if (toolTemp.getPos() == pos) {
                 return toolTemp;
             }
@@ -117,8 +118,8 @@ public  class AuxFunctions {
 
         }
     }
-    public static boolean isTool(HashMap<Integer, Tool> hashTools,int pos) {
-        for (Tool toolTemp : hashTools.values()) {
+    public static boolean isTool(List<Tool> listTools,int pos) {
+        for (Tool toolTemp : listTools) {
             if (toolTemp.getPos() == pos) {
 
                 return true;

@@ -20,9 +20,9 @@ public class GameManager {
     //Lista de Ids dos programmers que uso para manipular
     List<Integer> idProgrammers = new ArrayList<>();
     // Hash< ID , ABYSS > de abismos
-    HashMap<Integer, Abyss> abysses = new HashMap<>();
+    List<Abyss> abysses = new ArrayList<>();
     // Hash< ID , TOOL > de ferramentas
-    HashMap<Integer, Tool> tools = new HashMap<>();
+    List<Tool> tools = new ArrayList<>();
     int idsCasas;
     boolean canCatch = false;
     Board board = new Board();
@@ -48,7 +48,7 @@ public class GameManager {
 
 
         // Se houver um abismo na posicao POSITION , retorna a img que pertence
-        for (Abyss abyss : abysses.values()) {
+        for (Abyss abyss : abysses) {
             if (abyss.getPos() == position) {
 
                 switch (abyss.getId()) {
@@ -90,7 +90,7 @@ public class GameManager {
         }
 
         // Se houver uma tool na posicao POSITION , retorna a img que pertence
-        for (Tool tool : tools.values()) {
+        for (Tool tool : tools) {
             if (tool.getPos() == position) {
 
                 switch (tool.getId()) {
@@ -137,14 +137,14 @@ public class GameManager {
             return null;
         }
 
-        for (Abyss a : abysses.values()) {
+        for (Abyss a : abysses) {
             if (a.getPos() == position) {
                 return a.toString();
             }
         }
 
 
-        for (Tool t : tools.values()) {
+        for (Tool t : tools) {
             if (t.getPos() == position) {
                 return t.toString();
             }
@@ -473,11 +473,11 @@ public class GameManager {
                 }
 
                 if (abyssAlert) {
-                    abysses.put(idAbyss, new Abyss(idAbyss, AuxFunctions.setTitleAbyss(idAbyss), posAbyss));
+                    abysses.add(new Abyss(idAbyss, AuxFunctions.setTitleAbyss(idAbyss), posAbyss));
                     continue;
                 }
 
-                tools.put(idTool, new Tool(idTool, AuxFunctions.setTitleTool(idTool), posTool));
+                tools.add(new Tool(idTool, AuxFunctions.setTitleTool(idTool), posTool));
 
 
             }
@@ -801,7 +801,7 @@ public class GameManager {
         Programmer programmerTemp = programmers.get(game.getCurrentPlayerID());
 
 
-        for (Tool tool : tools.values()) {
+        for (Tool tool : tools) {
             if (programmerTemp.getPos() == tool.getPos()) {
                 isTool = true;
                 break;
@@ -811,7 +811,7 @@ public class GameManager {
         if (!programmerTemp.isStuck()) {
             if (!isTool) {
 
-                for (Abyss abyss : abysses.values()) {
+                for (Abyss abyss : abysses) {
                     if (programmers.containsKey(programmerTemp.getId())) {
 
                         if (programmerTemp.getPos() == abyss.getPos()) {
@@ -948,16 +948,17 @@ public class GameManager {
                                     }
 
                                     programmerListGameResults.add(programmerTemp);
-                                    programmersOutOfGame.put(game.getCurrentPlayerID(),
-                                            programmers.get(game.getCurrentPlayerID()));
 
                                     programmers.get(game.getCurrentPlayerID()).setOutOfGame();
 
+                                    programmersOutOfGame.put(game.getCurrentPlayerID(),
+                                            programmers.get(game.getCurrentPlayerID()));
+
                                     idProgrammers.remove(indexAuxToRemoveID);
-                                    // programerList.remove(programmers.get(game.getCurrentPlayerID()));
+
+
                                     programmers.remove(game.getCurrentPlayerID());
                                     game.removeOneCount();
-                                    //game.count--;
 
 
                                     break;
@@ -1084,10 +1085,9 @@ public class GameManager {
 
     public List<String> getGameResults() {
 
-        ArrayList<String> gameResults = new ArrayList<>();
+        List<String> gameResults = new ArrayList<>();
 
         try {
-
             gameResults.add("O GRANDE JOGO DO DEISI");
             gameResults.add("");
             gameResults.add("NR. DE TURNOS");
@@ -1097,7 +1097,6 @@ public class GameManager {
             gameResults.add(game.getWinner());
             gameResults.add("");
             gameResults.add("RESTANTES");
-
 
             programmerListGameResults.sort((p1, p2) -> {
                 if (p1.getPos() < p2.getPos()) {
@@ -1109,22 +1108,17 @@ public class GameManager {
                 }
             });
 
-            for (Programmer i : programmerListGameResults) {
+            for (Programmer programmer : programmerListGameResults) {
                 //se o nome do programer é o winner, passo à frente
-                if (i.getName().equals(game.getWinner())) {
+                if (programmer.getName().equals(game.getWinner())) {
                     continue;
                 }
-
-                gameResults.add(i.getName() + " " + i.getPos());
+                gameResults.add(programmer.getName() + " " + programmer.getPos());
             }
 
         } catch (Exception e) {
-
             gameResults.clear();
-
         }
-
-
         return gameResults;
     }
 
