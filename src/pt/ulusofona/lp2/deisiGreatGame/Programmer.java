@@ -93,16 +93,16 @@ public class Programmer {
     }
     public boolean catchTool(Tool tool){
 
-        if (tools.contains(tool)){
-            return false;
-        }
+        if (tool != null) {
+            for (Tool toolz : tools) {
+                if (toolz.getId() == tool.getId()) {
+                    return false;
+                }
+            }
 
-        if (tool != null && !tools.contains(tool)){
-
-            tools.add(tool);
-            return true;
         }
-        return false;
+        tools.add(tool);
+        return true;
     }
     public void dropTool(Tool tool){
         if (tool != null){

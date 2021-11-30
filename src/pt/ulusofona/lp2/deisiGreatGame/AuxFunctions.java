@@ -66,16 +66,16 @@ public  class AuxFunctions {
                 return  "";
         }
     }
-    public static boolean isAbyss(List<Abyss> listAbyss, int pos) {
-        for (Abyss abyss : listAbyss) {
+    public static boolean isAbyss(List<Abyss> hashAbyss, int pos) {
+        for (Abyss abyss : hashAbyss) {
             if (abyss.getPos() == pos) {
                 return true;
             }
         }
         return false;
     }
-    public static int setIdAbyss(List<Abyss> listAbyss,int pos) {
-        for (Abyss abyss : listAbyss) {
+    public static int setIdAbyss(List<Abyss>hashAbyss,int pos) {
+        for (Abyss abyss : hashAbyss) {
             if (abyss.getPos() == pos) {
                 return abyss.getId();
             }
@@ -83,8 +83,8 @@ public  class AuxFunctions {
         return -1;
     }
 
-    public static Tool setTool(List<Tool> listTools,int pos) {
-        for (Tool toolTemp : listTools) {
+    public static Tool setTool(List<Tool>hashTools,int pos) {
+        for (Tool toolTemp : hashTools) {
             if (toolTemp.getPos() == pos) {
                 return toolTemp;
             }
@@ -118,8 +118,8 @@ public  class AuxFunctions {
 
         }
     }
-    public static boolean isTool(List<Tool> listTools,int pos) {
-        for (Tool toolTemp : listTools) {
+    public static boolean isTool(List<Tool>hashTools,int pos) {
+        for (Tool toolTemp : hashTools) {
             if (toolTemp.getPos() == pos) {
 
                 return true;

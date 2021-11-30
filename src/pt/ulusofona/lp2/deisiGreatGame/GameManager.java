@@ -948,17 +948,18 @@ public class GameManager {
                                     }
 
                                     programmerListGameResults.add(programmerTemp);
-
                                     programmers.get(game.getCurrentPlayerID()).setOutOfGame();
 
                                     programmersOutOfGame.put(game.getCurrentPlayerID(),
                                             programmers.get(game.getCurrentPlayerID()));
 
+
+
                                     idProgrammers.remove(indexAuxToRemoveID);
-
-
+                                    // programerList.remove(programmers.get(game.getCurrentPlayerID()));
                                     programmers.remove(game.getCurrentPlayerID());
                                     game.removeOneCount();
+                                    //game.count--;
 
 
                                     break;
@@ -1017,10 +1018,10 @@ public class GameManager {
             }
         }
 
-       /* if (programmerTemp.getPos() >= 31) {
+       /*if (programmerTemp.getPos() >= 31) {
             programmerTemp.setPos(1);
-        }*/
-
+        }
+*/
         // Incremento o count para ir buscar o proximo posicao no array IDS
         game.addOneCount();
 
@@ -1038,28 +1039,28 @@ public class GameManager {
         game.nextShift();
 
        // System.out.println(programmerTemp);
-       // System.out.println(programmerTemp.getTools().size());
+        //System.out.println(programmerTemp.getTools().size());
 
         if (isTool && !canCatch) {
 
-           // System.out.println("Já tens isto zé");
+          //  System.out.println("Já tens isto zé");
             return "Já tens esta ferramenta, siga para a próxima !";
 
 
         } else if (isTool) {
-         //   System.out.println("TOOL");
+          //  System.out.println("TOOL");
             return "Parabéns, apanhaste uma ferramenta !!";
 
         } else if (isAbyss) {
-           // System.out.println("ABISMO");
+          //  System.out.println("ABISMO");
             return "Ohhh, caiste num abismo !!";
 
         } else if (programmerTemp.isStuck()) {
-          //  System.out.println("PRESO");
+         //  System.out.println("PRESO");
             return "Estás preso em Ciclos Infinitos! Pode ser que tenhas sorte e alguém te tire daí !";
 
         }
-      //  System.out.println("NULL");
+       // System.out.println("NULL");
         return null;
 
 
@@ -1085,9 +1086,10 @@ public class GameManager {
 
     public List<String> getGameResults() {
 
-        List<String> gameResults = new ArrayList<>();
+        ArrayList<String> gameResults = new ArrayList<>();
 
         try {
+
             gameResults.add("O GRANDE JOGO DO DEISI");
             gameResults.add("");
             gameResults.add("NR. DE TURNOS");
@@ -1097,6 +1099,7 @@ public class GameManager {
             gameResults.add(game.getWinner());
             gameResults.add("");
             gameResults.add("RESTANTES");
+
 
             programmerListGameResults.sort((p1, p2) -> {
                 if (p1.getPos() < p2.getPos()) {
@@ -1108,17 +1111,22 @@ public class GameManager {
                 }
             });
 
-            for (Programmer programmer : programmerListGameResults) {
+            for (Programmer i : programmerListGameResults) {
                 //se o nome do programer é o winner, passo à frente
-                if (programmer.getName().equals(game.getWinner())) {
+                if (i.getName().equals(game.getWinner())) {
                     continue;
                 }
-                gameResults.add(programmer.getName() + " " + programmer.getPos());
+
+                gameResults.add(i.getName() + " " + i.getPos());
             }
 
         } catch (Exception e) {
+
             gameResults.clear();
+
         }
+
+
         return gameResults;
     }
 
