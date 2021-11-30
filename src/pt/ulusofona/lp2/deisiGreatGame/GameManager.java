@@ -20,7 +20,7 @@ public class GameManager {
     //Lista de Ids dos programmers que uso para manipular
     List<Integer> idProgrammers = new ArrayList<>();
     // Hash< ID , ABYSS > de abismos
-    List<Abyss> abysses = new ArrayList<>();
+    HashMap<Integer, Abyss> abysses = new HashMap<>();
     // Hash< ID , TOOL > de ferramentas
     List<Tool> tools = new ArrayList<>();
     int idsCasas;
@@ -48,7 +48,7 @@ public class GameManager {
 
 
         // Se houver um abismo na posicao POSITION , retorna a img que pertence
-        for (Abyss abyss : abysses) {
+        for (Abyss abyss : abysses.values()) {
             if (abyss.getPos() == position) {
 
                 switch (abyss.getId()) {
@@ -137,7 +137,7 @@ public class GameManager {
             return null;
         }
 
-        for (Abyss a : abysses) {
+        for (Abyss a : abysses.values()) {
             if (a.getPos() == position) {
                 return a.toString();
             }
@@ -473,7 +473,7 @@ public class GameManager {
                 }
 
                 if (abyssAlert) {
-                    abysses.add(new Abyss(idAbyss, AuxFunctions.setTitleAbyss(idAbyss), posAbyss));
+                    abysses.put(idAbyss, new Abyss(idAbyss, AuxFunctions.setTitleAbyss(idAbyss), posAbyss));
                     continue;
                 }
 
@@ -800,7 +800,7 @@ public class GameManager {
         boolean isAbyss = false;
         Programmer programmerTemp = programmers.get(game.getCurrentPlayerID());
 
-
+       // System.out.println(programmerTemp.getPos());
         for (Tool tool : tools) {
             if (programmerTemp.getPos() == tool.getPos()) {
                 isTool = true;
@@ -811,7 +811,7 @@ public class GameManager {
         if (!programmerTemp.isStuck()) {
             if (!isTool) {
 
-                for (Abyss abyss : abysses) {
+                for (Abyss abyss : abysses.values()) {
                     if (programmers.containsKey(programmerTemp.getId())) {
 
                         if (programmerTemp.getPos() == abyss.getPos()) {
@@ -821,7 +821,9 @@ public class GameManager {
                             }
                             List<Programmer> programmersInThisPositions;
                             boolean counterAbyss = false;
+
                             switch (idsCasas) {
+
 
                                 // SYNTAX - Recua 1 casa
                                 case 0:
@@ -1038,8 +1040,8 @@ public class GameManager {
         //Troco de turno incrementando os turnos terminados
         game.nextShift();
 
-       // System.out.println(programmerTemp);
-        //System.out.println(programmerTemp.getTools().size());
+        //System.out.println(programmerTemp);
+
 
         if (isTool && !canCatch) {
 

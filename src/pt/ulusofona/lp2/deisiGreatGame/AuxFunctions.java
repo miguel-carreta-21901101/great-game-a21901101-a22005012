@@ -66,16 +66,16 @@ public  class AuxFunctions {
                 return  "";
         }
     }
-    public static boolean isAbyss(List<Abyss> hashAbyss, int pos) {
-        for (Abyss abyss : hashAbyss) {
+    public static boolean isAbyss(HashMap<Integer, Abyss> hashAbyss, int pos) {
+        for (Abyss abyss : hashAbyss.values()) {
             if (abyss.getPos() == pos) {
                 return true;
             }
         }
         return false;
     }
-    public static int setIdAbyss(List<Abyss>hashAbyss,int pos) {
-        for (Abyss abyss : hashAbyss) {
+    public static int setIdAbyss(HashMap<Integer, Abyss>hashAbyss,int pos) {
+        for (Abyss abyss : hashAbyss.values()) {
             if (abyss.getPos() == pos) {
                 return abyss.getId();
             }
