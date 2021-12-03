@@ -1,13 +1,13 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
-public class Game {
+public class GameSetting {
 
     private int currentPlayerID = 0;
     private int endedShifts = 1;
     private String winner;
     private int currentDiceShoot;
     private int count;
-    public Game() {
+    public GameSetting() {
     }
 
     // GETTERS

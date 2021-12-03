@@ -26,7 +26,7 @@ public class GameManager {
     int idsCasas;
     boolean canCatch = false;
     Board board = new Board();
-    Game game = new Game();
+    GameSetting gameSetting = new GameSetting();
 
 
     public GameManager() {
@@ -227,7 +227,7 @@ public class GameManager {
     }
 
     public int getCurrentPlayerID() {
-        return game.getCurrentPlayerID();
+        return gameSetting.getCurrentPlayerID();
     }
     //**********************************************************************************************
 
@@ -238,7 +238,7 @@ public class GameManager {
         programmers.clear();
         abysses.clear();
         tools.clear();
-        game = new Game();
+        gameSetting = new GameSetting();
         board = new Board();
 
     }
@@ -318,7 +318,7 @@ public class GameManager {
                             return false;
                         }
 
-                        linguagensProgramacao = AuxFunctions.ordernarLinguagensProgramacao(playerInfo[i][j]);
+                        linguagensProgramacao = AuxCode.ordernarLinguagensProgramacao(playerInfo[i][j]);
 
                         break;
 
@@ -473,11 +473,16 @@ public class GameManager {
                 }
 
                 if (abyssAlert) {
-                    abysses.put(idAbyss, new Abyss(idAbyss, AuxFunctions.setTitleAbyss(idAbyss), posAbyss));
+                    abysses.put(idAbyss, new Abyss(idAbyss, AuxCode.setTitleAbyss(idAbyss), posAbyss));
                     continue;
                 }
 
-                tools.add(new Tool(idTool, AuxFunctions.setTitleTool(idTool), posTool));
+                Tool tool =  Tool.createTool(idTool, AuxCode.setTitleTool(idTool), posTool);
+                if (tool == null){
+                    return false;
+                }
+
+                tools.add(tool);
 
 
             }
@@ -488,7 +493,7 @@ public class GameManager {
         Collections.sort(idProgrammers);
 
         //Declaro que o primeiro player a jogar é o que está em primeiro lugar , pois está ordenado do menor -> maior
-        game.setCurrentPlayerID(idProgrammers.get(0));
+        gameSetting.setCurrentPlayerID(idProgrammers.get(0));
 
         //Declaro o tamanho do mapa
         board.setTamanho(worldSize);
@@ -573,7 +578,7 @@ public class GameManager {
                             return false;
                         }
 
-                        linguagensProgramacao = AuxFunctions.ordernarLinguagensProgramacao(playerInfo[i][j]);
+                        linguagensProgramacao = AuxCode.ordernarLinguagensProgramacao(playerInfo[i][j]);
 
                         break;
 
@@ -654,7 +659,7 @@ public class GameManager {
         Collections.sort(idProgrammers);
 
         //Declaro que o primeiro player a jogar é o que está em primeiro lugar , pois está ordenado do menor -> maior
-        game.setCurrentPlayerID(idProgrammers.get(0));
+        gameSetting.setCurrentPlayerID(idProgrammers.get(0));
 
         //Declaro o tamanho do mapa
         board.setTamanho(worldSize);
@@ -700,9 +705,9 @@ public class GameManager {
             canCatch = false;
 
             // Se houver uma tool nessa casa E o player ainda nao tenha adquirido esta tool , ele apanha a tool.
-            if (AuxFunctions.isTool(tools, posAux)) {
-                if (programmerTemp.catchTool(AuxFunctions.setTool(tools, posAux))) {
-                    programmerTemp.catchTool(AuxFunctions.setTool(tools, posAux));
+            if (AuxCode.isTool(tools, posAux)) {
+                if (programmerTemp.catchTool(AuxCode.setTool(tools, posAux))) {
+                    programmerTemp.catchTool(AuxCode.setTool(tools, posAux));
                     canCatch = true;
                 }
 
@@ -712,8 +717,8 @@ public class GameManager {
             }
 
             // Se existir um abismo na casa
-            if (AuxFunctions.isAbyss(abysses, posAux)) {
-                idAbyss = AuxFunctions.setIdAbyss(abysses, posAux);
+            if (AuxCode.isAbyss(abysses, posAux)) {
+                idAbyss = AuxCode.setIdAbyss(abysses, posAux);
 
                 //  System.out.println("ABISMO POS : " + posAux);
 
@@ -728,7 +733,7 @@ public class GameManager {
 
                     case 1:
                         idsCasas = 1;
-                        game.setDiceShoot(nrSpaces);
+                        gameSetting.setDiceShoot(nrSpaces);
                         break;
 
 
@@ -786,7 +791,7 @@ public class GameManager {
 
             }
 
-            AuxFunctions.changePosAndCasa(posAux, programmers, programmerTemp);
+            AuxCode.changePosAndCasa(posAux, programmers, programmerTemp);
 
         }
 
@@ -798,7 +803,7 @@ public class GameManager {
 
         boolean isTool = false;
         boolean isAbyss = false;
-        Programmer programmerTemp = programmers.get(game.getCurrentPlayerID());
+        Programmer programmerTemp = programmers.get(gameSetting.getCurrentPlayerID());
 
        // System.out.println(programmerTemp.getPos());
         for (Tool tool : tools) {
@@ -835,7 +840,7 @@ public class GameManager {
                                         }
                                     }
                                     if (!counterAbyss) {
-                                        AuxFunctions.changePosAndCasa(programmerTemp.getPos() - 1,
+                                        AuxCode.changePosAndCasa(programmerTemp.getPos() - 1,
                                                 programmers, programmerTemp);
                                     }
                                     break;
@@ -852,8 +857,8 @@ public class GameManager {
                                     }
 
                                     if (!counterAbyss) {
-                                        double auxSpaces = (double) game.getCurrentDiceShoot() / 2;
-                                        AuxFunctions.changePosAndCasa(programmerTemp.getPos() -
+                                        double auxSpaces = (double) gameSetting.getCurrentDiceShoot() / 2;
+                                        AuxCode.changePosAndCasa(programmerTemp.getPos() -
                                                         (int) Math.floor(auxSpaces),
                                                 programmers, programmerTemp);
                                     }
@@ -872,7 +877,7 @@ public class GameManager {
                                     if (!counterAbyss) {
 
 
-                                        AuxFunctions.changePosAndCasa(programmerTemp.getPos() - 2,
+                                        AuxCode.changePosAndCasa(programmerTemp.getPos() - 2,
                                                 programmers, programmerTemp);
                                     }
                                     break;
@@ -889,7 +894,7 @@ public class GameManager {
                                     }
 
                                     if (!counterAbyss) {
-                                        AuxFunctions.changePosAndCasa(programmerTemp.getPos() - 3,
+                                        AuxCode.changePosAndCasa(programmerTemp.getPos() - 3,
                                                 programmers, programmerTemp);
                                     }
                                     break;
@@ -898,7 +903,7 @@ public class GameManager {
                                 //CRASH - volta à primeira casa
                                 case 4:
 
-                                    AuxFunctions.changePosAndCasa(1, programmers, programmerTemp);
+                                    AuxCode.changePosAndCasa(1, programmers, programmerTemp);
 
                                     break;
 
@@ -915,7 +920,7 @@ public class GameManager {
                                     }
 
                                     if (!counterAbyss) {
-                                        AuxFunctions.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
+                                        AuxCode.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
                                                 programmerTemp.getCasasPercorridasList().size() - 2), programmers,
                                                 programmerTemp);
                                     }
@@ -932,7 +937,7 @@ public class GameManager {
                                         }
                                     }
                                     if (!counterAbyss) {
-                                        AuxFunctions.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
+                                        AuxCode.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
                                                 programmerTemp.getCasasPercorridasList().size() - 3), programmers,
                                                 programmerTemp);
                                     }
@@ -943,26 +948,23 @@ public class GameManager {
 
                                     int indexAuxToRemoveID = 0;
                                     for (Integer i : idProgrammers) {
-                                        if (i == game.getCurrentPlayerID()) {
+                                        if (i == gameSetting.getCurrentPlayerID()) {
                                             break;
                                         }
                                         indexAuxToRemoveID++;
                                     }
 
                                     programmerListGameResults.add(programmerTemp);
-                                    programmers.get(game.getCurrentPlayerID()).setOutOfGame();
+                                    programmers.get(gameSetting.getCurrentPlayerID()).setOutOfGame();
 
-                                    programmersOutOfGame.put(game.getCurrentPlayerID(),
-                                            programmers.get(game.getCurrentPlayerID()));
+                                    programmersOutOfGame.put(gameSetting.getCurrentPlayerID(),
+                                            programmers.get(gameSetting.getCurrentPlayerID()));
 
 
 
                                     idProgrammers.remove(indexAuxToRemoveID);
-                                    // programerList.remove(programmers.get(game.getCurrentPlayerID()));
-                                    programmers.remove(game.getCurrentPlayerID());
-                                    game.removeOneCount();
-                                    //game.count--;
-
+                                    programmers.remove(gameSetting.getCurrentPlayerID());
+                                    gameSetting.removeOneCount();
 
                                     break;
 
@@ -1004,7 +1006,7 @@ public class GameManager {
 
                                     if (programmersInThisPositions.size() > 1) {
                                         for (Programmer p : programmersInThisPositions) {
-                                            AuxFunctions.changePosAndCasa(p.getPos() - 3, programmers, p);
+                                            AuxCode.changePosAndCasa(p.getPos() - 3, programmers, p);
                                         }
                                     }
 
@@ -1025,20 +1027,20 @@ public class GameManager {
         }
 */
         // Incremento o count para ir buscar o proximo posicao no array IDS
-        game.addOneCount();
+        gameSetting.addOneCount();
 
         // Se o count chegar ao ids.size , comeca de novo para nao dar index out of bound
-        if (game.getCount() >= idProgrammers.size()) {
-            game.setCount(0);
+        if (gameSetting.getCount() >= idProgrammers.size()) {
+            gameSetting.setCount(0);
 
         }
 
         //Declaro o proximo jogador a jogar
-        game.setCurrentPlayerID(idProgrammers.get(game.getCount()));
+        gameSetting.setCurrentPlayerID(idProgrammers.get(gameSetting.getCount()));
 
 
         //Troco de turno incrementando os turnos terminados
-        game.nextShift();
+        gameSetting.nextShift();
 
         //System.out.println(programmerTemp);
 
@@ -1078,7 +1080,7 @@ public class GameManager {
                 programmerListGameResults.addAll(programmers.values());
 
                 //Declaro o Vencedor
-                game.setWinner(programmer.getName());
+                gameSetting.setWinner(programmer.getName());
                 return true;
             }
         }
@@ -1095,10 +1097,10 @@ public class GameManager {
             gameResults.add("O GRANDE JOGO DO DEISI");
             gameResults.add("");
             gameResults.add("NR. DE TURNOS");
-            gameResults.add("" + game.getEndedShifts());
+            gameResults.add("" + gameSetting.getEndedShifts());
             gameResults.add("");
             gameResults.add("VENCEDOR");
-            gameResults.add(game.getWinner());
+            gameResults.add(gameSetting.getWinner());
             gameResults.add("");
             gameResults.add("RESTANTES");
 
@@ -1115,7 +1117,7 @@ public class GameManager {
 
             for (Programmer i : programmerListGameResults) {
                 //se o nome do programer é o winner, passo à frente
-                if (i.getName().equals(game.getWinner())) {
+                if (i.getName().equals(gameSetting.getWinner())) {
                     continue;
                 }
 

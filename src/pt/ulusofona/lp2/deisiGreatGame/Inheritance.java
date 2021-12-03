@@ -1,0 +1,7 @@
+package pt.ulusofona.lp2.deisiGreatGame;
+
+public class Inheritance extends Tool{
+    public Inheritance(int id, String titulo, int pos) {
+        super(id, titulo, pos);
+    }
+}

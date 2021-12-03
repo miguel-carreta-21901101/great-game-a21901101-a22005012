@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 
-public class TestGameManager {
+public class TestGameSettingManager {
 
     // fun para 2 jogadores com Infos
     private String[][] getPlayersInfo(){
@@ -30,7 +30,7 @@ public class TestGameManager {
     @Test
     public void testGameResultsSortingByPos(){
         GameManager gameMng = new GameManager();
-        Game gm = new Game();
+        GameSetting gm = new GameSetting();
 
         ArrayList<Programmer> map = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public class TestGameManager {
 
 
         gameMng.programmerListGameResults = map;
-        gameMng.game = gm;
+        gameMng.gameSetting = gm;
 
 
         ArrayList<String> expectedGameResults = new ArrayList<>();
