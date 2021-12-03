@@ -2,9 +2,6 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 public abstract class Tool extends GameHouseElement {
 
-    private boolean isRepeated;
-
-
     public Tool(int id, String titulo, int pos){
         super(id,  titulo,  pos);
      /*   this.id = id;
@@ -12,15 +9,6 @@ public abstract class Tool extends GameHouseElement {
         this.pos = pos;*/
     }
 
-
-    public boolean isRepeated() {
-        return isRepeated;
-    }
-
-
-    public void setIsRepeated(){
-        isRepeated = true;
-    }
 
     public static Tool createTool(int id, String titulo, int pos){
         switch(id){

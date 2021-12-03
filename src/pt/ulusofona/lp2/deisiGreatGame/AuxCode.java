@@ -66,6 +66,8 @@ public  class AuxCode {
                 return  "";
         }
     }
+
+
     public static boolean isAbyss(HashMap<Integer, Abyss> hashAbyss, int pos) {
         for (Abyss abyss : hashAbyss.values()) {
             if (abyss.getPos() == pos) {

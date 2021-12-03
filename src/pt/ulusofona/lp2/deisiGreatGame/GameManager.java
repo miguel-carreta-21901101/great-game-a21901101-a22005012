@@ -473,7 +473,13 @@ public class GameManager {
                 }
 
                 if (abyssAlert) {
-                    abysses.put(idAbyss, new Abyss(idAbyss, AuxCode.setTitleAbyss(idAbyss), posAbyss));
+
+                    Abyss abyss  =  Abyss.createAbyss(idAbyss, AuxCode.setTitleAbyss(idAbyss), posAbyss);
+                    if (abyss == null){
+                        return false;
+                    }
+
+                    abysses.put(idAbyss, abyss);
                     continue;
                 }
 
@@ -1000,6 +1006,7 @@ public class GameManager {
                                     break;
 
 
+                                    //Segmenatation Fault
                                 case 9:
 
                                     programmersInThisPositions = getProgrammers(programmerTemp.getPos());
