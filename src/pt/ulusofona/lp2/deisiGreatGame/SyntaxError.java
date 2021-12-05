@@ -9,4 +9,5 @@ public class SyntaxError extends Abyss{
     public String getImagePng(){
         return "syntax.png";
     }
+
 }

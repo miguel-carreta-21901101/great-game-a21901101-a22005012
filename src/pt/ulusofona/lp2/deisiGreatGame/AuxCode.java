@@ -20,6 +20,7 @@ public  class AuxCode {
 
         return linguagensOrdenadas.substring(0, linguagensOrdenadas.length() -2);
     }
+
     public static void changePosAndCasa(int pos, HashMap<Integer, Programmer> programmers, Programmer programmer) {
         programmers.get(programmer.getId()).setPos(pos);
         programmers.get(programmer.getId()).adicionaCasa(pos);

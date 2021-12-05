@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import java.util.HashMap;
+
 public abstract class Abyss extends GameHouseElement {
 
     public Abyss(int id, String title, int pos){

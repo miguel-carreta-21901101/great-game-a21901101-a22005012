@@ -50,17 +50,13 @@ public class GameManager {
         // Se houver um abismo na posicao POSITION , retorna a img que pertence
         for (Abyss abyss : abysses.values()) {
             if (abyss.getPos() == position) {
-
                return abyss.getImagePng();
-
-
             }
         }
 
         // Se houver uma tool na posicao POSITION , retorna a img que pertence
         for (Tool tool : tools) {
             if (tool.getPos() == position) {
-
                 return tool.getImagePng();
 
             }
@@ -194,162 +190,14 @@ public class GameManager {
 
     public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) {
 
-        // Reset ao jogo
-        resetGame();
-
-        HashSet<Integer> idsRepetidos = new HashSet<>();
-        HashSet<String> coresRepetidas = new HashSet<>();
-        int countPlayers = 0;
-        int idPlayers = 0;
-        String nome = "";
-        String linguagensProgramacao = "";
-        String cor = "";
-
-
-        if (worldSize < 1) {
-            return false;
-        }
-
-        int i, j;
-
-
-        for (i = 0; i < playerInfo.length; i++) {
-            if (playerInfo[0] == null) {
-                return false;
-            }
-
-            //Percorre as informaçoes de cada programador
-            for (j = 0; j <= 3; j++) {
-
-                //Se J for null E o num players inferior a 2, false
-                if (playerInfo[i][j] == null && countPlayers < 2) {
-                    return false;
-
-                    //Se J for null E tiver o num players suficiente , true
-                } else if (playerInfo[i][j] == null && countPlayers >= 2) {
-                    return true;
-                }
-
-                switch (j) {
-
-                    // ID
-                    case 0:
-
-                        // Se o ID  for repetido OU  menor que 0 , false
-                        if (idsRepetidos.contains(Integer.parseInt(playerInfo[i][j])) ||
-                                (Integer.parseInt(playerInfo[i][j]) < 0)) {
-
-                            return false;
-                        }
-                        //adiciona o ID ao Hashset para validar se ha repetidos
-                        idsRepetidos.add(Integer.parseInt(playerInfo[i][j]));
-                        idPlayers = Integer.parseInt(playerInfo[i][j]);
-
-                        //Adiciono ao array de ids para facilitar na escolha do CurrentPlayer mais à frente
-                        idProgrammers.add(idPlayers);
-
-                        break;
-
-                    // NOME
-                    case 1:
-
-                        // Se o NOME for null OU vazio , false
-                        if (playerInfo[i][j] == null || playerInfo[i][j].length() == 0) {
-                            return false;
-                        }
-                        nome = playerInfo[i][j];
-
-                        break;
-
-                    // LISTA LINGUAGENS DE PROGRAMACAO
-                    case 2:
-                        if (playerInfo[i][j] == null || playerInfo[i][j].length() == 0) {
-                            return false;
-                        }
-
-                        linguagensProgramacao = AuxCode.ordernarLinguagensProgramacao(playerInfo[i][j]);
-
-                        break;
-
-                    // COR
-                    case 3:
-
-                        //Se a cor for diferente das possiveis, false
-                        if (!(playerInfo[i][j].equals("Purple") || playerInfo[i][j].equals("Green") ||
-                                playerInfo[i][j].equals("Brown") || playerInfo[i][j].equals("Blue"))) {
-                            return false;
-
-                        }
-                        // Se existir uma repetida, false
-                        if (coresRepetidas.contains(playerInfo[i][j])) {
-                            return false;
-                        }
-
-                        //Adiciona a cor ao HashSet para validar as cores repetidas
-                        coresRepetidas.add(playerInfo[i][j]);
-                        cor = playerInfo[i][j];
-                        break;
-
-                    default:
-                        break;
-
-                }
-            }
-
-            countPlayers++;
-
-            // Crio um obj ProgrammerColor  e adiciono ao hashmap
-
-            switch (cor) {
-                case "Purple": {
-                    ProgrammerColor color = ProgrammerColor.PURPLE;
-                    programmers.put(idPlayers, new Programmer(idPlayers, nome, linguagensProgramacao, color));
-
-                    break;
-                }
-                case "Blue": {
-                    ProgrammerColor color = ProgrammerColor.BLUE;
-                    programmers.put(idPlayers, new Programmer(idPlayers, nome, linguagensProgramacao, color));
-
-                    break;
-                }
-                case "Green": {
-                    ProgrammerColor color = ProgrammerColor.GREEN;
-                    programmers.put(idPlayers, new Programmer(idPlayers, nome, linguagensProgramacao, color));
-
-                    break;
-                }
-                case "Brown": {
-                    ProgrammerColor color = ProgrammerColor.BROWN;
-                    programmers.put(idPlayers, new Programmer(idPlayers, nome, linguagensProgramacao, color));
-                    break;
-                }
-
-                default:
-                    break;
-
-            }
-
-
-        }
-
-        totalProgrammers.addAll(programmers.values());
-        // O num de players entre 2 - 4
-        if (countPlayers <= 1 || countPlayers > 4) {
-            return false;
-        }
-
-        // o tamanho do board tem que ser no minimo 2 peças por player .
-        if (worldSize < (countPlayers * 2)) {
-            return false;
-        }
 
         //              ABYSSES & TOOLS
 
+        createInitialBoard(playerInfo, worldSize);
 
         int idAbyss = 0;
         int idTool = 0;
-
+        int i, j;
         int posAbyss = 0;
         int posTool = 0;
 
@@ -443,15 +291,6 @@ public class GameManager {
             }
 
         }
-
-        // Ordeno o array de IDS para saber que está por ordem do mais pequeno para o maior
-        Collections.sort(idProgrammers);
-
-        //Declaro que o primeiro player a jogar é o que está em primeiro lugar , pois está ordenado do menor -> maior
-        gameSetting.setCurrentPlayerID(idProgrammers.get(0));
-
-        //Declaro o tamanho do mapa
-        board.setTamanho(worldSize);
 
         return true;
 
@@ -935,6 +774,7 @@ public class GameManager {
                                     }
                                     int count = 0;
                                     if (!counterAbyss) {
+
                                         programmerTemp.stuckedByInfiniteCircle();
 
                                         programmersInThisPositions = getProgrammers(programmerTemp.getPos());
