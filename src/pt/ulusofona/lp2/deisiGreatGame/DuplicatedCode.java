@@ -5,7 +5,7 @@ public class DuplicatedCode extends Abyss{
         super(id, titulo, pos);
     }
     @Override
-    public String getTitleInfo(){
+    public String toString(){
         return title;
     }
 

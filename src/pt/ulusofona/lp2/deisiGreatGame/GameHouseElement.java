@@ -10,7 +10,7 @@ public abstract class GameHouseElement {
         this.title = title;
         this.pos = pos;
     }
-    public abstract String getTitleInfo();
+
 
     public abstract String getImagePng();
 
@@ -21,6 +21,5 @@ public abstract class GameHouseElement {
     public int getPos() {
         return pos;
     }
-
-
+    public  String toString(){return title;}
 }

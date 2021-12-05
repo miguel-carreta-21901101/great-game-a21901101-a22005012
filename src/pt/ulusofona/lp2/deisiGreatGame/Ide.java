@@ -6,11 +6,6 @@ public class Ide extends Tool{
     }
 
     @Override
-    public String getTitleInfo(){
-        return title;
-    }
-
-    @Override
     public String getImagePng(){
         return "IDE.png";
     }

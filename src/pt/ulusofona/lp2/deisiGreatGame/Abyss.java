@@ -39,5 +39,4 @@ public abstract class Abyss extends GameHouseElement {
     }}
 
 
-
 }

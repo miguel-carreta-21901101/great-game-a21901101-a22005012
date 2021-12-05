@@ -6,7 +6,7 @@ public class Crash extends Abyss{
     }
 
     @Override
-    public String getTitleInfo(){
+    public String toString(){
         return title;
     }
 

@@ -85,14 +85,14 @@ public class GameManager {
 
         for (Abyss abyss : abysses.values()) {
             if (abyss.getPos() == position) {
-                return abyss.getTitleInfo();
+                return abyss.toString();
             }
         }
 
 
         for (Tool tool : tools) {
             if (tool.getPos() == position) {
-                return tool.getTitleInfo();
+                return tool.toString();
             }
         }
 
@@ -977,10 +977,6 @@ public class GameManager {
             }
         }
 
-       /*if (programmerTemp.getPos() >= 31) {
-            programmerTemp.setPos(1);
-        }
-*/
         // Incremento o count para ir buscar o proximo posicao no array IDS
         gameSetting.addOneCount();
 

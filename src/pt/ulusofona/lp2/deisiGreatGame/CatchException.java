@@ -5,7 +5,7 @@ public class CatchException extends Tool{
         super(id, titulo, pos);
     }
     @Override
-    public String getTitleInfo(){
+    public String toString(){
         return title;
     }
     @Override
