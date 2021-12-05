@@ -2,14 +2,17 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 public abstract class GameHouseElement {
     protected int id;
-    protected String titulo;
+    protected String title;
     protected int pos;
 
-    public GameHouseElement(int id, String titulo, int pos) {
+    public GameHouseElement(int id, String title, int pos) {
         this.id = id;
-        this.titulo = titulo;
+        this.title = title;
         this.pos = pos;
     }
+    public abstract String getTitleInfo();
+
+    public abstract String getImagePng();
 
     public int getId() {
         return id;
@@ -18,5 +21,6 @@ public abstract class GameHouseElement {
     public int getPos() {
         return pos;
     }
+
 
 }

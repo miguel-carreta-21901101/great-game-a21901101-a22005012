@@ -4,4 +4,14 @@ public class Crash extends Abyss{
     public Crash(int id, String titulo, int pos) {
         super(id, titulo, pos);
     }
+
+    @Override
+    public String getTitleInfo(){
+        return title;
+    }
+
+    @Override
+    public String getImagePng(){
+        return "crash.png";
+    }
 }

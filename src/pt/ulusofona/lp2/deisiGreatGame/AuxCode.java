@@ -20,12 +20,10 @@ public  class AuxCode {
 
         return linguagensOrdenadas.substring(0, linguagensOrdenadas.length() -2);
     }
-
     public static void changePosAndCasa(int pos, HashMap<Integer, Programmer> programmers, Programmer programmer) {
         programmers.get(programmer.getId()).setPos(pos);
         programmers.get(programmer.getId()).adicionaCasa(pos);
     }
-
     public static String setTitleAbyss(int id){
 
 
@@ -66,8 +64,6 @@ public  class AuxCode {
                 return  "";
         }
     }
-
-
     public static boolean isAbyss(HashMap<Integer, Abyss> hashAbyss, int pos) {
         for (Abyss abyss : hashAbyss.values()) {
             if (abyss.getPos() == pos) {
@@ -84,9 +80,8 @@ public  class AuxCode {
         }
         return -1;
     }
-
-    public static Tool setTool(List<Tool>hashTools,int pos) {
-        for (Tool toolTemp : hashTools) {
+    public static Tool setTool(List<Tool>listTool,int pos) {
+        for (Tool toolTemp : listTool) {
             if (toolTemp.getPos() == pos) {
                 return toolTemp;
             }
@@ -120,8 +115,8 @@ public  class AuxCode {
 
         }
     }
-    public static boolean isTool(List<Tool>hashTools,int pos) {
-        for (Tool toolTemp : hashTools) {
+    public static boolean isTool(List<Tool>listTools,int pos) {
+        for (Tool toolTemp : listTools) {
             if (toolTemp.getPos() == pos) {
 
                 return true;

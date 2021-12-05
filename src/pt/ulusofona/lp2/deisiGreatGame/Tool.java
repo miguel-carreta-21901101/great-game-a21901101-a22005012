@@ -2,34 +2,33 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 public abstract class Tool extends GameHouseElement {
 
-    public Tool(int id, String titulo, int pos){
-        super(id,  titulo,  pos);
+    public Tool(int id, String title, int pos){
+        super(id,  title,  pos);
      /*   this.id = id;
-        this.titulo = titulo;
+        this.title = title;
         this.pos = pos;*/
     }
 
 
-    public static Tool createTool(int id, String titulo, int pos){
+    public static Tool createTool(int id, String title, int pos){
         switch(id){
             case 0:
-                return new Inheritance(id, titulo, pos);
+                return new Inheritance(id, title, pos);
             case 1:
-                return new FunctionalProgramming(id, titulo, pos);
+                return new FunctionalProgramming(id, title, pos);
             case 2:
-                return new UnitTest(id, titulo, pos);
+                return new UnitTest(id, title, pos);
             case 3:
-                return new CatchException(id, titulo, pos);
+                return new CatchException(id, title, pos);
             case 4:
-                return new  Ide(id, titulo, pos);
+                return new  Ide(id, title, pos);
             case 5:
-                return new HelpTeacher(id, titulo, pos);
+                return new HelpTeacher(id, title, pos);
             default:
                 return null;
         }
     }
 
-    public String toString(){
-        return titulo;
-    }
+
+
 }

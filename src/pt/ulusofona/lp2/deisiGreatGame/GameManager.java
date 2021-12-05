@@ -51,41 +51,9 @@ public class GameManager {
         for (Abyss abyss : abysses.values()) {
             if (abyss.getPos() == position) {
 
-                switch (abyss.getId()) {
+               return abyss.getImagePng();
 
-                    case 0:
-                        return "syntax.png";
 
-                    case 1:
-                        return "logic.png";
-
-                    case 2:
-                        return "exception.png";
-
-                    case 3:
-                        return "file-not-found-exception.png";
-
-                    case 4:
-                        return "crash.png";
-
-                    case 5:
-                        return "duplicated-code.png";
-
-                    case 6:
-                        return "secondary-effects.png";
-
-                    case 7:
-                        return "bsod.png";
-
-                    case 8:
-                        return "infinite-loop.png";
-
-                    case 9:
-                        return "core-dumped.png";
-
-                    default:
-                        throw new IllegalArgumentException();
-                }
             }
         }
 
@@ -93,30 +61,8 @@ public class GameManager {
         for (Tool tool : tools) {
             if (tool.getPos() == position) {
 
-                switch (tool.getId()) {
+                return tool.getImagePng();
 
-                    case 0:
-                        return "inheritance.png";
-
-                    case 1:
-                        return "functional.png";
-
-                    case 2:
-                        return "unit-tests.png";
-
-                    case 3:
-                        return "catch.png";
-
-                    case 4:
-                        return "IDE.png";
-
-                    case 5:
-                        return "ajuda-professor.png";
-
-                    default:
-                        throw new IllegalArgumentException();
-
-                }
             }
         }
 
@@ -137,16 +83,16 @@ public class GameManager {
             return null;
         }
 
-        for (Abyss a : abysses.values()) {
-            if (a.getPos() == position) {
-                return a.toString();
+        for (Abyss abyss : abysses.values()) {
+            if (abyss.getPos() == position) {
+                return abyss.getTitleInfo();
             }
         }
 
 
-        for (Tool t : tools) {
-            if (t.getPos() == position) {
-                return t.toString();
+        for (Tool tool : tools) {
+            if (tool.getPos() == position) {
+                return tool.getTitleInfo();
             }
         }
 
@@ -233,9 +179,12 @@ public class GameManager {
 
 
     public void resetGame() {
-        programmerListGameResults.clear();
-        idProgrammers.clear();
+
         programmers.clear();
+        programmersOutOfGame.clear();
+        programmerListGameResults.clear();
+        totalProgrammers.clear();
+        idProgrammers.clear();
         abysses.clear();
         tools.clear();
         gameSetting = new GameSetting();
@@ -726,7 +675,6 @@ public class GameManager {
             if (AuxCode.isAbyss(abysses, posAux)) {
                 idAbyss = AuxCode.setIdAbyss(abysses, posAux);
 
-                //  System.out.println("ABISMO POS : " + posAux);
 
                 switch (idAbyss) {
 

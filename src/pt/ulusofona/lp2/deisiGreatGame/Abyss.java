@@ -1,41 +1,43 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
-public class Abyss extends GameHouseElement {
+public abstract class Abyss extends GameHouseElement {
 
-    public Abyss(int id, String titulo, int pos){
-        super(id,  titulo,  pos);
+    public Abyss(int id, String title, int pos){
+        super(id,  title,  pos);
        /* this.id = id;
-        this.titulo = titulo;
+        this.title = title;
         this.pos = pos;*/
     }
 
-    public static Abyss createAbyss(int id, String titulo, int pos){
+    public static Abyss createAbyss(int id, String title, int pos){
+
         switch(id){
 
         case 0:
-        return new SyntaxError(id, titulo, pos);
+        return new SyntaxError(id, title, pos);
         case 1:
-        return new LogicError(id, titulo, pos);
+        return new LogicError(id, title, pos);
         case 2:
-        return new ExceptionFault(id, titulo, pos);
+        return new ExceptionFault(id, title, pos);
         case 3:
-        return new FileNotFoundException(id, titulo, pos);
+        return new FileNotFoundException(id, title, pos);
         case 4:
-        return new Crash(id, titulo, pos);
+        return new Crash(id, title, pos);
         case 5:
-        return new DuplicatedCode(id, titulo, pos);
+        return new DuplicatedCode(id, title, pos);
         case 6:
-        return new SideEffect(id, titulo, pos);
+        return new SideEffect(id, title, pos);
         case 7:
-        return new BlueScreenDeath(id, titulo, pos);
+        return new BlueScreenDeath(id, title, pos);
         case 8:
-        return new InfiniteCircle(id, titulo, pos);
+        return new InfiniteLoop(id, title, pos);
         case 9:
-        return new SegmentationFault(id, titulo, pos);
+        return new SegmentationFault(id, title, pos);
 
         default:
             return null;
     }}
 
-    public String toString(){return titulo;}
+
+
 }

@@ -1,15 +1,16 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
-public class CatchException extends Tool{
-    public CatchException(int id, String titulo, int pos) {
+public class InfiniteLoop extends Abyss{
+    public InfiniteLoop(int id, String titulo, int pos) {
         super(id, titulo, pos);
     }
     @Override
     public String getTitleInfo(){
         return title;
     }
+
     @Override
     public String getImagePng(){
-        return "catch.png";
+        return "infinite-loop.png";
     }
 }
