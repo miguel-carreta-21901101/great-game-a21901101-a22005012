@@ -1,9 +1,12 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
 import static org.junit.Assert.*;
+import static pt.ulusofona.lp2.deisiGreatGame.Abyss.createAbyss;
+import static pt.ulusofona.lp2.deisiGreatGame.Tool.createTool;
 
 import org.junit.Test;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 
@@ -124,6 +127,57 @@ public class TestGameSettingManager {
         manager.moveCurrentPlayer(5);//andar o current na poss 79 5 cassas para a frente e como excedeu por 4 cassas o goal ficar no 76
         Programmer programmerThatMoved = manager.getProgrammers(false).get(0);
         assertEquals(76, programmerThatMoved.getPos());
+    }
+
+    @Test
+    public void testeCreateAbyssPos(){
+        GameManager manager = new GameManager();
+        manager.createInitialBoard(getPlayersInfo(), 80);
+        Abyss abyss0 = createAbyss(0, "Syntax Error", 1);
+        manager.abysses.put(0, abyss0);
+        //System.out.println(manager.abysses);
+        assertEquals(1, abyss0.getPos());
+
+
+    }
+    @Test
+    public void testePlayerReactAbyss(){
+        GameManager manager = new GameManager();
+        manager.createInitialBoard(getPlayersInfo(), 2);
+
+        //make abyss
+        Abyss abyss0 = createAbyss(0, "Syntax Error", 1);
+        manager.abysses.put(0, abyss0);
+
+        //make programmer
+        Programmer programmer0 = new Programmer("Steve", 1);
+        manager.gameSetting.setCurrentPlayerID(1);
+
+        assertEquals("Ohhh, caiste num abismo !!", manager.reactToAbyssOrTool());
+
+
+    }
+
+    @Test
+    public void testePlayerReactTool(){
+        GameManager manager = new GameManager();
+        manager.createInitialBoard(getPlayersInfo(), 2);
+
+        //make tool
+        Tool tool0 = createTool(0, "Inheritance", 1);
+        manager.tools.add(0, tool0);
+
+        //make programmer
+        Programmer programmer0 = new Programmer("Steve", 1);
+        manager.gameSetting.setCurrentPlayerID(1);
+
+        //System.out.println(manager.gameSetting.getCurrentPlayerID());
+        //System.out.println(tool0.getPos());
+        manager.canCatch = true;
+
+        assertEquals("Parabéns, apanhaste uma ferramenta !!", manager.reactToAbyssOrTool());
+
+
     }
 
 }
