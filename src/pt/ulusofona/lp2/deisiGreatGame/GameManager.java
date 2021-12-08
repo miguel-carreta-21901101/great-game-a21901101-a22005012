@@ -672,7 +672,7 @@ public class GameManager {
                                 case 5:
                                     int[] allowedTools5 = new int[2];
                                     allowedTools5[0] = 0;
-                                    int penalty = programmerTemp.getCasasPercorridasList().get(
+                                    int penalty = programmerTemp.getPos() - programmerTemp.getCasasPercorridasList().get(
                                             programmerTemp.getCasasPercorridasList().size() - 2);
 
                                     reactAbyss(programmerTemp, allowedTools5, penalty);
@@ -698,8 +698,9 @@ public class GameManager {
                                 case 6:
                                     int[] allowedTools6 = new int[2];
                                     allowedTools6[0] = 1;
-                                    int penalty6 = programmerTemp.getCasasPercorridasList().get(
+                                    int penalty6 = programmerTemp.getPos() - programmerTemp.getCasasPercorridasList().get(
                                             programmerTemp.getCasasPercorridasList().size() - 2);
+
                                     reactAbyss(programmerTemp, allowedTools6, penalty6);
                                     break;
                                     /*
