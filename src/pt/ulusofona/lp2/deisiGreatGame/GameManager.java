@@ -518,7 +518,7 @@ public class GameManager {
                 switch (idAbyss) {
 
 
-                    // ERRO SINTAX -  Recya 1 casa
+                    // ERRO SINTAX -  Recua 1 casa
                     case 0:
                         idsCasas = 0;
                         break;
@@ -598,7 +598,9 @@ public class GameManager {
         boolean isAbyss = false;
         Programmer programmerTemp = programmers.get(gameSetting.getCurrentPlayerID());
 
-       // System.out.println(programmerTemp.getPos());
+        // System.out.println(programmerTemp.getPos());
+
+        //Por cada tool criada, se existir uma tool na pos do jogador
         for (Tool tool : tools) {
             if (programmerTemp.getPos() == tool.getPos()) {
                 isTool = true;
@@ -623,87 +625,59 @@ public class GameManager {
                             switch (idsCasas) {
 
 
-                                // SYNTAX - Recua 1 casa
+                                //ERRO SINTAX Recua 1 casa
                                 case 0:
-                                    for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 5 || tool.getId() == 4) {
-                                            counterAbyss = true;
-                                            programmerTemp.dropTool(tool);
-                                            break;
-                                        }
-                                    }
-                                    if (!counterAbyss) {
-                                        AuxCode.changePosAndCasa(programmerTemp.getPos() - 1,
-                                                programmers, programmerTemp);
-                                    }
+                                    int[] allowedTools0 = new int[2];
+                                    allowedTools0[0] = 5;
+                                    allowedTools0[1] = 4;
+                                    reactAbyss(programmerTemp, allowedTools0, 1);
                                     break;
 
 
-                                //LOGICA - Recua metado do valor que tiver saido no dado
+                                //LOGICA - Recua metad3 do valor que tiver saido no dado
                                 case 1:
-                                    for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 5 || tool.getId() == 2) {
-                                            counterAbyss = true;
-                                            programmerTemp.dropTool(tool);
-                                            break;
-                                        }
-                                    }
-
-                                    if (!counterAbyss) {
-                                        double auxSpaces = (double) gameSetting.getCurrentDiceShoot() / 2;
-                                        AuxCode.changePosAndCasa(programmerTemp.getPos() -
-                                                        (int) Math.floor(auxSpaces),
-                                                programmers, programmerTemp);
-                                    }
+                                    int[] allowedTools1 = new int[2];
+                                    allowedTools1[0] = 5;
+                                    allowedTools1[1] = 2;
+                                    double auxSpaces = (double) gameSetting.getCurrentDiceShoot() / 2;
+                                    reactAbyss(programmerTemp, allowedTools1, (int) Math.floor(auxSpaces));
                                     break;
 
 
                                 //EXCEPTION - recua 2 casas
                                 case 2:
-                                    for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 5 || tool.getId() == 3) {
-                                            counterAbyss = true;
-                                            programmerTemp.dropTool(tool);
-                                            break;
-                                        }
-                                    }
-                                    if (!counterAbyss) {
+                                    int[] allowedTools2 = new int[2];
+                                    allowedTools2[0] = 5;
+                                    allowedTools2[1] = 3;
+                                    reactAbyss(programmerTemp, allowedTools2, 2);
 
-
-                                        AuxCode.changePosAndCasa(programmerTemp.getPos() - 2,
-                                                programmers, programmerTemp);
-                                    }
                                     break;
 
 
                                 // FILE NOT FOUND - recua 3 casas
                                 case 3:
-                                    for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 5 || tool.getId() == 3) {
-                                            counterAbyss = true;
-                                            programmerTemp.dropTool(tool);
-                                            break;
-                                        }
-                                    }
-
-                                    if (!counterAbyss) {
-                                        AuxCode.changePosAndCasa(programmerTemp.getPos() - 3,
-                                                programmers, programmerTemp);
-                                    }
+                                    int[] allowedTools3 = new int[2];
+                                    allowedTools3[0] = 5;
+                                    allowedTools3[1] = 3;
+                                    reactAbyss(programmerTemp, allowedTools3, 3);
                                     break;
 
 
                                 //CRASH - volta à primeira casa
                                 case 4:
-
                                     AuxCode.changePosAndCasa(1, programmers, programmerTemp);
-
                                     break;
 
-
-                                // DUPLICATED CODE - Recuar ate à antiga casa onde o plauer estava
+                                // DUPLICATED CODE - Recuar ate à antiga casa onde o player estava
                                 case 5:
+                                    int[] allowedTools5 = new int[2];
+                                    allowedTools5[0] = 0;
+                                    int penalty = programmerTemp.getCasasPercorridasList().get(
+                                            programmerTemp.getCasasPercorridasList().size() - 2);
 
+                                    reactAbyss(programmerTemp, allowedTools5, penalty);
+
+                                    /*
                                     for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 0) {
                                             counterAbyss = true;
@@ -718,10 +692,17 @@ public class GameManager {
                                                 programmerTemp);
                                     }
                                     break;
-
+                                    */
 
                                 // EFEITOS SECUNDARIOS
                                 case 6:
+                                    int[] allowedTools6 = new int[2];
+                                    allowedTools6[0] = 1;
+                                    int penalty6 = programmerTemp.getCasasPercorridasList().get(
+                                            programmerTemp.getCasasPercorridasList().size() - 2);
+                                    reactAbyss(programmerTemp, allowedTools6, penalty6);
+                                    break;
+                                    /*
                                     for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 1) {
                                             counterAbyss = true;
@@ -735,6 +716,8 @@ public class GameManager {
                                                 programmerTemp);
                                     }
                                     break;
+
+                                     */
 
                                 // BLUE SCREEN - perde imediatamente o jogo
                                 case 7:
@@ -793,8 +776,7 @@ public class GameManager {
                                     }
                                     break;
 
-
-                                    //Segmenatation Fault
+                                //Segmentation Fault
                                 case 9:
 
                                     programmersInThisPositions = getProgrammers(programmerTemp.getPos());
@@ -859,6 +841,33 @@ public class GameManager {
         return null;
 
 
+    }
+
+    public boolean reactAbyss(Programmer programmerTemp, int[] allowedTools, int penaltyCasas){
+        boolean counterAbyss = false;
+
+        //por cada tool que o programmer tem
+        for (Tool tool : programmerTemp.getTools()) {
+            //por cada tool que pode ajudar o programmer
+            for(int index = 0; index < allowedTools.length; index++) {
+                //se o programmer tiver alguma tool que o possa ajudar
+                if (tool.getId() == allowedTools[index]) {
+                    counterAbyss = true;
+                    programmerTemp.dropTool(tool);
+                }
+            }
+            //se o programmer tiver alguma tool que o possa ajudar
+            if (counterAbyss){
+                break;
+            }
+
+        }
+        if (!counterAbyss) {
+            AuxCode.changePosAndCasa(programmerTemp.getPos() - penaltyCasas,
+                    programmers, programmerTemp);
+        }
+
+        return counterAbyss;
     }
 
 
