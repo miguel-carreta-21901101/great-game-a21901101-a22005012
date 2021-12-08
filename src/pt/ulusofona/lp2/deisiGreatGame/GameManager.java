@@ -630,7 +630,7 @@ public class GameManager {
                                     int[] allowedTools0 = new int[2];
                                     allowedTools0[0] = 5;
                                     allowedTools0[1] = 4;
-                                    reactAbyss(programmerTemp, allowedTools0, 1);
+                                    reactAbyss(programmerTemp, allowedTools0, 1, 0);
                                     break;
 
 
@@ -640,7 +640,7 @@ public class GameManager {
                                     allowedTools1[0] = 5;
                                     allowedTools1[1] = 2;
                                     double auxSpaces = (double) gameSetting.getCurrentDiceShoot() / 2;
-                                    reactAbyss(programmerTemp, allowedTools1, (int) Math.floor(auxSpaces));
+                                    reactAbyss(programmerTemp, allowedTools1, (int) Math.floor(auxSpaces), 0);
                                     break;
 
 
@@ -649,7 +649,7 @@ public class GameManager {
                                     int[] allowedTools2 = new int[2];
                                     allowedTools2[0] = 5;
                                     allowedTools2[1] = 3;
-                                    reactAbyss(programmerTemp, allowedTools2, 2);
+                                    reactAbyss(programmerTemp, allowedTools2, 2, 0);
 
                                     break;
 
@@ -659,7 +659,7 @@ public class GameManager {
                                     int[] allowedTools3 = new int[2];
                                     allowedTools3[0] = 5;
                                     allowedTools3[1] = 3;
-                                    reactAbyss(programmerTemp, allowedTools3, 3);
+                                    reactAbyss(programmerTemp, allowedTools3, 3, 0);
                                     break;
 
 
@@ -672,10 +672,7 @@ public class GameManager {
                                 case 5:
                                     int[] allowedTools5 = new int[2];
                                     allowedTools5[0] = 0;
-                                    int penalty = programmerTemp.getPos() - programmerTemp.getCasasPercorridasList().get(
-                                            programmerTemp.getCasasPercorridasList().size() - 2);
-
-                                    reactAbyss(programmerTemp, allowedTools5, penalty);
+                                    reactAbyss(programmerTemp, allowedTools5, 0, 1);
 
                                     /*
                                     for (Tool tool : programmerTemp.getTools()) {
@@ -698,10 +695,7 @@ public class GameManager {
                                 case 6:
                                     int[] allowedTools6 = new int[2];
                                     allowedTools6[0] = 1;
-                                    int penalty6 = programmerTemp.getPos() - programmerTemp.getCasasPercorridasList().get(
-                                            programmerTemp.getCasasPercorridasList().size() - 2);
-
-                                    reactAbyss(programmerTemp, allowedTools6, penalty6);
+                                    reactAbyss(programmerTemp, allowedTools6, 0, 2);
                                     break;
                                     /*
                                     for (Tool tool : programmerTemp.getTools()) {
@@ -844,7 +838,7 @@ public class GameManager {
 
     }
 
-    public boolean reactAbyss(Programmer programmerTemp, int[] allowedTools, int penaltyCasas){
+    public boolean reactAbyss(Programmer programmerTemp, int[] allowedTools, int penaltyCasas, int roolback){
         boolean counterAbyss = false;
 
         //por cada tool que o programmer tem
@@ -863,9 +857,21 @@ public class GameManager {
             }
 
         }
-        if (!counterAbyss) {
+        if (!counterAbyss && roolback == 0) {//se não for função de roolback
             AuxCode.changePosAndCasa(programmerTemp.getPos() - penaltyCasas,
                     programmers, programmerTemp);
+        }
+
+        if (!counterAbyss && roolback == 1) {//se for duplicated code
+            AuxCode.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
+                            programmerTemp.getCasasPercorridasList().size() - 2), programmers,
+                    programmerTemp);
+        }
+
+        if (!counterAbyss && roolback == 2) {//se for efeitos secundarios
+            AuxCode.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
+                            programmerTemp.getCasasPercorridasList().size() - 3), programmers,
+                    programmerTemp);
         }
 
         return counterAbyss;
