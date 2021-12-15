@@ -624,7 +624,6 @@ public class GameManager {
 
                             switch (idsCasas) {
 
-
                                 //ERRO SINTAX Recua 1 casa
                                 case 0:
                                     int[] allowedTools0 = new int[2];
@@ -632,7 +631,6 @@ public class GameManager {
                                     allowedTools0[1] = 4;
                                     reactAbyss(programmerTemp, allowedTools0, 1, 0);
                                     break;
-
 
                                 //LOGICA - Recua metad3 do valor que tiver saido no dado
                                 case 1:
@@ -643,7 +641,6 @@ public class GameManager {
                                     reactAbyss(programmerTemp, allowedTools1, (int) Math.floor(auxSpaces), 0);
                                     break;
 
-
                                 //EXCEPTION - recua 2 casas
                                 case 2:
                                     int[] allowedTools2 = new int[2];
@@ -653,7 +650,6 @@ public class GameManager {
 
                                     break;
 
-
                                 // FILE NOT FOUND - recua 3 casas
                                 case 3:
                                     int[] allowedTools3 = new int[2];
@@ -661,7 +657,6 @@ public class GameManager {
                                     allowedTools3[1] = 3;
                                     reactAbyss(programmerTemp, allowedTools3, 3, 0);
                                     break;
-
 
                                 //CRASH - volta à primeira casa
                                 case 4:
@@ -674,45 +669,12 @@ public class GameManager {
                                     allowedTools5[0] = 0;
                                     reactAbyss(programmerTemp, allowedTools5, 0, 1);
 
-                                    /*
-                                    for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 0) {
-                                            counterAbyss = true;
-                                            programmerTemp.dropTool(tool);
-                                            break;
-                                        }
-                                    }
-
-                                    if (!counterAbyss) {
-                                        AuxCode.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
-                                                programmerTemp.getCasasPercorridasList().size() - 2), programmers,
-                                                programmerTemp);
-                                    }
-                                    break;
-                                    */
-
                                 // EFEITOS SECUNDARIOS
                                 case 6:
                                     int[] allowedTools6 = new int[2];
                                     allowedTools6[0] = 1;
                                     reactAbyss(programmerTemp, allowedTools6, 0, 2);
                                     break;
-                                    /*
-                                    for (Tool tool : programmerTemp.getTools()) {
-                                        if (tool.getId() == 1) {
-                                            counterAbyss = true;
-                                            programmerTemp.dropTool(tool);
-                                            break;
-                                        }
-                                    }
-                                    if (!counterAbyss) {
-                                        AuxCode.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
-                                                programmerTemp.getCasasPercorridasList().size() - 3), programmers,
-                                                programmerTemp);
-                                    }
-                                    break;
-
-                                     */
 
                                 // BLUE SCREEN - perde imediatamente o jogo
                                 case 7:
