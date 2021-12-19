@@ -7,10 +7,7 @@ public class Crash extends Abyss {
         super(id, titulo, pos);
     }
 
-    @Override
-    public String toString() {
-        return title;
-    }
+
 
     @Override
     public String getImagePng() {

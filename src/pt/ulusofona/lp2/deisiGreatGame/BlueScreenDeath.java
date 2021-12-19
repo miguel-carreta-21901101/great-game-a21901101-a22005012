@@ -4,10 +4,7 @@ public class BlueScreenDeath extends Abyss{
     public BlueScreenDeath(int id, String titulo, int pos) {
         super(id, titulo, pos);
     }
-    @Override
-    public String toString(){
-        return title;
-    }
+
 
 
     @Override

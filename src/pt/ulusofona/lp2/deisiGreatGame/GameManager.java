@@ -50,7 +50,7 @@ public class GameManager {
         // Se houver um abismo na posicao POSITION , retorna a img que pertence
         for (Abyss abyss : abysses.values()) {
             if (abyss.getPos() == position) {
-               return abyss.getImagePng();
+                return abyss.getImagePng();
             }
         }
 
@@ -271,8 +271,8 @@ public class GameManager {
 
                 if (abyssAlert) {
 
-                    Abyss abyss  =  Abyss.createAbyss(idAbyss, AuxCode.setTitleAbyss(idAbyss), posAbyss);
-                    if (abyss == null){
+                    Abyss abyss = Abyss.createAbyss(idAbyss, AuxCode.setTitleAbyss(idAbyss), posAbyss);
+                    if (abyss == null) {
                         return false;
                     }
 
@@ -280,8 +280,8 @@ public class GameManager {
                     continue;
                 }
 
-                Tool tool =  Tool.createTool(idTool, AuxCode.setTitleTool(idTool), posTool);
-                if (tool == null){
+                Tool tool = Tool.createTool(idTool, AuxCode.setTitleTool(idTool), posTool);
+                if (tool == null) {
                     return false;
                 }
 
@@ -669,7 +669,7 @@ public class GameManager {
                                     allowedTools5[0] = 0;
                                     reactAbyss(programmerTemp, allowedTools5, 0, 1);
 
-                                // EFEITOS SECUNDARIOS
+                                    // EFEITOS SECUNDARIOS
                                 case 6:
                                     int[] allowedTools6 = new int[2];
                                     allowedTools6[0] = 1;
@@ -692,7 +692,6 @@ public class GameManager {
 
                                     programmersOutOfGame.put(gameSetting.getCurrentPlayerID(),
                                             programmers.get(gameSetting.getCurrentPlayerID()));
-
 
 
                                     idProgrammers.remove(indexAuxToRemoveID);
@@ -777,44 +776,44 @@ public class GameManager {
 
         if (isTool && !canCatch) {
 
-          //  System.out.println("Já tens isto zé");
+            //  System.out.println("Já tens isto zé");
             return "Já tens esta ferramenta, siga para a próxima !";
 
 
         } else if (isTool) {
-          //  System.out.println("TOOL");
+            //  System.out.println("TOOL");
             return "Parabéns, apanhaste uma ferramenta !!";
 
         } else if (isAbyss) {
-          //  System.out.println("ABISMO");
+            //  System.out.println("ABISMO");
             return "Ohhh, caiste num abismo !!";
 
         } else if (programmerTemp.isStuck()) {
-         //  System.out.println("PRESO");
+            //  System.out.println("PRESO");
             return "Estás preso em Ciclos Infinitos! Pode ser que tenhas sorte e alguém te tire daí !";
 
         }
-       // System.out.println("NULL");
+        // System.out.println("NULL");
         return null;
 
 
     }
 
-    public boolean reactAbyss(Programmer programmerTemp, int[] allowedTools, int penaltyCasas, int roolback){
+    public boolean reactAbyss(Programmer programmerTemp, int[] allowedTools, int penaltyCasas, int roolback) {
         boolean counterAbyss = false;
 
         //por cada tool que o programmer tem
         for (Tool tool : programmerTemp.getTools()) {
             //por cada tool que pode ajudar o programmer
-            for(int index = 0; index < allowedTools.length; index++) {
+            for (int allowedTool : allowedTools) {
                 //se o programmer tiver alguma tool que o possa ajudar
-                if (tool.getId() == allowedTools[index]) {
+                if (tool.getId() == allowedTool) {
                     counterAbyss = true;
                     programmerTemp.dropTool(tool);
                 }
             }
             //se o programmer tiver alguma tool que o possa ajudar
-            if (counterAbyss){
+            if (counterAbyss) {
                 break;
             }
 
@@ -826,13 +825,13 @@ public class GameManager {
 
         if (!counterAbyss && roolback == 1) {//se for duplicated code
             AuxCode.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
-                            programmerTemp.getCasasPercorridasList().size() - 2), programmers,
+                    programmerTemp.getCasasPercorridasList().size() - 2), programmers,
                     programmerTemp);
         }
 
         if (!counterAbyss && roolback == 2) {//se for efeitos secundarios
             AuxCode.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
-                            programmerTemp.getCasasPercorridasList().size() - 3), programmers,
+                    programmerTemp.getCasasPercorridasList().size() - 3), programmers,
                     programmerTemp);
         }
 

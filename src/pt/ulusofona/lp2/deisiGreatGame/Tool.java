@@ -4,9 +4,7 @@ public abstract class Tool extends GameHouseElement {
 
     public Tool(int id, String title, int pos){
         super(id,  title,  pos);
-     /*   this.id = id;
-        this.title = title;
-        this.pos = pos;*/
+
     }
 
 
@@ -28,7 +26,6 @@ public abstract class Tool extends GameHouseElement {
                 return null;
         }
     }
-
 
 
 }
