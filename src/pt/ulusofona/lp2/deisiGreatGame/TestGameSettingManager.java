@@ -69,7 +69,7 @@ public class TestGameSettingManager {
         assertEquals(gameMng.getGameResults().toString(), expectedGameResults.toString());
     }
 
-
+/*
     //nrPositions está a 0.  tem que ser entre 1 - 6 ( num do dado)
    @Test
     public void teste01Move(){
@@ -114,7 +114,7 @@ public class TestGameSettingManager {
         Programmer programmerThatMovedLeast = manager.getProgrammers(false).get(1);
         assertEquals(4, programmerThatMovedLeast.getPos());
     }*/
-
+/*
     @Test
     public void testeMovePlayerPassFinish(){
         GameManager manager = new GameManager();
@@ -179,5 +179,5 @@ public class TestGameSettingManager {
 
 
     }
-
+*/
 }

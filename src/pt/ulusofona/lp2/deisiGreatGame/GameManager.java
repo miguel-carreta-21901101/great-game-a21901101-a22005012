@@ -3,6 +3,9 @@ package pt.ulusofona.lp2.deisiGreatGame;
 import javax.swing.*;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -188,7 +191,8 @@ public class GameManager {
 
     }
 
-    public boolean createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools) {
+    public void createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools)
+            throws InvalidInitialBoardException {
 
 
         //              ABYSSES & TOOLS
@@ -204,7 +208,7 @@ public class GameManager {
         for (i = 0; i < abyssesAndTools.length; i++) {
 
             if (abyssesAndTools[i] == null) {
-                return false;
+                throw new InvalidInitialBoardException("O Abismo ou Ferramenta é NULL !");
             }
 
 
@@ -214,7 +218,7 @@ public class GameManager {
             for (j = 0; j <= 2; j++) {
 
                 if (abyssesAndTools[i][j] == null) {
-                    return false;
+                    throw new InvalidInitialBoardException("O Abismo ou Ferramenta é NULL !");
                 }
 
                 switch (j) {
@@ -226,7 +230,7 @@ public class GameManager {
                         if (!abyssesAndTools[i][0].equals(String.valueOf(0)) && !abyssesAndTools[i][0]
                                 .equals(String.valueOf(1))) {
 
-                            return false;
+                            throw new InvalidInitialBoardException("Não é Abismo nem Ferramenta!");
 
                         }
 
@@ -238,12 +242,12 @@ public class GameManager {
 
                     case 1:
                         if (abyssesAndTools[i][1] == null) {
-                            return false;
+                            throw new InvalidInitialBoardException("O ID  é NULL !");
                         }
                         if (abyssAlert) {
                             if (Integer.parseInt(abyssesAndTools[i][1]) < 0 ||
                                     Integer.parseInt(abyssesAndTools[i][1]) > 9) {
-                                return false;
+                                throw new InvalidInitialBoardException("O ID é Inválido!");
                             }
                             idAbyss = Integer.parseInt(abyssesAndTools[i][1]);
                             break;
@@ -251,7 +255,7 @@ public class GameManager {
 
                         if (Integer.parseInt(abyssesAndTools[i][1]) < 0 ||
                                 Integer.parseInt(abyssesAndTools[i][1]) > 5) {
-                            return false;
+                            throw new InvalidInitialBoardException("O ID é Inválido!");
                         }
                         idTool = Integer.parseInt(abyssesAndTools[i][1]);
                         break;
@@ -273,7 +277,7 @@ public class GameManager {
 
                     Abyss abyss = Abyss.createAbyss(idAbyss, AuxCode.setTitleAbyss(idAbyss), posAbyss);
                     if (abyss == null) {
-                        return false;
+                        throw new InvalidInitialBoardException("O Abismo é NULL!");
                     }
 
                     abysses.put(idAbyss, abyss);
@@ -282,7 +286,7 @@ public class GameManager {
 
                 Tool tool = Tool.createTool(idTool, AuxCode.setTitleTool(idTool), posTool);
                 if (tool == null) {
-                    return false;
+                    throw new InvalidInitialBoardException("A Ferramenta é NULL!");
                 }
 
                 tools.add(tool);
@@ -292,12 +296,10 @@ public class GameManager {
 
         }
 
-        return true;
 
     }
 
-
-    public boolean createInitialBoard(String[][] playerInfo, int worldSize) {
+    public void createInitialBoard(String[][] playerInfo, int worldSize) throws InvalidInitialBoardException {
 
 
         // Reset ao jogo
@@ -312,7 +314,7 @@ public class GameManager {
         String cor = "";
 
         if (worldSize < 1) {
-            return false;
+            throw new InvalidInitialBoardException("O tamanho do mapa é inferior a 1!");
         }
 
         int i, j;
@@ -320,7 +322,7 @@ public class GameManager {
 
         for (i = 0; i < playerInfo.length; i++) {
             if (playerInfo[0] == null) {
-                return false;
+                throw new InvalidInitialBoardException("O player é NULL!");
             }
 
             //Percorre as informaçoes de cada programador
@@ -328,11 +330,11 @@ public class GameManager {
 
                 //Se J for null E o num players inferior a 2, false
                 if (playerInfo[i][j] == null && countPlayers < 2) {
-                    return false;
+                    throw new InvalidInitialBoardException("O player é NULL ou o numero de players é inferior a 2!");
 
                     //Se J for null E tiver o num players suficiente , true
                 } else if (playerInfo[i][j] == null && countPlayers >= 2) {
-                    return true;
+                    return;
                 }
 
                 switch (j) {
@@ -344,8 +346,10 @@ public class GameManager {
                         if (idsRepetidos.contains(Integer.parseInt(playerInfo[i][j])) ||
                                 (Integer.parseInt(playerInfo[i][j]) < 0)) {
 
-                            return false;
+                            throw new InvalidInitialBoardException("O ID é repetido OU  menor que 0");
                         }
+
+
                         //adiciona o ID ao Hashset para validar se ha repetidos
                         idsRepetidos.add(Integer.parseInt(playerInfo[i][j]));
                         id = Integer.parseInt(playerInfo[i][j]);
@@ -360,7 +364,7 @@ public class GameManager {
 
                         // Se o NOME for null OU vazio , false
                         if (playerInfo[i][j] == null || playerInfo[i][j].length() == 0) {
-                            return false;
+                            throw new InvalidInitialBoardException("O ID é repetido OU  menor que 0");
                         }
                         nome = playerInfo[i][j];
 
@@ -369,7 +373,7 @@ public class GameManager {
                     // LISTA LINGUAGENS DE PROGRAMACAO
                     case 2:
                         if (playerInfo[i][j] == null || playerInfo[i][j].length() == 0) {
-                            return false;
+                            throw new InvalidInitialBoardException("A lista de linguagens é NULL ou está vazia");
                         }
 
                         linguagensProgramacao = AuxCode.ordernarLinguagensProgramacao(playerInfo[i][j]);
@@ -382,12 +386,12 @@ public class GameManager {
                         //Se a cor for diferente das possiveis, false
                         if (!(playerInfo[i][j].equals("Purple") || playerInfo[i][j].equals("Green") ||
                                 playerInfo[i][j].equals("Brown") || playerInfo[i][j].equals("Blue"))) {
-                            return false;
+                            throw new InvalidInitialBoardException("A cor nao é nenhuma das possiveis");
 
                         }
                         // Se existir uma repetida, false
                         if (coresRepetidas.contains(playerInfo[i][j])) {
-                            return false;
+                            throw new InvalidInitialBoardException("Existe uma cor repetida");
                         }
 
                         //Adiciona a cor ao HashSet para validar as cores repetidas
@@ -440,12 +444,12 @@ public class GameManager {
 
         // O num de players entre 2 - 4
         if (countPlayers <= 1 || countPlayers > 4) {
-            return false;
+            throw new InvalidInitialBoardException("O numero de players não está entre 2 e 4");
         }
 
         // o tamanho do board tem que ser no minimo 2 peças por player .
         if (worldSize < (countPlayers * 2)) {
-            return false;
+            throw new InvalidInitialBoardException("o tamanho do mapa tem que ser no minimo 2 casas por player");
         }
 
 
@@ -458,10 +462,7 @@ public class GameManager {
         //Declaro o tamanho do mapa
         board.setTamanho(worldSize);
 
-        return true;
-
     }
-
 
     public boolean moveCurrentPlayer(int nrSpaces) {
 
@@ -594,6 +595,8 @@ public class GameManager {
 
     public String reactToAbyssOrTool() {
 
+        File file = new File("ika");
+        saveGame(file);
         boolean isTool = false;
         boolean isAbyss = false;
         Programmer programmerTemp = programmers.get(gameSetting.getCurrentPlayerID());
@@ -836,6 +839,32 @@ public class GameManager {
         }
 
         return counterAbyss;
+    }
+
+    private void writePlayer(FileWriter writer, Programmer programmer) {
+
+    }
+
+    public boolean saveGame(File file) {
+        try {
+            FileWriter writer = new FileWriter(file);
+            // Tamanho do Mapa
+            writer.write(board.getTamanho());
+            // Turnos feitos
+            writer.write(gameSetting.getEndedShifts());
+            //Current player
+            writer.write(getCurrentPlayerID());
+
+
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+
+    }
+
+    public boolean loadGame(File file){
+        return false;
     }
 
 
