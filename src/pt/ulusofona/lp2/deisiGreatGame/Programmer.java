@@ -37,6 +37,8 @@ public class Programmer {
 
     //**************************  GETTERS *****************************************************
 
+
+
     public int getId(){
         return id;
     }
@@ -58,11 +60,12 @@ public class Programmer {
     public boolean isOutOfGame() {
         return outOfGame;
     }
-
+    public String getLinguagens() {
+        return linguagens;
+    }
     public boolean isStuck() {
         return stuck;
     }
-
 //**********************************************************************************************
 
 

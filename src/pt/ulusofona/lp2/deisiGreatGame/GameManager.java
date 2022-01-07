@@ -32,6 +32,10 @@ public class GameManager {
     GameSetting gameSetting = new GameSetting();
 
 
+    private int mapSize, currentPlayerID, endedShifts = 0;
+     List<Programmer> players =  new ArrayList<>();
+
+
     public GameManager() {
     }
 
@@ -176,6 +180,98 @@ public class GameManager {
     }
     //**********************************************************************************************
 
+    private void writePlayer(FileWriter writer, Programmer programmer) throws IOException {
+        writer.write(programmer.getId() + " : ");  // id
+        writer.write(programmer.getName() + " : ");  // name
+        writer.write(programmer.getPos() + " : ");  // Position
+        writer.write(programmer.getColor().getColor() + " : ");
+        writer.write(programmer.getLinguagens() + " : ");
+        writer.write((programmer.isOutOfGame() ? "1" : "0") + " : ");  // out of game
+        writer.write((programmer.isStuck() ? "1" : "0" + " : "));  // Stuck
+
+        if (programmer.getCasasPercorridasList().size() > 3){
+            writer.write(programmer.getCasasPercorridasList().get(programmer.getCasasPercorridasList().size() -3) +
+                    " : " + programmer.getCasasPercorridasList().get(programmer.getCasasPercorridasList().size() -2)
+            );
+            writer.write("\n");
+        }
+        if (programmer.getTools().size() != 0) {
+            writer.write("\n");
+        }
+        for (Tool tool : programmer.getTools()) {
+            writer.write(tool + " : ");
+        }
+        //writer.write("\n");
+
+
+
+    }
+
+    private void writeGameHouseElements(FileWriter writer, GameHouseElement gameHouseElement) throws IOException {
+        writer.write(gameHouseElement.getId() + " : ");  // id
+        writer.write(gameHouseElement.getPos() + " : ");  // Position
+
+    }
+
+    public boolean saveGame(File file) {
+        try {
+            FileWriter writer = new FileWriter(file);
+            // Tamanho do Mapa
+            writer.write(board.getTamanho() + "\n");
+            //Current player
+            writer.write(getCurrentPlayerID() + "\n");
+            //Num de turnos
+            writer.write(gameSetting.getEndedShifts() + "\n");
+            // Programmers Size
+            //writer.write(getProgrammers(true).size() + "\n");
+
+            for (Programmer p : getProgrammers(true)) {
+                writePlayer(writer, p);
+                writer.write("\n");
+            }
+
+            writer.write("TOOLS" + "\n");
+
+            for (Tool tool : tools){
+                writeGameHouseElements(writer, tool);
+                writer.write("\n");
+            }
+
+            writer.write("ABYSS" + "\n");
+
+            for (Abyss abyss : abysses.values()){
+                writeGameHouseElements(writer, abyss);
+                writer.write("\n");
+            }
+
+            writer.close();
+
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+
+    }
+
+    public boolean loadGame(File file) {
+
+        try {
+            Scanner fileReader = new Scanner(file);
+            // Map Size
+            String line = fileReader.nextLine();
+            mapSize = Integer.parseInt(line.trim());
+            //CurrentPlayerID
+            line = fileReader.nextLine();
+            currentPlayerID = Integer.parseInt(line.trim());
+
+        } catch (IOException e) {
+            return false;
+        }
+
+
+        return true;
+    }
+
 
     public void resetGame() {
 
@@ -290,7 +386,6 @@ public class GameManager {
                 }
 
                 tools.add(tool);
-
 
             }
 
@@ -595,8 +690,7 @@ public class GameManager {
 
     public String reactToAbyssOrTool() {
 
-        File file = new File("ika");
-        saveGame(file);
+
         boolean isTool = false;
         boolean isAbyss = false;
         Programmer programmerTemp = programmers.get(gameSetting.getCurrentPlayerID());
@@ -841,34 +935,9 @@ public class GameManager {
         return counterAbyss;
     }
 
-    private void writePlayer(FileWriter writer, Programmer programmer) {
-
-    }
-
-    public boolean saveGame(File file) {
-        try {
-            FileWriter writer = new FileWriter(file);
-            // Tamanho do Mapa
-            writer.write(board.getTamanho());
-            // Turnos feitos
-            writer.write(gameSetting.getEndedShifts());
-            //Current player
-            writer.write(getCurrentPlayerID());
-
-
-        } catch (IOException e) {
-            return false;
-        }
-        return true;
-
-    }
-
-    public boolean loadGame(File file){
-        return false;
-    }
-
 
     public boolean gameIsOver() {
+
 
         // Se algum jogador chegar à ultima casa do mapa ,
         for (Programmer programmer : programmers.values()) {
