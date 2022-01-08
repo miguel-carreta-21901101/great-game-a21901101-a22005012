@@ -48,13 +48,13 @@ fun playersByLanguage(manager: GameManager, wantedLanguage: String): String {
     var stringFinal : String = ""
 
     manager.getProgrammers(true)
-        .filter { it.linguagens.contains(wantedLanguage) }
+        .filter { wantedLanguage in it.linguagens }
         .forEach({stringFinal += it.name + ','})
 
     return stringFinal.dropLast(1)
 }
 
-fun polyglots(manager: GameManager): String? {
+fun polyglots(manager: GameManager): String {
     var stringFinal : String = ""
 
     manager.getProgrammers(true)
@@ -70,7 +70,7 @@ fun mostUsedPositions(manager: GameManager, list: List<String>): String? {
     return ""
 }
 
-fun mostUsedAbysses(manager: GameManager, max_results : Int): String? {
+fun mostUsedAbysses(manager: GameManager, max_results : Int): String {
     var stringFinal : String = ""
 
     var res = manager.steppedOn

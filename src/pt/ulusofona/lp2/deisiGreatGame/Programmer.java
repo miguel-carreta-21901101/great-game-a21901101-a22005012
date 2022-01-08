@@ -1,7 +1,9 @@
 package pt.ulusofona.lp2.deisiGreatGame;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public class Programmer {
@@ -130,13 +132,17 @@ public class Programmer {
     }
 
     public int getNumeroLinguas(){
+        HashSet<String> linguagensRead = new HashSet<>();
+        String[] linguagens = this.linguagens.split(",");
         int count = 0;
-        for (int i = 0; i < this.linguagens.length(); i++) {
-            if (this.linguagens.charAt(i) == ',') {
-                count++;
+
+        for(String linguagem : linguagens){
+            if(!linguagensRead.contains(linguagem)){
+                linguagensRead.add(linguagem);
+                count ++;
             }
         }
-        return count + 1;
+        return count;
     }
 
     public String toString() {
