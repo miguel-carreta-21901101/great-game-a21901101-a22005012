@@ -45,7 +45,7 @@ fun player(manager: GameManager, playerName: List<String>): String {
 
 fun playersByLanguage(manager: GameManager, wantedLanguage: String): String {
 
-    var stringFinal = ""
+    var stringFinal : String = ""
 
     manager.getProgrammers(true)
         .filter { it.linguagens.contains(wantedLanguage) }
