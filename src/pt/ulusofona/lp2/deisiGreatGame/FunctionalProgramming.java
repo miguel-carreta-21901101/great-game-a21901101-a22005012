@@ -5,6 +5,11 @@ public class FunctionalProgramming extends Tool{
         super(id, titulo, pos);
     }
 
+    public FunctionalProgramming(int id, String title){
+        super(id, title);
+
+    }
+
     @Override
     public String getImagePng(){
         return "functional.png";

@@ -32,8 +32,7 @@ public class GameManager {
     GameSetting gameSetting = new GameSetting();
 
 
-    private int mapSize, currentPlayerID, endedShifts = 0;
-     List<Programmer> players =  new ArrayList<>();
+    private String[][] playerInfoLoadGame = null;
 
 
     public GameManager() {
@@ -181,6 +180,8 @@ public class GameManager {
     //**********************************************************************************************
 
     private void writePlayer(FileWriter writer, Programmer programmer) throws IOException {
+        boolean temTool = false;
+
         writer.write(programmer.getId() + " : ");  // id
         writer.write(programmer.getName() + " : ");  // name
         writer.write(programmer.getPos() + " : ");  // Position
@@ -192,16 +193,17 @@ public class GameManager {
         if (programmer.getCasasPercorridasList().size() > 3){
             writer.write(programmer.getCasasPercorridasList().get(programmer.getCasasPercorridasList().size() -3) +
                     " : " + programmer.getCasasPercorridasList().get(programmer.getCasasPercorridasList().size() -2)
+
             );
-            writer.write("\n");
+           // writer.write("\n");
         }
         if (programmer.getTools().size() != 0) {
+            temTool = true;
             writer.write("\n");
         }
         for (Tool tool : programmer.getTools()) {
             writer.write(tool + " : ");
         }
-        //writer.write("\n");
 
 
 
@@ -223,14 +225,13 @@ public class GameManager {
             //Num de turnos
             writer.write(gameSetting.getEndedShifts() + "\n");
             // Programmers Size
-            //writer.write(getProgrammers(true).size() + "\n");
+            writer.write(getProgrammers(true).size() + "\n");
 
             for (Programmer p : getProgrammers(true)) {
                 writePlayer(writer, p);
                 writer.write("\n");
             }
 
-            writer.write("TOOLS" + "\n");
 
             for (Tool tool : tools){
                 writeGameHouseElements(writer, tool);
@@ -256,13 +257,112 @@ public class GameManager {
     public boolean loadGame(File file) {
 
         try {
+           // resetGame();
             Scanner fileReader = new Scanner(file);
             // Map Size
             String line = fileReader.nextLine();
-            mapSize = Integer.parseInt(line.trim());
+            board.setTamanho(Integer.parseInt(line.trim()));
+            // System.out.println(board.getTamanho());
             //CurrentPlayerID
             line = fileReader.nextLine();
-            currentPlayerID = Integer.parseInt(line.trim());
+            gameSetting.setCurrentPlayerID(Integer.parseInt(line.trim()));
+            //System.out.println(getCurrentPlayerID());
+            //Ended shifts
+            line = fileReader.nextLine();
+            gameSetting.setEndedShifts(Integer.parseInt(line.trim()));;
+           // System.out.println(gameSetting.getEndedShifts());
+            line = fileReader.nextLine();
+            int programmersSize = Integer.parseInt(line.trim());
+
+
+            int idAux = 0;
+
+            for (int i = 0; i < programmersSize*2; i++) {
+                line = fileReader.nextLine();
+                String[] dados = line.split(":");
+                int id = 0;
+                List<Tool> tools = new ArrayList<>();
+                if (dados[0].trim().equals("Herança") || dados[0].trim().equals("Programação Funcional")||
+                        dados[0].trim().equals("Testes unitários") || dados[0].trim().equals("Tratamento de Excepções")
+                        || dados[0].trim().equals("IDE") || dados[0].trim().equals("Ajuda Do Professor")){
+
+
+                    for (String dado : dados) {
+                        if (dado.equals("") || dado.equals(" ")){
+                            break;
+                        }
+                        tools.add(Tool.associateToolToPlayer(AuxCode.setIdTool(dado.trim()), dado.trim()));
+
+                    }
+
+
+                    for (Programmer p : programmers.values()){
+                       if (p.getId() == idAux){
+                           p.setTools(tools);
+                       }
+                    }
+
+                    continue;
+                }
+                id = Integer.parseInt(dados[0].trim());
+                idAux = id;
+                String name = dados[1].trim();
+                int pos = Integer.parseInt(dados[2].trim());
+                String color = dados[3].trim();
+
+                ProgrammerColor cor = null;
+                switch (color){
+                    case "Purple":
+                        cor = ProgrammerColor.PURPLE;
+                        break;
+                    case "Blue":
+                        cor = ProgrammerColor.BLUE;
+                        break;
+                    case "Brown":
+                        cor = ProgrammerColor.BROWN;
+                        break;
+                    case "Green":
+                        cor = ProgrammerColor.GREEN;
+                        break;
+
+                    default:
+                        break;
+                }
+                //List<String> linguagens = new ArrayList<>();
+                String linguagens = dados[4];
+                int outOfGame = Integer.parseInt(dados[5].trim());
+                int stuck = Integer.parseInt(dados[6].trim());
+                int duasCasasAnteriores;
+                int casaAnterior;
+
+
+                if (dados.length == 9){
+                    duasCasasAnteriores = Integer.parseInt(dados[7].trim());
+                    casaAnterior = Integer.parseInt(dados[8].trim());
+
+                    programmers.put(id, new Programmer(id, name, pos, cor, linguagens, outOfGame, stuck));
+                }
+            }
+
+            line = fileReader.nextLine();
+            // line = fileReader.nextLine();
+/*
+            while (!line.equals("ABYSS")){
+                String[] dados = line.split(":");
+                int posMap = Integer.parseInt(dados[0].trim());
+                int idTool = Integer.parseInt(dados[1].trim());
+
+
+
+
+                Tool tool = Tool.createTool(idTool, AuxCode.setTitleTool(idTool), posMap);
+
+                tools.add(tool);
+
+                line = fileReader.nextLine();
+            }*/
+
+
 
         } catch (IOException e) {
             return false;
@@ -544,7 +644,7 @@ public class GameManager {
 
         // o tamanho do board tem que ser no minimo 2 peças por player .
         if (worldSize < (countPlayers * 2)) {
-            throw new InvalidInitialBoardException("o tamanho do mapa tem que ser no minimo 2 casas por player");
+            throw new InvalidInitialBoardException("O tamanho do mapa tem que ser no minimo 2 casas por player");
         }
 
 

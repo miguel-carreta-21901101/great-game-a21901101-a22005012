@@ -30,7 +30,7 @@ fun functionGET(game: GameManager, list: List<String>): String? {
 
 fun functionPOST(game: GameManager, list: List<String>): String? {
     when (list[0]) {
-        //  "MOVE" ->  return move(game, list)
+          "MOVE" ->  return move(game, list)
         //   "ABYSS" ->  return move(game, list)
     }
     return null
@@ -43,19 +43,28 @@ fun player(manager: GameManager, playerName: List<String>): String {
     }
 }
 
-fun playersByLanguage(manager : GameManager, languages : List<String>) : String {
-    return manager.programmers.values.filter {it.linguagens == languages[1]}.joinToString { it.name }.
-    ifBlank{ return "" }
+fun playersByLanguage(manager: GameManager, languages: List<String>): String {
+    return manager.programmers.values.filter { it.linguagens == languages[1] }.joinToString(",") { it.name }
+        .ifBlank { return "" }
 }
 
-fun polyglots(manager : GameManager, list : List<String>) : String? {
+fun polyglots(manager: GameManager, list: List<String>): String? {
     return ""
 }
 
-fun mostUsedPositions(manager : GameManager, list : List<String>) : String? {
+fun mostUsedPositions(manager: GameManager, list: List<String>): String? {
     return ""
 }
 
-fun mostUsedAbysses(manager : GameManager, list : List<String>) : String? {
+fun mostUsedAbysses(manager: GameManager, list: List<String>): String? {
     return ""
+}
+
+fun move(manager: GameManager, pos: List<String>): String {
+    manager.moveCurrentPlayer(Integer.parseInt(pos[1]))
+    return if (manager.reactToAbyssOrTool() == null) {
+        "OK"
+    } else {
+        "Abyss Or Tool"
+    }
 }

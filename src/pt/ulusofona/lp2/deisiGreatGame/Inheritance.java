@@ -5,6 +5,11 @@ public class Inheritance extends Tool{
         super(id, titulo, pos);
     }
 
+    public Inheritance(int id, String title){
+        super(id, title);
+
+    }
+
     @Override
     public String getImagePng(){
         return "inheritance.png";

@@ -5,6 +5,10 @@ public class HelpTeacher extends Tool{
         super(id, titulo, pos);
     }
 
+    public HelpTeacher(int id, String title){
+        super(id, title);
+
+    }
 
     @Override
     public String getImagePng(){

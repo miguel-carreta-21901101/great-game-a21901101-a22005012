@@ -5,6 +5,12 @@ public class Ide extends Tool{
         super(id, titulo, pos);
     }
 
+    public Ide(int id, String title){
+        super(id, title);
+
+    }
+
+
     @Override
     public String getImagePng(){
         return "IDE.png";

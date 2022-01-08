@@ -5,6 +5,11 @@ public class UnitTest extends Tool{
         super(id, titulo, pos);
     }
 
+    public UnitTest(int id, String title){
+        super(id, title);
+
+    }
+
     @Override
     public String getImagePng(){
         return "unit-tests.png";

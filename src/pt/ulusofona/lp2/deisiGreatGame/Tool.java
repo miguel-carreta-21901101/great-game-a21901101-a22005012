@@ -7,6 +7,32 @@ public abstract class Tool extends GameHouseElement {
 
     }
 
+    public Tool(int id, String title){
+        super(id, title);
+    }
+
+
+
+
+    public static Tool associateToolToPlayer(int id, String title){
+        switch (title){
+            case "Herança":
+                return new Inheritance(id, title);
+            case "Programação Funcional":
+                return new FunctionalProgramming(id, title);
+            case "Testes unitários":
+                return new UnitTest(id, title);
+            case "Tratamento de Excepções ":
+                return new CatchException(id, title);
+            case "IDE":
+                return new  Ide(id, title);
+            case "Ajuda Do Professor":
+                return new HelpTeacher(id, title);
+            default:
+                return null;
+        }
+    }
+
 
     public static Tool createTool(int id, String title, int pos){
         switch(id){

@@ -90,6 +90,60 @@ public  class AuxCode {
 
         return null;
     }
+
+    public static int setIdTool(String title){
+        switch (title){
+            case "Herança":
+                return 0;
+
+            case "Programação Funcional":
+                return 1;
+
+            case "Testes unitários":
+                return 2;
+
+            case  "Tratamento de Excepções":
+                return 3;
+
+            case "IDE":
+                return 4;
+
+            case "Ajuda Do Professor":
+                return 5;
+
+            default:
+                return -1;
+
+        }
+    }
+
+    public static String setTitleToolLoad(int id){
+
+        switch(id){
+            case 0:
+                return "Herança";
+
+            case 1:
+                return "Programação Funcional";
+
+            case 2:
+                return "Testes unitários";
+
+            case 3:
+                return "Tratamento de Excepções";
+
+            case 4:
+                return "IDE";
+
+            case 5:
+                return "Ajuda Do Professor";
+
+            default:
+                return "";
+
+        }
+    }
+
     public static String setTitleTool(int id){
 
         switch(id){

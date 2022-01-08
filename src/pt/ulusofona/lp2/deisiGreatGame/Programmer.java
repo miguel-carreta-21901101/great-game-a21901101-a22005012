@@ -13,10 +13,26 @@ public class Programmer {
     private ProgrammerColor color;
     private List<Integer> casasPercorridasList = new ArrayList<>();
     private List<Tool> tools = new ArrayList<>();
+    private int outOfTheGame;
+    private int stucked;
     private boolean outOfGame = false;
     private boolean stuck = false;
 
     //************* Constructors ************************
+
+    public Programmer(int id, String name, int pos, ProgrammerColor color, String linguagens, int outOfGame, int stuck
+                      ){
+        this.id = id;
+        this.name = name;
+        this.pos = pos;
+        this.color = color;
+        this.linguagens = linguagens;
+        this.outOfTheGame = outOfGame;
+        this.stucked = stuck;
+
+    }
+
+
 
 
     public Programmer(String name, int pos){
@@ -75,7 +91,6 @@ public class Programmer {
     public void setOutOfGame() {
         this.outOfGame = true;
     }
-
     public void stuckedByInfiniteCircle() {
         this.stuck = true;
     }
@@ -85,6 +100,7 @@ public class Programmer {
     public void setPos(int pos) {
         this.pos = pos;
     }
+    public void setTools(List<Tool> tools) {this.tools = tools;}
 
     //***************************************************************************************************
 

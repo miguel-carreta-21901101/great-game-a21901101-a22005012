@@ -11,6 +11,11 @@ public abstract class GameHouseElement {
         this.pos = pos;
     }
 
+    public GameHouseElement(int id , String title){
+        this.id = id;
+        this.title = title;
+    }
+
 
     public abstract String getImagePng();
 
