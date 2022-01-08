@@ -20,10 +20,10 @@ fun wichCommand(commandType: CommandType): (GameManager, List<String>) -> String
 fun functionGET(game: GameManager, list: List<String>): String? {
     when (list[0]) {
         "PLAYER" -> return player(game, list)
-        "PLAYERS_BY_LANGUAGE" -> return playersByLanguage(game, list)
-        "POLYGLOTS" -> return polyglots(game, list)
+        "PLAYERS_BY_LANGUAGE" -> return playersByLanguage(game, list[1])
+        "POLYGLOTS" -> return polyglots(game)
         "MOST_USED_POSITIONS" -> return mostUsedPositions(game, list)
-        "MOST_USED_ABYSSES" -> return mostUsedAbysses(game, list)
+        "MOST_USED_ABYSSES" -> return mostUsedAbysses(game, list[1].toInt())
     }
     return null
 }
@@ -43,12 +43,18 @@ fun player(manager: GameManager, playerName: List<String>): String {
     }
 }
 
-fun playersByLanguage(manager: GameManager, languages: List<String>): String {
-    return manager.programmers.values.filter { it.linguagens == languages[1] }.joinToString(",") { it.name }
-        .ifBlank { return "" }
+fun playersByLanguage(manager: GameManager, wantedLanguage: String): String {
+
+    var stringFinal = ""
+
+    manager.getProgrammers(true)
+        .filter { it.linguagens.contains(wantedLanguage) }
+        .forEach({stringFinal += it.name + ','})
+
+    return stringFinal.dropLast(1)
 }
 
-fun polyglots(manager: GameManager, list: List<String>): String? {
+fun polyglots(manager: GameManager): String? {
     var stringFinal : String = ""
 
     manager.getProgrammers(true)
