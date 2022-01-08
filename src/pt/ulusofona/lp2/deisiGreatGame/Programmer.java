@@ -129,7 +129,15 @@ public class Programmer {
         }
     }
 
-
+    public int getNumeroLinguas(){
+        int count = 0;
+        for (int i = 0; i < this.linguagens.length(); i++) {
+            if (this.linguagens.charAt(i) == ',') {
+                count++;
+            }
+        }
+        return count + 1;
+    }
 
     public String toString() {
 

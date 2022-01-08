@@ -49,15 +49,31 @@ fun playersByLanguage(manager: GameManager, languages: List<String>): String {
 }
 
 fun polyglots(manager: GameManager, list: List<String>): String? {
-    return ""
+    var stringFinal : String = ""
+
+    manager.getProgrammers(true)
+        .filter { it.numeroLinguas > 1 }
+        .sortedBy {  it.numeroLinguas }
+        .reversed()
+        .forEach({stringFinal += it.name + ": " + it.numeroLinguas + "\n"})
+
+    return stringFinal
 }
 
 fun mostUsedPositions(manager: GameManager, list: List<String>): String? {
     return ""
 }
 
-fun mostUsedAbysses(manager: GameManager, list: List<String>): String? {
-    return ""
+fun mostUsedAbysses(manager: GameManager, max_results : Int): String? {
+    var stringFinal : String = ""
+
+    var res = manager.steppedOn
+        .entries.sortedBy { it.value }
+        .reversed().take(max_results).associate { it.toPair() }
+
+    res.forEach({stringFinal += it.key + ":" + it.value + "\n"})
+
+    return stringFinal
 }
 
 fun move(manager: GameManager, pos: List<String>): String {

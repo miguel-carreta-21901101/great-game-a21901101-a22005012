@@ -31,6 +31,17 @@ public class GameManager {
     Board board = new Board();
     GameSetting gameSetting = new GameSetting();
 
+    //Counter de steppedOn Abysses
+    int steppedOnSyntaxError = 0;
+    int steppedOnLogicError = 0;
+    int steppedOnExceptionFault = 0;
+    int steppedOnFileNotFoundException = 0;
+    int steppedOnCrash = 0;
+    int steppedOnDuplicatedCode = 0;
+    int steppedOnSideEffect = 0;
+    int steppedOnBlueScreenDeath = 0;
+    int steppedOnInfiniteLoop = 0;
+    int steppedOnSegmentationFault = 0;
 
     private String[][] playerInfoLoadGame = null;
 
@@ -710,34 +721,38 @@ public class GameManager {
             if (AuxCode.isAbyss(abysses, posAux)) {
                 idAbyss = AuxCode.setIdAbyss(abysses, posAux);
 
-
                 switch (idAbyss) {
 
 
                     // ERRO SINTAX -  Recua 1 casa
                     case 0:
                         idsCasas = 0;
+                        steppedOnSyntaxError++;
                         break;
 
 
                     case 1:
                         idsCasas = 1;
                         gameSetting.setDiceShoot(nrSpaces);
+                        steppedOnLogicError++;
                         break;
 
 
                     case 2:
                         idsCasas = 2;
+                        steppedOnExceptionFault++;
                         break;
 
 
                     case 3:
                         idsCasas = 3;
+                        steppedOnFileNotFoundException++;
                         break;
 
 
                     case 4:
                         idsCasas = 4;
+                        steppedOnCrash++;
                         break;
 
 
@@ -745,7 +760,7 @@ public class GameManager {
                     // Recua até à casa onde estava antes de chegar a esta casa.
                     case 5:
                         idsCasas = 5;
-
+                        steppedOnDuplicatedCode++;
                         break;
 
 
@@ -754,22 +769,26 @@ public class GameManager {
                     case 6:
 
                         idsCasas = 6;
+                        steppedOnSideEffect++;
                         break;
 
 
                     //Blue Screen  -   perde imediatamente o jogo
                     case 7:
                         idsCasas = 7;
+                        steppedOnBlueScreenDeath++;
                         break;
 
 
                     // CICLO INFINITO
                     case 8:
                         idsCasas = 8;
+                        steppedOnInfiniteLoop++;
                         break;
                     // CORE DUMPED
                     case 9:
                         idsCasas = 9;
+                        steppedOnSegmentationFault++;
                         break;
 
                     default:
@@ -1114,6 +1133,22 @@ public class GameManager {
         painel.add(ricardo);
 
         return painel;
+    }
+
+    public  HashMap<String, Integer> getSteppedOn(){
+        HashMap<String, Integer> casas = new HashMap<>();
+        casas.put("Syntax Error", steppedOnSyntaxError);
+        casas.put("Logic Error", steppedOnLogicError);
+        casas.put("Exception Fault", steppedOnExceptionFault);
+        casas.put("FileNotFound Exception", steppedOnFileNotFoundException);
+        casas.put("Crash", steppedOnCrash);
+        casas.put("Duplicated Code", steppedOnDuplicatedCode);
+        casas.put("Side Effect", steppedOnSideEffect);
+        casas.put("BlueScreen Death", steppedOnBlueScreenDeath);
+        casas.put("Infinite Loop", steppedOnInfiniteLoop);
+        casas.put("Segmentation Fault", steppedOnSegmentationFault);
+
+        return casas;
     }
 
 }
