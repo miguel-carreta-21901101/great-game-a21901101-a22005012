@@ -590,6 +590,7 @@ public class GameManager {
                     Abyss abyss = Abyss.createAbyss(idAbyss, AuxCode.setTitleAbyss(idAbyss), posAbyss);
                     if (abyss == null) {
                       //  throw new InvalidInitialBoardException("O Abyss é NULL!");
+
                         ex.isInvalidAbyss();
                     }
 
