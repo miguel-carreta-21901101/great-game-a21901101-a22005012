@@ -136,7 +136,7 @@ public class Programmer {
 
     public int obtainNumeroLinguas(){
         HashSet<String> linguagensRead = new HashSet<>();
-        String[] linguagens = this.linguagens.split(",");
+        String[] linguagens = this.linguagens.split("; ");
         int count = 0;
 
         for(String linguagem : linguagens){

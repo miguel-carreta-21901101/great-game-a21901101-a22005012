@@ -59,9 +59,8 @@ fun polyglots(manager: GameManager): String {
     var stringFinal : String = ""
 
     manager.programmers.values
-        .filter { it.obtainNumeroLinguas() > 0 }
+        .filter { it.obtainNumeroLinguas() > 1 }
         .sortedBy {  it.obtainNumeroLinguas() }
-        .reversed()
         .forEach { stringFinal += it.name + ": " + it.obtainNumeroLinguas() + "\n" }
 
     return stringFinal
