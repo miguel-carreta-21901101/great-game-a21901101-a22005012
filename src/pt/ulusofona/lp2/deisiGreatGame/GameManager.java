@@ -303,8 +303,6 @@ public class GameManager {
 
     public boolean loadGame(File file) {
 
-
-
         try {
             resetGame();
             Scanner fileReader = new Scanner(file);
@@ -499,7 +497,7 @@ public class GameManager {
     public void createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools)
             throws InvalidInitialBoardException {
 
-        InvalidInitialBoardException ex = new InvalidInitialBoardException();
+
         //              ABYSSES & TOOLS
 
         createInitialBoard(playerInfo, worldSize);
@@ -556,7 +554,9 @@ public class GameManager {
                         if (abyssAlert) {
                             if (Integer.parseInt(abyssesAndTools[i][1]) < 0 ||
                                     Integer.parseInt(abyssesAndTools[i][1]) > 9) {
-                                ex.isInvalidAbyss();
+
+                                throw new InvalidInitialBoardException("ID Invalido!");
+                                //  ex.isInvalidAbyss();
                             }
                             idAbyss = Integer.parseInt(abyssesAndTools[i][1]);
                             break;
@@ -564,7 +564,8 @@ public class GameManager {
 
                         if (Integer.parseInt(abyssesAndTools[i][1]) < 0 ||
                                 Integer.parseInt(abyssesAndTools[i][1]) > 5) {
-                            ex.isInvalidTool();
+                            throw new InvalidInitialBoardException("ID Invalido!");
+                         //   ex.isInvalidTool();
                         }
                         idTool = Integer.parseInt(abyssesAndTools[i][1]);
                         break;
@@ -582,11 +583,13 @@ public class GameManager {
 
                 }
 
+                  InvalidInitialBoardException ex = new InvalidInitialBoardException();
 
                 if (abyssAlert) {
 
                     Abyss abyss = Abyss.createAbyss(idAbyss, AuxCode.setTitleAbyss(idAbyss), posAbyss);
                     if (abyss == null) {
+                      //  throw new InvalidInitialBoardException("O Abyss é NULL!");
                         ex.isInvalidAbyss();
                     }
 
@@ -597,7 +600,7 @@ public class GameManager {
                 Tool tool = Tool.createTool(idTool, AuxCode.setTitleTool(idTool), posTool);
                 if (tool == null) {
                     ex.isInvalidTool();
-                    //throw new InvalidInitialBoardException("A Ferramenta é NULL!");
+                  //  throw new InvalidInitialBoardException("A Ferramenta é NULL!");
                 }
 
                 tools.add(tool);
