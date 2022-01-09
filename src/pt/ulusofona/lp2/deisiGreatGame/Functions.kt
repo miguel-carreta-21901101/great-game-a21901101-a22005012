@@ -31,7 +31,7 @@ fun functionGet(game: GameManager, list: List<String>): String? {
 fun functionPost(game: GameManager, list: List<String>): String? {
     when (list[0]) {
         "MOVE" ->  return move(game, list)
-        "ABYSS" ->  return move(game, list)
+        "ABYSS" ->  return postAbyss(game, list[1].toInt(), list[2].toInt())
     }
     return null
 }
@@ -91,8 +91,14 @@ fun move(manager: GameManager, pos: List<String>): String {
         "Abyss Or Tool"
     }
 }
-/*
-fun adicionaAbyss(manager: GameManager, idAbyss : Int , pos : Int) : Boolean {
-    manager.abysses
-        .forEach{ it.pos == pos}
-}*/
+
+fun postAbyss(manager: GameManager, abyssId : Int , posWanted: Int): String? {
+
+    if(manager.abysses.filter { it.pos == posWanted }.isNotEmpty()){
+        return "Position is occupied"
+    }
+
+    manager.abysses.add(Abyss.createAbyss(abyssId, AuxCode.setTitleAbyss(abyssId), posWanted))
+
+    return "OK"
+}

@@ -44,8 +44,6 @@ public class GameManager {
     int steppedOnSegmentationFault = 0;
 
 
-
-
     public GameManager() {
     }
 
