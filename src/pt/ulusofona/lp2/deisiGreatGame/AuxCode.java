@@ -27,8 +27,6 @@ public  class AuxCode {
     }
     public static String setTitleAbyss(int id){
 
-
-
         switch (id){
 
             case 0:
@@ -65,14 +63,16 @@ public  class AuxCode {
                 return  "";
         }
     }
-    public static boolean isAbyss(List<Abyss> hashAbyss, int pos) {
-        for (Abyss abyss : hashAbyss) {
+
+    public static boolean isAbyss(List<Abyss> listAbyss, int pos) {
+        for (Abyss abyss : listAbyss) {
             if (abyss.getPos() == pos) {
                 return true;
             }
         }
         return false;
     }
+
     public static int setIdAbyss(List<Abyss>hashAbyss,int pos) {
         for (Abyss abyss : hashAbyss) {
             if (abyss.getPos() == pos) {
