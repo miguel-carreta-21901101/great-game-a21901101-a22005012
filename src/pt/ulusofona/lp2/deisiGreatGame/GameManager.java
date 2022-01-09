@@ -595,7 +595,7 @@ public class GameManager {
 
                         }
 
-                        System.out.println(abyss + " " + posAbyss);
+
 
                         abysses.add(abyss);
                         continue;
@@ -615,10 +615,7 @@ public class GameManager {
 
         }
 
-        System.out.println("___________________________________");
-        for (Abyss abyss : abysses){
-            System.out.println(abyss + " " + abyss.getPos());
-        }
+
 
     }
 
@@ -926,12 +923,11 @@ public class GameManager {
 
     public String reactToAbyssOrTool() {
 
-
+        boolean breakTest = false;
         boolean isTool = false;
         boolean isAbyss = false;
         Programmer programmerTemp = programmers.get(gameSetting.getCurrentPlayerID());
 
-        // System.out.println(programmerTemp.getPos());
 
         //Por cada tool criada, se existir uma tool na pos do jogador
         for (Tool tool : tools) {
@@ -963,6 +959,7 @@ public class GameManager {
                                     allowedTools0[0] = 5;
                                     allowedTools0[1] = 4;
                                     reactAbyss(programmerTemp, allowedTools0, 1, 0);
+                                    breakTest = true;
                                     break;
 
                                 //LOGICA - Recua metad3 do valor que tiver saido no dado
@@ -972,6 +969,7 @@ public class GameManager {
                                     allowedTools1[1] = 2;
                                     double auxSpaces = (double) gameSetting.getCurrentDiceShoot() / 2;
                                     reactAbyss(programmerTemp, allowedTools1, (int) Math.floor(auxSpaces), 0);
+                                    breakTest = true;
                                     break;
 
                                 //EXCEPTION - recua 2 casas
@@ -980,7 +978,7 @@ public class GameManager {
                                     allowedTools2[0] = 5;
                                     allowedTools2[1] = 3;
                                     reactAbyss(programmerTemp, allowedTools2, 2, 0);
-
+                                    breakTest = true;
                                     break;
 
                                 // FILE NOT FOUND - recua 3 casas
@@ -989,11 +987,13 @@ public class GameManager {
                                     allowedTools3[0] = 5;
                                     allowedTools3[1] = 3;
                                     reactAbyss(programmerTemp, allowedTools3, 3, 0);
+                                    breakTest = true;
                                     break;
 
                                 //CRASH - volta à primeira casa
                                 case 4:
                                     AuxCode.changePosAndCasa(1, programmers, programmerTemp);
+                                    breakTest = true;
                                     break;
 
                                 // DUPLICATED CODE - Recuar ate à antiga casa onde o player estava
@@ -1001,12 +1001,15 @@ public class GameManager {
                                     int[] allowedTools5 = new int[2];
                                     allowedTools5[0] = 0;
                                     reactAbyss(programmerTemp, allowedTools5, 0, 1);
+                                    breakTest = true;
+                                    break;
 
                                     // EFEITOS SECUNDARIOS
                                 case 6:
-                                    int[] allowedTools6 = new int[2];
+                                    int[] allowedTools6 = new int[1];
                                     allowedTools6[0] = 1;
                                     reactAbyss(programmerTemp, allowedTools6, 0, 2);
+                                    breakTest = true;
                                     break;
 
                                 // BLUE SCREEN - perde imediatamente o jogo
@@ -1031,6 +1034,7 @@ public class GameManager {
                                     programmers.remove(gameSetting.getCurrentPlayerID());
                                     gameSetting.removeOneCount();
 
+                                    breakTest = true;
                                     break;
 
 
@@ -1063,6 +1067,7 @@ public class GameManager {
                                             }
                                         }
                                     }
+                                    breakTest = true;
                                     break;
 
                                 //Segmentation Fault
@@ -1076,6 +1081,7 @@ public class GameManager {
                                         }
                                     }
 
+                                    breakTest = true;
                                     break;
 
 
@@ -1083,6 +1089,9 @@ public class GameManager {
                                     break;
                             }
                         }
+                    }
+                    if (breakTest){
+                        break;
                     }
                 }
             }
@@ -1254,10 +1263,10 @@ public class GameManager {
 
     public HashMap<String, Integer> getSteppedOn() {
         HashMap<String, Integer> casas = new HashMap<>();
-        casas.put("Syntax Error", steppedOnSyntaxError);
+        casas.put("Erro de sintaxe", steppedOnSyntaxError);
         casas.put("Logic Error", steppedOnLogicError);
-        casas.put("Exception Fault", steppedOnExceptionFault);
-        casas.put("FileNotFound Exception", steppedOnFileNotFoundException);
+        casas.put("Exception", steppedOnExceptionFault);
+        casas.put("File Not Found Exception", steppedOnFileNotFoundException);
         casas.put("Crash", steppedOnCrash);
         casas.put("Duplicated Code", steppedOnDuplicatedCode);
         casas.put("Side Effect", steppedOnSideEffect);
