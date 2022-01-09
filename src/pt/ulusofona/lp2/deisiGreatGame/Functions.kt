@@ -63,7 +63,7 @@ fun polyglots(manager: GameManager): String {
         .sortedBy {  it.obtainNumeroLinguas() }
         .forEach { stringFinal += it.name + ":" + it.obtainNumeroLinguas() + "\n" }
 
-    return stringFinal
+    return stringFinal.trim()
 }
 
 fun mostUsedPositions(manager: GameManager, list: List<String>): String? {
