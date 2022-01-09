@@ -261,6 +261,8 @@ public class GameManager {
             int count = 0;
             int sizeOfIdProgrammers = idProgrammers.size();
 
+
+
             for (Integer i : idProgrammers){
                 count ++;
                 writer.write(i + "");
@@ -271,7 +273,7 @@ public class GameManager {
             }
 
             writer.write("\n");
-
+            writer.write(gameSetting.getCount() + "\n");
 
             for (Programmer p : getProgrammers(true)) {
                 writePlayer(writer, p);
@@ -329,6 +331,9 @@ public class GameManager {
 
                 idProgrammers.add(Integer.parseInt(dado));
             }
+
+            line = fileReader.nextLine();
+            gameSetting.setCount(Integer.parseInt(line.trim()));
 
             int idAux = 0;
 
@@ -1079,6 +1084,8 @@ public class GameManager {
             }
         }
 
+        System.out.println("player  -> " + getCurrentPlayerID());
+        System.out.println("count -> " + gameSetting.getCount());
         // Incremento o count para ir buscar o proximo posicao no array IDS
         gameSetting.addOneCount();
 
@@ -1096,7 +1103,10 @@ public class GameManager {
         gameSetting.nextShift();
 
         //System.out.println(programmerTemp);
+        System.out.println("player  -> " + getCurrentPlayerID());
+        System.out.println("count -> " + gameSetting.getCount());
 
+        System.out.println("________________________________________");
 
         if (isTool && !canCatch) {
 
