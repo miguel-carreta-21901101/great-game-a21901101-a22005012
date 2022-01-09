@@ -1264,16 +1264,15 @@ public class GameManager {
     public HashMap<String, Integer> getSteppedOn() {
         HashMap<String, Integer> casas = new HashMap<>();
         casas.put("Erro de sintaxe", steppedOnSyntaxError);
-        casas.put("Logic Error", steppedOnLogicError);
+        casas.put("Erro de lógica", steppedOnLogicError);
         casas.put("Exception", steppedOnExceptionFault);
-        casas.put("File Not Found Exception", steppedOnFileNotFoundException);
-        casas.put("Crash", steppedOnCrash);
+        casas.put("Crash (aka Rebentanço)", steppedOnCrash);
         casas.put("Duplicated Code", steppedOnDuplicatedCode);
-        casas.put("Side Effect", steppedOnSideEffect);
-        casas.put("BlueScreen Death", steppedOnBlueScreenDeath);
-        casas.put("Infinite Loop", steppedOnInfiniteLoop);
+        casas.put("Efeitos secundários", steppedOnSideEffect);
+        casas.put("Blue Screen of Death", steppedOnBlueScreenDeath);
+        casas.put("Ciclo infinito", steppedOnInfiniteLoop);
         casas.put("Segmentation Fault", steppedOnSegmentationFault);
-
+        casas.put("File Not Found Exception", steppedOnFileNotFoundException);
         return casas;
     }
 

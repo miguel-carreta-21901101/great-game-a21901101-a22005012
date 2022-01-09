@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -48,21 +49,21 @@ public class TestCoverage {
     public void testSetTitleAbyss(){
         assertEquals("Erro de sintaxe", AuxCode.setTitleAbyss(0));
     }
-/*
+
     @Test
     public void testIsAbyss(){
-        HashMap<Integer, Abyss> abysses = new HashMap<>();
+        List<Abyss> abysses = new ArrayList<>();
         Abyss abyss0 = createAbyss(0, "Syntax Error", 1);
-        abysses.put(0, abyss0);
+        abysses.add(0, abyss0);
 
         assertTrue(AuxCode.isAbyss(abysses, 1));
     }
 
     @Test
     public void testSetIdAbyss(){
-        HashMap<Integer, Abyss> abysses = new HashMap<>();
+        List<Abyss> abysses = new ArrayList<>();
         Abyss abyss0 = createAbyss(3, "Syntax Error", 1);
-        abysses.put(0, abyss0);
+        abysses.add(0, abyss0);
 
         //System.out.println(AuxCode.setIdAbyss(abysses, 1));
         assertEquals(3, AuxCode.setIdAbyss(abysses,1));
@@ -75,8 +76,8 @@ public class TestCoverage {
         tools.add(tool0);
 
         System.out.println(AuxCode.setTool(tools, 0));
-        assertEquals("IDE", AuxCode.setTool(tools, 0).title);
-    }*/
+        assertEquals("IDE", Objects.requireNonNull(AuxCode.setTool(tools, 0)).title);
+    }
 
     @Test
     public void testSetTitleTool(){
