@@ -1261,6 +1261,7 @@ public class GameManager {
 
     public HashMap<String, Integer> getSteppedOn() {
         HashMap<String, Integer> casas = new HashMap<>();
+        casas.put("File Not Found Exception", steppedOnFileNotFoundException);
         casas.put("Erro de sintaxe", steppedOnSyntaxError);
         casas.put("Erro de lógica", steppedOnLogicError);
         casas.put("Exception", steppedOnExceptionFault);
@@ -1270,7 +1271,7 @@ public class GameManager {
         casas.put("Blue Screen of Death", steppedOnBlueScreenDeath);
         casas.put("Ciclo infinito", steppedOnInfiniteLoop);
         casas.put("Segmentation Fault", steppedOnSegmentationFault);
-        casas.put("File Not Found Exception", steppedOnFileNotFoundException);
+
 
         return casas;
     }
