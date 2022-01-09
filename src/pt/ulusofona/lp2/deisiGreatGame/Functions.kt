@@ -49,7 +49,7 @@ fun playersByLanguage(manager: GameManager, wantedLanguage: String): String {
     var stringFinal : String = ""
 
     manager.programmers.values
-        .filter { wantedLanguage in it.linguagens.split(',')}
+        .filter { wantedLanguage in it.linguagens.split("; ")}
         .forEach { stringFinal += it.name + ',' }
     return stringFinal.dropLast(1)
 }
@@ -61,7 +61,7 @@ fun polyglots(manager: GameManager): String {
     manager.programmers.values
         .filter { it.obtainNumeroLinguas() > 1 }
         .sortedBy {  it.obtainNumeroLinguas() }
-        .forEach { stringFinal += it.name + ": " + it.obtainNumeroLinguas() + "\n" }
+        .forEach { stringFinal += it.name + ":" + it.obtainNumeroLinguas() + "\n" }
 
     return stringFinal
 }
