@@ -75,8 +75,8 @@ fun mostUsedAbysses(manager: GameManager, max_results : Int): String {
     var stringFinal : String = ""
 
     var res = manager.steppedOn
-        .entries.sortedBy { it.value }
-        .reversed().take(max_results - 1).associate { it.toPair() }
+        .entries.sortedByDescending{ it.value }
+        .take(max_results - 1).associate { it.toPair() }
 
     res.forEach { stringFinal += it.key + ":" + it.value + "\n" }
 
