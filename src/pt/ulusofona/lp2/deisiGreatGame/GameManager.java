@@ -43,7 +43,7 @@ public class GameManager {
     int steppedOnInfiniteLoop = 0;
     int steppedOnSegmentationFault = 0;
 
-    private String[][] playerInfoLoadGame = null;
+
 
 
     public GameManager() {
@@ -247,6 +247,7 @@ public class GameManager {
     }
 
     public boolean saveGame(File file) {
+
         try {
             FileWriter writer = new FileWriter(file);
             // Tamanho do Mapa
@@ -301,6 +302,8 @@ public class GameManager {
     }
 
     public boolean loadGame(File file) {
+
+
 
         try {
             resetGame();
@@ -362,6 +365,8 @@ public class GameManager {
                 String linguagens = dados[4].trim();
 
 
+
+
                 int outOfGame = Integer.parseInt(dados[5].trim());
 
                 int stuck = Integer.parseInt(dados[6].trim());
@@ -384,7 +389,6 @@ public class GameManager {
                 List<Tool> tools = new ArrayList<>();
                 List<Integer> casas = new ArrayList<>();
                 boolean temTool = false;
-
                 if (dados.length == 8 || dados.length == 9) {
 
                     if (dados[7].equals(" ")){
@@ -408,6 +412,7 @@ public class GameManager {
                         for (Programmer p : programmers.values()) {
                             if (p.getId() == idAux) {
                                 p.setTools(tools);
+
                             }
                         }
                     }
@@ -494,7 +499,7 @@ public class GameManager {
     public void createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools)
             throws InvalidInitialBoardException {
 
-
+        InvalidInitialBoardException ex = new InvalidInitialBoardException();
         //              ABYSSES & TOOLS
 
         createInitialBoard(playerInfo, worldSize);
@@ -551,7 +556,7 @@ public class GameManager {
                         if (abyssAlert) {
                             if (Integer.parseInt(abyssesAndTools[i][1]) < 0 ||
                                     Integer.parseInt(abyssesAndTools[i][1]) > 9) {
-                                throw new InvalidInitialBoardException("O ID é Inválido!");
+                                ex.isInvalidAbyss();
                             }
                             idAbyss = Integer.parseInt(abyssesAndTools[i][1]);
                             break;
@@ -559,7 +564,7 @@ public class GameManager {
 
                         if (Integer.parseInt(abyssesAndTools[i][1]) < 0 ||
                                 Integer.parseInt(abyssesAndTools[i][1]) > 5) {
-                            throw new InvalidInitialBoardException("O ID é Inválido!");
+                            ex.isInvalidTool();
                         }
                         idTool = Integer.parseInt(abyssesAndTools[i][1]);
                         break;
@@ -577,11 +582,12 @@ public class GameManager {
 
                 }
 
+
                 if (abyssAlert) {
 
                     Abyss abyss = Abyss.createAbyss(idAbyss, AuxCode.setTitleAbyss(idAbyss), posAbyss);
                     if (abyss == null) {
-                        throw new InvalidInitialBoardException("O Abismo é NULL!");
+                        ex.isInvalidAbyss();
                     }
 
                     abysses.put(idAbyss, abyss);
@@ -590,7 +596,8 @@ public class GameManager {
 
                 Tool tool = Tool.createTool(idTool, AuxCode.setTitleTool(idTool), posTool);
                 if (tool == null) {
-                    throw new InvalidInitialBoardException("A Ferramenta é NULL!");
+                    ex.isInvalidTool();
+                    //throw new InvalidInitialBoardException("A Ferramenta é NULL!");
                 }
 
                 tools.add(tool);

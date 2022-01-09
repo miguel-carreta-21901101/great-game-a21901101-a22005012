@@ -11,13 +11,13 @@ fun router(): (CommandType) -> (GameManager, List<String>) -> String? {
 fun wichCommand(commandType: CommandType): (GameManager, List<String>) -> String? {
 
     when (commandType) {
-        GET -> return { game, values -> functionGET(game, values) }
-        POST -> return { game, values -> functionPOST(game, values) }
+        GET -> return { game, values -> functionGet(game, values) }
+        POST -> return { game, values -> functionPost(game, values) }
     }
 }
 
 
-fun functionGET(game: GameManager, list: List<String>): String? {
+fun functionGet(game: GameManager, list: List<String>): String? {
     when (list[0]) {
         "PLAYER" -> return player(game, list)
         "PLAYERS_BY_LANGUAGE" -> return playersByLanguage(game, list[1])
@@ -28,7 +28,7 @@ fun functionGET(game: GameManager, list: List<String>): String? {
     return null
 }
 
-fun functionPOST(game: GameManager, list: List<String>): String? {
+fun functionPost(game: GameManager, list: List<String>): String? {
     when (list[0]) {
         "MOVE" ->  return move(game, list)
         //   "ABYSS" ->  return move(game, list)
@@ -43,15 +43,15 @@ fun player(manager: GameManager, playerName: List<String>): String {
     }
 }
 
+
 fun playersByLanguage(manager: GameManager, wantedLanguage: String): String {
 
     var stringFinal : String = ""
 
     manager.getProgrammers(true)
-        .filter { wantedLanguage in it.linguagens }
+        .filter { wantedLanguage in it.linguagens}
         .filter { it.obtainNumeroLinguas() > 0 }
         .forEach { stringFinal += it.name + ',' }
-
     return stringFinal.dropLast(1)
 }
 
@@ -63,7 +63,7 @@ fun polyglots(manager: GameManager): String {
         .filter { it.obtainNumeroLinguas() > 1 }
         .sortedBy {  it.obtainNumeroLinguas() }
         .reversed()
-        .forEach({stringFinal += it.name + ": " + it.obtainNumeroLinguas() + "\n"})
+        .forEach { stringFinal += it.name + ": " + it.obtainNumeroLinguas() + "\n" }
 
     return stringFinal
 }
@@ -79,7 +79,7 @@ fun mostUsedAbysses(manager: GameManager, max_results : Int): String {
         .entries.sortedBy { it.value }
         .reversed().take(max_results).associate { it.toPair() }
 
-    res.forEach({stringFinal += it.key + ":" + it.value + "\n"})
+    res.forEach { stringFinal += it.key + ":" + it.value + "\n" }
 
     return stringFinal
 }
