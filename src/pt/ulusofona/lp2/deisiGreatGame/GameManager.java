@@ -420,7 +420,6 @@ public class GameManager {
                 }
             }
 
-            line = fileReader.nextLine();
 
             while(!(line = fileReader.nextLine()).equals("END")){
                 String[] dados = line.split(":".trim());
