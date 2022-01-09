@@ -1268,9 +1268,9 @@ public class GameManager {
         casas.put("Duplicated Code", steppedOnDuplicatedCode);
         casas.put("Efeitos secundários", steppedOnSideEffect);
         casas.put("Blue Screen of Death", steppedOnBlueScreenDeath);
-        casas.put("File Not Found Exception", steppedOnFileNotFoundException);
         casas.put("Ciclo infinito", steppedOnInfiniteLoop);
         casas.put("Segmentation Fault", steppedOnSegmentationFault);
+        casas.put("File Not Found Exception", steppedOnFileNotFoundException);
 
         return casas;
     }
