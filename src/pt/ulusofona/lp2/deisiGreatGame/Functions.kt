@@ -91,3 +91,8 @@ fun move(manager: GameManager, pos: List<String>): String {
         "Abyss Or Tool"
     }
 }
+/*
+fun adicionaAbyss(manager: GameManager, idAbyss : Int , pos : Int) : Boolean {
+    manager.abysses
+        .forEach{ it.pos == pos}
+}*/
