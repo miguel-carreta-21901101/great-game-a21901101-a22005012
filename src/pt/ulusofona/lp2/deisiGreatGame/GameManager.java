@@ -192,6 +192,10 @@ public class GameManager {
 
     private void writePlayer(FileWriter writer, Programmer programmer) throws IOException {
         boolean temTool = false;
+        boolean temCasasPercorridas = false;
+        int count = 0;
+        int sizeOfProgrammerTools;
+        int sizeOfCasasPercorridas;
 
         writer.write(programmer.getId() + " : ");  // id
         writer.write(programmer.getName() + " : ");  // name
@@ -199,30 +203,46 @@ public class GameManager {
         writer.write(programmer.getColor().getColor() + " : ");
         writer.write(programmer.getLinguagens() + " : ");
         writer.write((programmer.isOutOfGame() ? "1" : "0") + " : ");  // out of game
-        writer.write((programmer.isStuck() ? "1" : "0" + " : "));  // Stuck
+        writer.write((programmer.isStuck() ? "1" : "0") + " : ");  // Stuck
 
-        if (programmer.getCasasPercorridasList().size() > 3){
-            writer.write(programmer.getCasasPercorridasList().get(programmer.getCasasPercorridasList().size() -3) +
-                    " : " + programmer.getCasasPercorridasList().get(programmer.getCasasPercorridasList().size() -2)
+        sizeOfProgrammerTools = programmer.getTools().size();
 
-            );
-           // writer.write("\n");
-        }
-        if (programmer.getTools().size() != 0) {
-            temTool = true;
-            writer.write("\n");
-        }
         for (Tool tool : programmer.getTools()) {
-            writer.write(tool + " : ");
+            temTool = true;
+            count++;
+
+
+            writer.write(String.valueOf(tool));
+
+            if (count == sizeOfProgrammerTools) {
+                break;
+            }
+            writer.write(" @ ");
+
+        }
+        if (temTool) {
+            writer.write(" : ");
         }
 
+        count = 0;
+        sizeOfCasasPercorridas = programmer.getCasasPercorridasList().size();
 
+        for (Integer i : programmer.getCasasPercorridasList()) {
+            count++;
+            writer.write(i + "");
+
+            if (count == sizeOfCasasPercorridas) {
+                break;
+            }
+            writer.write(" @ ");
+        }
 
     }
 
+
     private void writeGameHouseElements(FileWriter writer, GameHouseElement gameHouseElement) throws IOException {
         writer.write(gameHouseElement.getId() + " : ");  // id
-        writer.write(gameHouseElement.getPos() + " : ");  // Position
+        writer.write(gameHouseElement.getPos() + "");  // Position
 
     }
 
@@ -244,18 +264,19 @@ public class GameManager {
             }
 
 
-            for (Tool tool : tools){
+            for (Tool tool : tools) {
                 writeGameHouseElements(writer, tool);
                 writer.write("\n");
             }
 
             writer.write("ABYSS" + "\n");
 
-            for (Abyss abyss : abysses.values()){
+            for (Abyss abyss : abysses.values()) {
                 writeGameHouseElements(writer, abyss);
                 writer.write("\n");
             }
 
+            writer.write("END");
             writer.close();
 
         } catch (IOException e) {
@@ -268,7 +289,7 @@ public class GameManager {
     public boolean loadGame(File file) {
 
         try {
-           // resetGame();
+             resetGameLoadGame();
             Scanner fileReader = new Scanner(file);
             // Map Size
             String line = fileReader.nextLine();
@@ -280,41 +301,19 @@ public class GameManager {
             //System.out.println(getCurrentPlayerID());
             //Ended shifts
             line = fileReader.nextLine();
-            gameSetting.setEndedShifts(Integer.parseInt(line.trim()));;
-           // System.out.println(gameSetting.getEndedShifts());
+            gameSetting.setEndedShifts(Integer.parseInt(line.trim()));
+
+            // System.out.println(gameSetting.getEndedShifts());
             line = fileReader.nextLine();
             int programmersSize = Integer.parseInt(line.trim());
 
 
             int idAux = 0;
 
-            for (int i = 0; i < programmersSize*2; i++) {
+            for (int i = 0; i < programmersSize; i++) {
                 line = fileReader.nextLine();
                 String[] dados = line.split(":");
                 int id = 0;
-                List<Tool> tools = new ArrayList<>();
-                if (dados[0].trim().equals("Herança") || dados[0].trim().equals("Programação Funcional")||
-                        dados[0].trim().equals("Testes unitários") || dados[0].trim().equals("Tratamento de Excepções")
-                        || dados[0].trim().equals("IDE") || dados[0].trim().equals("Ajuda Do Professor")){
-
-
-                    for (String dado : dados) {
-                        if (dado.equals("") || dado.equals(" ")){
-                            break;
-                        }
-                        tools.add(Tool.associateToolToPlayer(AuxCode.setIdTool(dado.trim()), dado.trim()));
-
-                    }
-
-
-                    for (Programmer p : programmers.values()){
-                       if (p.getId() == idAux){
-                           p.setTools(tools);
-                       }
-                    }
-
-                    continue;
-                }
                 id = Integer.parseInt(dados[0].trim());
                 idAux = id;
                 String name = dados[1].trim();
@@ -322,7 +321,7 @@ public class GameManager {
                 String color = dados[3].trim();
 
                 ProgrammerColor cor = null;
-                switch (color){
+                switch (color) {
                     case "Purple":
                         cor = ProgrammerColor.PURPLE;
                         break;
@@ -339,42 +338,107 @@ public class GameManager {
                     default:
                         break;
                 }
-                //List<String> linguagens = new ArrayList<>();
                 String linguagens = dados[4];
+
+
                 int outOfGame = Integer.parseInt(dados[5].trim());
                 int stuck = Integer.parseInt(dados[6].trim());
-                int duasCasasAnteriores;
-                int casaAnterior;
 
-
-                if (dados.length == 9){
-                    duasCasasAnteriores = Integer.parseInt(dados[7].trim());
-                    casaAnterior = Integer.parseInt(dados[8].trim());
-
+                if (pos == 1 ) {
                     programmers.put(id, new Programmer(id, name, pos, cor, linguagens, outOfGame, stuck));
+                    continue
+                            ;
+                }
+
+                List<Tool> tools = new ArrayList<>();
+                List<Integer> casas = new ArrayList<>();
+                boolean temTool = false;
+
+                if (dados.length == 8 || dados.length == 9) {
+
+                    if (dados[7].equals(" ")){
+                        programmers.put(id, new Programmer(id, name, pos, cor, linguagens, outOfGame, stuck));
+                        continue;
+                    }
+                    programmers.put(id, new Programmer(id, name, pos, cor, linguagens, outOfGame, stuck));
+
+                    String[] toolz = dados[7].trim().split("@");
+
+                    if (toolz[0].trim().equals("Herança") || toolz[0].trim().equals("Programação Funcional") ||
+                            toolz[0].trim().equals("Testes unitários") || toolz[0].trim().equals("Tratamento de Excepções")
+                            || toolz[0].trim().equals("IDE") || toolz[0].trim().equals("Ajuda Do Professor")) {
+
+                        temTool = true;
+                        for (String s : toolz) {
+                            tools.add(Tool.associateToolToPlayer(AuxCode.setIdTool(s.trim()), s.trim()));
+
+                        }
+
+                        for (Programmer p : programmers.values()) {
+                            if (p.getId() == idAux) {
+                                p.setTools(tools);
+                            }
+                        }
+                    }
+                    String[] casazz;
+                    if (temTool) {
+                        casazz = dados[8].trim().split("@");
+                    } else {
+                        casazz = dados[7].trim().split("@");
+                    }
+
+                    if (Integer.parseInt(casazz[0].trim()) > 0) {
+                        for (String s : casazz) {
+                            casas.add(Integer.parseInt(s.trim()));
+                        }
+
+
+                        for (Programmer p : programmers.values()) {
+                            if (p.getId() == idAux) {
+                                p.setCasasPercorridas(casas);
+                            }
+                        }
+                    }
+                }
+
+
+            }
+
+
+            while (!(line = fileReader.nextLine()).equals("ABYSS")) {
+                String[] dados = line.split(":".trim());
+                if (dados.length == 2){
+                    int idTool = Integer.parseInt(dados[0].trim());
+                    int posTool = Integer.parseInt(dados[1].trim());
+                    Tool tool = Tool.createTool(idTool, AuxCode.setTitleAbyss(idTool), posTool);
+                    if (tool == null){
+                        throw new IllegalArgumentException();
+                    }
+
+                    tools.add(tool);
+
                 }
             }
 
             line = fileReader.nextLine();
-            // line = fileReader.nextLine();
-/*
-            while (!line.equals("ABYSS")){
-                String[] dados = line.split(":");
-                int posMap = Integer.parseInt(dados[0].trim());
-                int idTool = Integer.parseInt(dados[1].trim());
+
+            while(!(line = fileReader.nextLine()).equals("END")){
+                String[] dados = line.split(":".trim());
+                if (dados.length == 2){
+                    int idAbyss = Integer.parseInt(dados[0].trim());
+                    int posAbyss = Integer.parseInt(dados[1].trim());
+                    Abyss abyss = Abyss.createAbyss(idAbyss, AuxCode.setTitleAbyss(idAbyss), posAbyss);
+                    if (abyss == null){
+                        throw new IllegalArgumentException();
+                    }
+
+                    abysses.put(idAbyss, abyss);
+
+                }
+            }
 
 
-
-
-                Tool tool = Tool.createTool(idTool, AuxCode.setTitleTool(idTool), posMap);
-
-                tools.add(tool);
-
-                line = fileReader.nextLine();
-            }*/
-
-
-
+            fileReader.close();
         } catch (IOException e) {
             return false;
         }
@@ -391,6 +455,19 @@ public class GameManager {
         programmerListGameResults.clear();
         totalProgrammers.clear();
         idProgrammers.clear();
+        abysses.clear();
+        tools.clear();
+        gameSetting = new GameSetting();
+        board = new Board();
+
+    }
+
+    public void resetGameLoadGame() {
+
+        programmers.clear();
+        programmersOutOfGame.clear();
+        programmerListGameResults.clear();
+        totalProgrammers.clear();
         abysses.clear();
         tools.clear();
         gameSetting = new GameSetting();
@@ -1135,7 +1212,7 @@ public class GameManager {
         return painel;
     }
 
-    public  HashMap<String, Integer> getSteppedOn(){
+    public HashMap<String, Integer> getSteppedOn() {
         HashMap<String, Integer> casas = new HashMap<>();
         casas.put("Syntax Error", steppedOnSyntaxError);
         casas.put("Logic Error", steppedOnLogicError);

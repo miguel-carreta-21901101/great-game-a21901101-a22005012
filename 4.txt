@@ -1,59 +1,55 @@
 79
-3
-35
+2
+22
 4
-1 : Joshua Bloch : 41 : Purple : C; C#; Java; Python : 0 : 0 : 31 : 35
-Testes unitários : IDE : 
-2 : Guido van Rossum : 37 : Blue : C; Common Lisp; Python : 0 : 0 : 27 : 33
-Herança : IDE : 
-3 : Ada Lovelace : 22 : Green : Ada; C,C# : 0 : 0 : 18 : 21
-Testes unitários : Herança : 
-4 : John McCarthy : 34 : Brown : C,C#; Lisp : 0 : 0 : 27 : 31
-Ajuda Do Professor : Herança : 
+1 : Joshua Bloch : 21 : Purple : C; C#; Java; Python : 0 : 0 : 5 @ 10 @ 15 @ 16 @ 18 @ 21
+2 : Guido van Rossum : 23 : Blue : C; Common Lisp; Python : 0 : 0 : IDE : 6 @ 12 @ 16 @ 21 @ 23
+3 : Ada Lovelace : 19 : Green : Ada; C,C# : 0 : 0 : Tratamento de Excepções @ IDE @ Herança : 7 @ 9 @ 14 @ 15 @ 19
+4 : John McCarthy : 16 : Brown : C,C#; Lisp : 0 : 0 : Ajuda Do Professor @ IDE : 4 @ 8 @ 10 @ 14 @ 16
 0 : 0 : 
 1 : 0 : 
-1 : 32 : 
-1 : 32 : 
-2 : 32 : 
+1 : 33 : 
+1 : 33 : 
+2 : 33 : 
 2 : 2 : 
 2 : 2 : 
-5 : 2 : 
+2 : 2 : 
+2 : 3 : 
+2 : 3 : 
 5 : 3 : 
-5 : 3 : 
-1 : 3 : 
-1 : 36 : 
-1 : 36 : 
-4 : 36 : 
-4 : 37 : 
-4 : 37 : 
-3 : 37 : 
-3 : 6 : 
-3 : 6 : 
-3 : 6 : 
-3 : 7 : 
-3 : 7 : 
-0 : 7 : 
-0 : 9 : 
-0 : 9 : 
-2 : 9 : 
-2 : 18 : 
-2 : 18 : 
-5 : 18 : 
-5 : 19 : 
-5 : 19 : 
-4 : 19 : 
-4 : 25 : 
-4 : 25 : 
-0 : 25 : 
-0 : 29 : 
+5 : 8 : 
+5 : 8 : 
+3 : 8 : 
+3 : 9 : 
+3 : 9 : 
+5 : 9 : 
+5 : 11 : 
+5 : 11 : 
+4 : 11 : 
+4 : 12 : 
+4 : 12 : 
+4 : 12 : 
+4 : 14 : 
+4 : 14 : 
+0 : 14 : 
+0 : 19 : 
+0 : 19 : 
+1 : 19 : 
+1 : 20 : 
+1 : 20 : 
+3 : 20 : 
+3 : 24 : 
+3 : 24 : 
+0 : 24 : 
+0 : 30 : 
 ABYSS
-0 : 50 : 
-1 : 53 : 
-2 : 77 : 
-3 : 48 : 
-4 : 57 : 
-5 : 43 : 
-6 : 47 : 
-7 : 68 : 
-8 : 75 : 
-9 : 42 : 
+0 : 77 : 
+1 : 44 : 
+2 : 45 : 
+3 : 63 : 
+4 : 55 : 
+5 : 68 : 
+6 : 48 : 
+7 : 49 : 
+8 : 76 : 
+9 : 39 : 

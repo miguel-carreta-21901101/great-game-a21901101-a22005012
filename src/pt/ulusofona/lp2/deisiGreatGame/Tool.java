@@ -22,7 +22,7 @@ public abstract class Tool extends GameHouseElement {
                 return new FunctionalProgramming(id, title);
             case "Testes unitários":
                 return new UnitTest(id, title);
-            case "Tratamento de Excepções ":
+            case "Tratamento de Excepções":
                 return new CatchException(id, title);
             case "IDE":
                 return new  Ide(id, title);

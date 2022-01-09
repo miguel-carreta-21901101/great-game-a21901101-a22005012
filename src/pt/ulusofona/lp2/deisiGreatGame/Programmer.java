@@ -23,7 +23,7 @@ public class Programmer {
     //************* Constructors ************************
 
     public Programmer(int id, String name, int pos, ProgrammerColor color, String linguagens, int outOfGame, int stuck
-                      ){
+    ){
         this.id = id;
         this.name = name;
         this.pos = pos;
@@ -103,6 +103,9 @@ public class Programmer {
         this.pos = pos;
     }
     public void setTools(List<Tool> tools) {this.tools = tools;}
+
+    public void setCasasPercorridas(List<Integer> casasPercorridasList){
+        this.casasPercorridasList = casasPercorridasList;}
 
     //***************************************************************************************************
 

@@ -30,7 +30,7 @@ fun functionGET(game: GameManager, list: List<String>): String? {
 
 fun functionPOST(game: GameManager, list: List<String>): String? {
     when (list[0]) {
-          "MOVE" ->  return move(game, list)
+        "MOVE" ->  return move(game, list)
         //   "ABYSS" ->  return move(game, list)
     }
     return null
@@ -50,7 +50,7 @@ fun playersByLanguage(manager: GameManager, wantedLanguage: String): String {
     manager.getProgrammers(true)
         .filter { wantedLanguage in it.linguagens }
         .filter { it.obtainNumeroLinguas() > 0 }
-        .forEach({stringFinal += it.name + ','})
+        .forEach { stringFinal += it.name + ',' }
 
     return stringFinal.dropLast(1)
 }
