@@ -505,6 +505,10 @@ public class GameManager {
         int posAbyss = 0;
         int posTool = 0;
 
+        if (abyssesAndTools == null){
+            throw new InvalidInitialBoardException("A Matrix é NULL!");
+        }
+
         for (i = 0; i < abyssesAndTools.length; i++) {
 
             if (abyssesAndTools[i] == null) {
