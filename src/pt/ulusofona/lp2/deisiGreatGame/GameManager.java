@@ -368,8 +368,6 @@ public class GameManager {
                 String linguagens = dados[4].trim();
 
 
-
-
                 int outOfGame = Integer.parseInt(dados[5].trim());
 
                 int stuck = Integer.parseInt(dados[6].trim());
@@ -400,14 +398,14 @@ public class GameManager {
                     }
                     programmers.put(id, new Programmer(id, name, pos, cor, linguagens, outOfGame, stuck));
 
-                    String[] toolz = dados[7].trim().split("@");
+                    String[] toolsAux = dados[7].trim().split("@");
 
-                    if (toolz[0].trim().equals("Herança") || toolz[0].trim().equals("Programação Funcional") ||
-                            toolz[0].trim().equals("Testes unitários") || toolz[0].trim().equals("Tratamento de Excepções")
-                            || toolz[0].trim().equals("IDE") || toolz[0].trim().equals("Ajuda Do Professor")) {
+                    if (toolsAux[0].trim().equals("Herança") || toolsAux[0].trim().equals("Programação Funcional") ||
+                            toolsAux[0].trim().equals("Testes unitários") || toolsAux[0].trim().equals("Tratamento de Excepções")
+                            || toolsAux[0].trim().equals("IDE") || toolsAux[0].trim().equals("Ajuda Do Professor")) {
 
                         temTool = true;
-                        for (String s : toolz) {
+                        for (String s : toolsAux) {
                             tools.add(Tool.associateToolToPlayer(AuxCode.setIdTool(s.trim()), s.trim()));
 
                         }
@@ -419,15 +417,15 @@ public class GameManager {
                             }
                         }
                     }
-                    String[] casazz;
+                    String[] casasAux;
                     if (temTool) {
-                        casazz = dados[8].trim().split("@");
+                        casasAux = dados[8].trim().split("@");
                     } else {
-                        casazz = dados[7].trim().split("@");
+                        casasAux = dados[7].trim().split("@");
                     }
 
-                    if (Integer.parseInt(casazz[0].trim()) > 0) {
-                        for (String s : casazz) {
+                    if (Integer.parseInt(casasAux[0].trim()) > 0) {
+                        for (String s : casasAux) {
                             casas.add(Integer.parseInt(s.trim()));
                         }
 
