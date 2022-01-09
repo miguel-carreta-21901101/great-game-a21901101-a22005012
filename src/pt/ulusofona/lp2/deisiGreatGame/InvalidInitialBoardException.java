@@ -2,13 +2,20 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 public class InvalidInitialBoardException extends Exception {
     String message;
-
+    boolean isInvalid;
+    int i;
 
     public InvalidInitialBoardException() {
     }
 
     public InvalidInitialBoardException(String message) {
         this.message = message;
+    }
+    public InvalidInitialBoardException(String message, int i, int j){
+
+    }
+    public InvalidInitialBoardException(int i){
+        this.i = i;
     }
 
     public String getMessage() {
@@ -24,6 +31,6 @@ public class InvalidInitialBoardException extends Exception {
     }
 
     public String getTypeId(){
-        return "";
+        return Integer.toString(i);
     }
 }

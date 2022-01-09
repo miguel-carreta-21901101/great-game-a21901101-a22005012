@@ -513,108 +513,107 @@ public class GameManager {
         int posAbyss = 0;
         int posTool = 0;
 
-        if (abyssesAndTools == null){
-            throw new InvalidInitialBoardException("A Matrix é NULL!");
-        }
-
-        for (i = 0; i < abyssesAndTools.length; i++) {
-
-            if (abyssesAndTools[i] == null) {
-                throw new InvalidInitialBoardException("O Abismo ou Ferramenta é NULL !");
-            }
+        if (abyssesAndTools != null) {
 
 
-            // Var para detetar se é Abyss
-            boolean abyssAlert = false;
+            for (i = 0; i < abyssesAndTools.length; i++) {
 
-            for (j = 0; j <= 2; j++) {
-
-                if (abyssesAndTools[i][j] == null) {
+                if (abyssesAndTools[i] == null) {
                     throw new InvalidInitialBoardException("O Abismo ou Ferramenta é NULL !");
                 }
 
-                switch (j) {
 
-                    // 0 -> Abismo  ||  1 -> Ferramenta
-                    case 0:
+                // Var para detetar se é Abyss
+                boolean abyssAlert = false;
 
-                        // se nao for nenhum dos dois , false
-                        if (!abyssesAndTools[i][0].equals(String.valueOf(0)) && !abyssesAndTools[i][0]
-                                .equals(String.valueOf(1))) {
+                for (j = 0; j <= 2; j++) {
 
-                            throw new InvalidInitialBoardException("Não é Abismo nem Ferramenta!");
+                    if (abyssesAndTools[i][j] == null) {
+                        throw new InvalidInitialBoardException("O Abismo ou Ferramenta é NULL !");
+                    }
 
-                        }
+                    switch (j) {
 
-                        // Se for 0 (abismo) o detetor da true
-                        if (abyssesAndTools[i][0].equals(String.valueOf(0))) {
-                            abyssAlert = true;
-                        }
-                        break;
+                        // 0 -> Abismo  ||  1 -> Ferramenta
+                        case 0:
 
-                    case 1:
-                        if (abyssesAndTools[i][1] == null) {
-                            throw new InvalidInitialBoardException("O ID  é NULL !");
-                        }
-                        if (abyssAlert) {
-                            if (Integer.parseInt(abyssesAndTools[i][1]) < 0 ||
-                                    Integer.parseInt(abyssesAndTools[i][1]) > 9) {
+                            // se nao for nenhum dos dois , false
+                            if (!abyssesAndTools[i][0].equals(String.valueOf(0)) && !abyssesAndTools[i][0]
+                                    .equals(String.valueOf(1))) {
 
-                                throw new InvalidInitialBoardException("ID Invalido!");
-                                //  ex.isInvalidAbyss();
+                                throw new InvalidInitialBoardException("Não é Abismo nem Ferramenta!");
+
                             }
-                            idAbyss = Integer.parseInt(abyssesAndTools[i][1]);
+
+                            // Se for 0 (abismo) o detetor da true
+                            if (abyssesAndTools[i][0].equals(String.valueOf(0))) {
+                                abyssAlert = true;
+                            }
                             break;
-                        }
 
-                        if (Integer.parseInt(abyssesAndTools[i][1]) < 0 ||
-                                Integer.parseInt(abyssesAndTools[i][1]) > 5) {
-                            throw new InvalidInitialBoardException("ID Invalido!");
-                         //   ex.isInvalidTool();
-                        }
-                        idTool = Integer.parseInt(abyssesAndTools[i][1]);
-                        break;
+                        case 1:
+                            if (abyssesAndTools[i][1] == null) {
+                                throw new InvalidInitialBoardException("O ID  é NULL !");
+                            }
+                            if (abyssAlert) {
+                                if (Integer.parseInt(abyssesAndTools[i][1]) < 0 ||
+                                        Integer.parseInt(abyssesAndTools[i][1]) > 9) {
 
-                    case 2:
-                        if (abyssAlert) {
-                            posAbyss = Integer.parseInt(abyssesAndTools[i][2]);
+                                    throw new InvalidInitialBoardException("ID Invalido!");
+                                    //  ex.isInvalidAbyss();
+                                }
+                                idAbyss = Integer.parseInt(abyssesAndTools[i][1]);
+                                break;
+                            }
+
+                            if (Integer.parseInt(abyssesAndTools[i][1]) < 0 ||
+                                    Integer.parseInt(abyssesAndTools[i][1]) > 5) {
+                                throw new InvalidInitialBoardException("ID Invalido!");
+                                //   ex.isInvalidTool();
+                            }
+                            idTool = Integer.parseInt(abyssesAndTools[i][1]);
                             break;
-                        }
-                        posTool = Integer.parseInt(abyssesAndTools[i][2]);
-                        break;
 
-                    default:
-                        break;
+                        case 2:
+                            if (abyssAlert) {
+                                posAbyss = Integer.parseInt(abyssesAndTools[i][2]);
+                                break;
+                            }
+                            posTool = Integer.parseInt(abyssesAndTools[i][2]);
+                            break;
 
-                }
-
-
-                if (abyssAlert) {
-
-                    Abyss abyss = Abyss.createAbyss(idAbyss, AuxCode.setTitleAbyss(idAbyss), posAbyss);
-                    if (abyss == null) {
-                        throw new InvalidInitialBoardException("O Abyss é NULL!");
-
+                        default:
+                            break;
 
                     }
 
-                    abysses.put(idAbyss, abyss);
-                    continue;
+
+                    if (abyssAlert) {
+
+                        Abyss abyss = Abyss.createAbyss(idAbyss, AuxCode.setTitleAbyss(idAbyss), posAbyss);
+                        if (abyss == null) {
+                            throw new InvalidInitialBoardException(idAbyss);
+
+
+                        }
+
+                        abysses.put(idAbyss, abyss);
+                        continue;
+                    }
+
+                    Tool tool = Tool.createTool(idTool, AuxCode.setTitleTool(idTool), posTool);
+                    if (tool == null) {
+
+                        throw new InvalidInitialBoardException(idTool);
+                    }
+
+                    tools.add(tool);
+
                 }
-
-                Tool tool = Tool.createTool(idTool, AuxCode.setTitleTool(idTool), posTool);
-                if (tool == null) {
-
-                   throw new InvalidInitialBoardException("A Ferramenta é NULL!");
-                }
-
-                tools.add(tool);
 
             }
 
         }
-
-
     }
 
     public void createInitialBoard(String[][] playerInfo, int worldSize) throws InvalidInitialBoardException {
