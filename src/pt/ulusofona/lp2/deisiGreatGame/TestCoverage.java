@@ -48,7 +48,7 @@ public class TestCoverage {
     public void testSetTitleAbyss(){
         assertEquals("Erro de sintaxe", AuxCode.setTitleAbyss(0));
     }
-
+/*
     @Test
     public void testIsAbyss(){
         HashMap<Integer, Abyss> abysses = new HashMap<>();
@@ -76,7 +76,7 @@ public class TestCoverage {
 
         System.out.println(AuxCode.setTool(tools, 0));
         assertEquals("IDE", AuxCode.setTool(tools, 0).title);
-    }
+    }*/
 
     @Test
     public void testSetTitleTool(){

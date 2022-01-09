@@ -23,7 +23,7 @@ public class GameManager {
     //Lista de Ids dos programmers que uso para manipular
     List<Integer> idProgrammers = new ArrayList<>();
     // Hash< ID , ABYSS > de abismos
-    HashMap<Integer, Abyss> abysses = new HashMap<>();
+    List<Abyss> abysses = new ArrayList<>();
     // Hash< ID , TOOL > de ferramentas
     List<Tool> tools = new ArrayList<>();
     int idsCasas;
@@ -65,7 +65,7 @@ public class GameManager {
 
 
         // Se houver um abismo na posicao POSITION , retorna a img que pertence
-        for (Abyss abyss : abysses.values()) {
+        for (Abyss abyss : abysses) {
             if (abyss.getPos() == position) {
                 return abyss.getImagePng();
             }
@@ -96,7 +96,7 @@ public class GameManager {
             return null;
         }
 
-        for (Abyss abyss : abysses.values()) {
+        for (Abyss abyss : abysses) {
             if (abyss.getPos() == position) {
                 return abyss.toString();
             }
@@ -288,7 +288,7 @@ public class GameManager {
 
             writer.write("ABYSS" + "\n");
 
-            for (Abyss abyss : abysses.values()) {
+            for (Abyss abyss : abysses) {
                 writeGameHouseElements(writer, abyss);
                 writer.write("\n");
             }
@@ -468,7 +468,7 @@ public class GameManager {
                         throw new IllegalArgumentException();
                     }
 
-                    abysses.put(idAbyss, abyss);
+                    abysses.add(abyss);
 
                 }
             }
@@ -595,7 +595,9 @@ public class GameManager {
 
                         }
 
-                        abysses.put(idAbyss, abyss);
+                        System.out.println(abyss + " " + posAbyss);
+
+                        abysses.add(abyss);
                         continue;
                     }
 
@@ -612,6 +614,12 @@ public class GameManager {
             }
 
         }
+
+        System.out.println("___________________________________");
+        for (Abyss abyss : abysses){
+            System.out.println(abyss + " " + abyss.getPos());
+        }
+
     }
 
     public void createInitialBoard(String[][] playerInfo, int worldSize) throws InvalidInitialBoardException {
@@ -936,7 +944,7 @@ public class GameManager {
         if (!programmerTemp.isStuck()) {
             if (!isTool) {
 
-                for (Abyss abyss : abysses.values()) {
+                for (Abyss abyss : abysses) {
                     if (programmers.containsKey(programmerTemp.getId())) {
 
                         if (programmerTemp.getPos() == abyss.getPos()) {
@@ -1098,32 +1106,27 @@ public class GameManager {
         //Troco de turno incrementando os turnos terminados
         gameSetting.nextShift();
 
-        //System.out.println(programmerTemp);
-      //  System.out.println("player  -> " + getCurrentPlayerID());
-      //  System.out.println("count -> " + gameSetting.getCount());
-
-        //System.out.println("________________________________________");
 
         if (isTool && !canCatch) {
 
-            //  System.out.println("Já tens isto zé");
+          //    System.out.println("Já tens isto zé");
             return "Já tens esta ferramenta, siga para a próxima !";
 
 
         } else if (isTool) {
-            //  System.out.println("TOOL");
+          //    System.out.println("TOOL");
             return "Parabéns, apanhaste uma ferramenta !!";
 
         } else if (isAbyss) {
-            //  System.out.println("ABISMO");
+          //    System.out.println("ABISMO");
             return "Ohhh, caiste num abismo !!";
 
         } else if (programmerTemp.isStuck()) {
-            //  System.out.println("PRESO");
+          //    System.out.println("PRESO");
             return "Estás preso em Ciclos Infinitos! Pode ser que tenhas sorte e alguém te tire daí !";
 
         }
-        // System.out.println("NULL");
+       //  System.out.println("NULL");
         return null;
 
 

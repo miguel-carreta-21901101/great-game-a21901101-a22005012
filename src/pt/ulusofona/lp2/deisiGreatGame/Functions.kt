@@ -70,6 +70,7 @@ fun mostUsedPositions(manager: GameManager, list: List<String>): String? {
     return ""
 }
 
+
 fun mostUsedAbysses(manager: GameManager, max_results : Int): String {
     var stringFinal : String = ""
 
