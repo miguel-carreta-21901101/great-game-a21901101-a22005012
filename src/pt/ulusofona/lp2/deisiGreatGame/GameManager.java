@@ -438,12 +438,10 @@ public class GameManager {
 
 
             fileReader.close();
+            return true;
         } catch (IOException e) {
             return false;
         }
-
-
-        return true;
     }
 
 
