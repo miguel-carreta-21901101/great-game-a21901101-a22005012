@@ -359,7 +359,7 @@ public class GameManager {
                     default:
                         break;
                 }
-                String linguagens = dados[4];
+                String linguagens = dados[4].trim();
 
 
                 int outOfGame = Integer.parseInt(dados[5].trim());
