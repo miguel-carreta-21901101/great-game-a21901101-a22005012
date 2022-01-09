@@ -31,7 +31,7 @@ fun functionGet(game: GameManager, list: List<String>): String? {
 fun functionPost(game: GameManager, list: List<String>): String? {
     when (list[0]) {
         "MOVE" ->  return move(game, list)
-        //   "ABYSS" ->  return move(game, list)
+        "ABYSS" ->  return move(game, list)
     }
     return null
 }
