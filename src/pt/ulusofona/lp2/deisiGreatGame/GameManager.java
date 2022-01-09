@@ -257,6 +257,20 @@ public class GameManager {
             writer.write(gameSetting.getEndedShifts() + "\n");
             // Programmers Size
             writer.write(getProgrammers(true).size() + "\n");
+            int count = 0;
+            int sizeOfIdProgrammers = idProgrammers.size();
+
+            for (Integer i : idProgrammers){
+                count ++;
+                writer.write(i + "");
+                if (count == sizeOfIdProgrammers){
+                    break;
+                }
+                writer.write(" : ");
+            }
+
+            writer.write("\n");
+
 
             for (Programmer p : getProgrammers(true)) {
                 writePlayer(writer, p);
@@ -289,7 +303,7 @@ public class GameManager {
     public boolean loadGame(File file) {
 
         try {
-             resetGameLoadGame();
+            resetGame();
             Scanner fileReader = new Scanner(file);
             // Map Size
             String line = fileReader.nextLine();
@@ -307,12 +321,19 @@ public class GameManager {
             line = fileReader.nextLine();
             int programmersSize = Integer.parseInt(line.trim());
 
+            line = fileReader.nextLine();
+            String[] dados = line.split(" : ");
+
+            for (String dado : dados) {
+
+                idProgrammers.add(Integer.parseInt(dado));
+            }
 
             int idAux = 0;
 
             for (int i = 0; i < programmersSize; i++) {
                 line = fileReader.nextLine();
-                String[] dados = line.split(":");
+                dados = line.split(":");
                 int id = 0;
                 id = Integer.parseInt(dados[0].trim());
                 idAux = id;
@@ -342,7 +363,14 @@ public class GameManager {
 
 
                 int outOfGame = Integer.parseInt(dados[5].trim());
+
                 int stuck = Integer.parseInt(dados[6].trim());
+                if (outOfGame == 1){
+                    programmersOutOfGame.put(id,new Programmer(id, name, pos, cor, linguagens, outOfGame, stuck));
+                    programmersOutOfGame.get(id).setOutOfGame();
+                    continue;
+                }
+
 
                 if (pos == 1 ) {
                     programmers.put(id, new Programmer(id, name, pos, cor, linguagens, outOfGame, stuck));
@@ -350,6 +378,9 @@ public class GameManager {
                             ;
                 }
 
+                if (stuck == 1){
+                    programmers.get(id).stuckedByInfiniteCircle();
+                }
                 List<Tool> tools = new ArrayList<>();
                 List<Integer> casas = new ArrayList<>();
                 boolean temTool = false;
@@ -406,7 +437,7 @@ public class GameManager {
 
 
             while (!(line = fileReader.nextLine()).equals("ABYSS")) {
-                String[] dados = line.split(":".trim());
+                dados = line.split(":".trim());
                 if (dados.length == 2){
                     int idTool = Integer.parseInt(dados[0].trim());
                     int posTool = Integer.parseInt(dados[1].trim());
@@ -422,7 +453,7 @@ public class GameManager {
 
 
             while(!(line = fileReader.nextLine()).equals("END")){
-                String[] dados = line.split(":".trim());
+                dados = line.split(":".trim());
                 if (dados.length == 2){
                     int idAbyss = Integer.parseInt(dados[0].trim());
                     int posAbyss = Integer.parseInt(dados[1].trim());
@@ -439,7 +470,7 @@ public class GameManager {
 
             fileReader.close();
             return true;
-        } catch (IOException e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -459,18 +490,6 @@ public class GameManager {
 
     }
 
-    public void resetGameLoadGame() {
-
-        programmers.clear();
-        programmersOutOfGame.clear();
-        programmerListGameResults.clear();
-        totalProgrammers.clear();
-        abysses.clear();
-        tools.clear();
-        gameSetting = new GameSetting();
-        board = new Board();
-
-    }
 
     public void createInitialBoard(String[][] playerInfo, int worldSize, String[][] abyssesAndTools)
             throws InvalidInitialBoardException {
