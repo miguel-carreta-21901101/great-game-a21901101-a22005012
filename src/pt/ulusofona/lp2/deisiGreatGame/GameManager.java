@@ -588,15 +588,14 @@ public class GameManager {
 
                 }
 
-                  InvalidInitialBoardException ex = new InvalidInitialBoardException();
 
                 if (abyssAlert) {
 
                     Abyss abyss = Abyss.createAbyss(idAbyss, AuxCode.setTitleAbyss(idAbyss), posAbyss);
                     if (abyss == null) {
-                      //  throw new InvalidInitialBoardException("O Abyss é NULL!");
+                        throw new InvalidInitialBoardException("O Abyss é NULL!");
 
-                        ex.isInvalidAbyss();
+
                     }
 
                     abysses.put(idAbyss, abyss);
@@ -605,8 +604,8 @@ public class GameManager {
 
                 Tool tool = Tool.createTool(idTool, AuxCode.setTitleTool(idTool), posTool);
                 if (tool == null) {
-                    ex.isInvalidTool();
-                  //  throw new InvalidInitialBoardException("A Ferramenta é NULL!");
+
+                   throw new InvalidInitialBoardException("A Ferramenta é NULL!");
                 }
 
                 tools.add(tool);
@@ -1084,8 +1083,8 @@ public class GameManager {
             }
         }
 
-        System.out.println("player  -> " + getCurrentPlayerID());
-        System.out.println("count -> " + gameSetting.getCount());
+      //  System.out.println("player  -> " + getCurrentPlayerID());
+       // System.out.println("count -> " + gameSetting.getCount());
         // Incremento o count para ir buscar o proximo posicao no array IDS
         gameSetting.addOneCount();
 
@@ -1103,10 +1102,10 @@ public class GameManager {
         gameSetting.nextShift();
 
         //System.out.println(programmerTemp);
-        System.out.println("player  -> " + getCurrentPlayerID());
-        System.out.println("count -> " + gameSetting.getCount());
+      //  System.out.println("player  -> " + getCurrentPlayerID());
+      //  System.out.println("count -> " + gameSetting.getCount());
 
-        System.out.println("________________________________________");
+        //System.out.println("________________________________________");
 
         if (isTool && !canCatch) {
 
