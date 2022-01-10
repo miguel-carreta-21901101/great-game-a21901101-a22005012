@@ -455,7 +455,6 @@ public class GameManager {
                 }
             }
 
-
             while(!(line = fileReader.nextLine()).equals("END")){
                 dados = line.split(":".trim());
                 if (dados.length == 2){
@@ -470,7 +469,6 @@ public class GameManager {
 
                 }
             }
-
 
             fileReader.close();
             return true;

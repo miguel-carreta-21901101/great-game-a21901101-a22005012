@@ -69,23 +69,33 @@ public class TestGameSettingManager {
         assertEquals(gameMng.getGameResults().toString(), expectedGameResults.toString());
     }
 
-/*
+
     //nrPositions está a 0.  tem que ser entre 1 - 6 ( num do dado)
    @Test
     public void teste01Move(){
-        GameManager manager = new GameManager();
-        manager.createInitialBoard(getPlayersInfo(), 79);
-        boolean resultadoObtido = manager.moveCurrentPlayer(0);
-        assertFalse(resultadoObtido);
+        try {
+            GameManager manager = new GameManager();
+            manager.createInitialBoard(getPlayersInfo(), 79);
+            boolean resultadoObtido = manager.moveCurrentPlayer(0);
+            assertFalse(resultadoObtido);
+        }catch (InvalidInitialBoardException ex){
+            assertEquals("Excepcao", ex.getMessage());
+        }
+
     }
 
     //nrPositions está a 7.  tem que ser entre 1 - 6 ( num do dado)
     @Test
     public void teste02Move(){
         GameManager manager = new GameManager();
-        manager.createInitialBoard(getPlayersInfo(), 79);
-        boolean resultadoObtido = manager.moveCurrentPlayer(7);
-        assertFalse(resultadoObtido);
+        try{
+            manager.createInitialBoard(getPlayersInfo(), 79);
+            boolean resultadoObtido = manager.moveCurrentPlayer(7);
+            assertFalse(resultadoObtido);
+        }catch (InvalidInitialBoardException ex){
+            assertEquals("Excepcao", ex.getMessage());
+        }
+
 
     }
 
@@ -93,91 +103,125 @@ public class TestGameSettingManager {
     public void testeMoveOnePlayer(){
         //andar com o jogadorCurrent (index 0 do array programers) 5 casas para a frente
         GameManager manager = new GameManager();
+        try{
         manager.createInitialBoard(getPlayersInfo(), 79);
+            manager.moveCurrentPlayer(5);
+            Programmer programmerThatMoved = manager.getProgrammers(false).get(0);
+            assertEquals(6, programmerThatMoved.getPos());
+
+        }  catch (InvalidInitialBoardException ex){
+            assertEquals("Excepcao", ex.getMessage());
+        }
         //andar
-        manager.moveCurrentPlayer(5);
-        Programmer programmerThatMoved = manager.getProgrammers(false).get(0);
-        assertEquals(6, programmerThatMoved.getPos());
+
     }
 
-  /*  @Test
+   @Test
     public void testeMoveOneMultiplePlayers(){
         //andar com o jogador (index 0 do array programers) 11 casas para a frente
         //andar com o jogador (index 1 do array programers) 3 casas para a frente
-        GameManager manager = new GameManager();
-        manager.createInitialBoard(getPlayersInfo(), 79);
-        manager.moveCurrentPlayer(5);
-        manager.moveCurrentPlayer(3);
-        manager.moveCurrentPlayer(6);
-        Programmer programmerThatMovedMost = manager.getProgrammers(false).get(0);
-        assertEquals(12, programmerThatMovedMost.getPos());
-        Programmer programmerThatMovedLeast = manager.getProgrammers(false).get(1);
-        assertEquals(4, programmerThatMovedLeast.getPos());
-    }*/
-/*
+       try {
+           GameManager manager = new GameManager();
+           manager.createInitialBoard(getPlayersInfo(), 79);
+           manager.moveCurrentPlayer(5);
+           manager.moveCurrentPlayer(3);
+           manager.moveCurrentPlayer(6);
+           Programmer programmerThatMovedMost = manager.getProgrammers(false).get(0);
+           assertEquals(15, programmerThatMovedMost.getPos());
+           Programmer programmerThatMovedLeast = manager.getProgrammers(false).get(1);
+           assertEquals(1, programmerThatMovedLeast.getPos());
+
+
+       }catch (InvalidInitialBoardException ex){
+           assertEquals("Excepcao", ex.getMessage());
+       }
+
+
+    }
+
     @Test
     public void testeMovePlayerPassFinish(){
-        GameManager manager = new GameManager();
-        manager.createInitialBoard(getPlayersInfo(), 80);
-        //andar
+        try {
+            GameManager manager = new GameManager();
+            manager.createInitialBoard(getPlayersInfo(), 80);
+            //andar
 
-        for(int pos = 0; pos <= 159; pos++) {//andar todos os jogadores até o current ficar naquele que queremos e com pos=79
-            manager.moveCurrentPlayer(1);
+            for(int pos = 0; pos <= 159; pos++) {//andar todos os jogadores até o current ficar naquele que queremos e com pos=79
+                manager.moveCurrentPlayer(1);
+            }
+            manager.moveCurrentPlayer(5);//andar o current na poss 79 5 cassas para a frente e como excedeu por 4 cassas o goal ficar no 76
+            Programmer programmerThatMoved = manager.getProgrammers(false).get(0);
+            assertEquals(76, programmerThatMoved.getPos());
+        }catch (InvalidInitialBoardException ex){
+            assertEquals("Excepcao", ex.getMessage());
         }
-        manager.moveCurrentPlayer(5);//andar o current na poss 79 5 cassas para a frente e como excedeu por 4 cassas o goal ficar no 76
-        Programmer programmerThatMoved = manager.getProgrammers(false).get(0);
-        assertEquals(76, programmerThatMoved.getPos());
-    }
+        }
+
 
     @Test
     public void testeCreateAbyssPos(){
-        GameManager manager = new GameManager();
-        manager.createInitialBoard(getPlayersInfo(), 80);
-        Abyss abyss0 = createAbyss(0, "Syntax Error", 1);
-        manager.abysses.put(0, abyss0);
-        //System.out.println(manager.abysses);
-        assertEquals(1, abyss0.getPos());
+        try {
+            GameManager manager = new GameManager();
+            manager.createInitialBoard(getPlayersInfo(), 80);
+            Abyss abyss0 = createAbyss(0, "Syntax Error", 1);
+            manager.abysses.add(0, abyss0);
+            //System.out.println(manager.abysses);
+            assertEquals(1, abyss0.getPos());
+
+        }catch (InvalidInitialBoardException ex){
+            assertEquals("Excepcao", ex.getMessage());
+        }
 
 
-    }
+    }/*
     @Test
     public void testePlayerReactAbyss(){
-        GameManager manager = new GameManager();
-        manager.createInitialBoard(getPlayersInfo(), 2);
+        try {
+            GameManager manager = new GameManager();
+            manager.createInitialBoard(getPlayersInfo(), 2);
 
-        //make abyss
-        Abyss abyss0 = createAbyss(0, "Syntax Error", 1);
-        manager.abysses.put(0, abyss0);
+            //make abyss
+            Abyss abyss0 = createAbyss(0, "Syntax Error", 1);
+            manager.abysses.add(0, abyss0);
 
-        //make programmer
-        Programmer programmer0 = new Programmer("Steve", 1);
-        manager.gameSetting.setCurrentPlayerID(1);
+            //make programmer
+            Programmer programmer0 = new Programmer("Steve", 1);
+            manager.gameSetting.setCurrentPlayerID(1);
 
-        assertEquals("Ohhh, caiste num abismo !!", manager.reactToAbyssOrTool());
+            assertEquals("Ohhh, caiste num abismo !!", manager.reactToAbyssOrTool());
+
+        }catch (InvalidInitialBoardException ex){
+            assertEquals("Excepcao", ex.getMessage());
+        }
 
 
     }
 
     @Test
     public void testePlayerReactTool(){
-        GameManager manager = new GameManager();
-        manager.createInitialBoard(getPlayersInfo(), 2);
+        try {
+            GameManager manager = new GameManager();
+            manager.createInitialBoard(getPlayersInfo(), 2);
 
-        //make tool
-        Tool tool0 = createTool(0, "Inheritance", 1);
-        manager.tools.add(0, tool0);
+            //make tool
+            Tool tool0 = createTool(0, "Inheritance", 1);
+            manager.tools.add(0, tool0);
 
-        //make programmer
-        Programmer programmer0 = new Programmer("Steve", 1);
-        manager.gameSetting.setCurrentPlayerID(1);
+            //make programmer
+            Programmer programmer0 = new Programmer("Steve", 1);
+            manager.gameSetting.setCurrentPlayerID(1);
 
-        //System.out.println(manager.gameSetting.getCurrentPlayerID());
-        //System.out.println(tool0.getPos());
-        manager.canCatch = true;
+            //System.out.println(manager.gameSetting.getCurrentPlayerID());
+            //System.out.println(tool0.getPos());
+            manager.canCatch = true;
 
-        assertEquals("Parabéns, apanhaste uma ferramenta !!", manager.reactToAbyssOrTool());
+            assertEquals("Parabéns, apanhaste uma ferramenta !!", manager.reactToAbyssOrTool());
+
+        }catch (InvalidInitialBoardException ex){
+            assertEquals("Excepcao", ex.getMessage());
+        }
 
 
-    }
-*/
+    }*/
+
 }
