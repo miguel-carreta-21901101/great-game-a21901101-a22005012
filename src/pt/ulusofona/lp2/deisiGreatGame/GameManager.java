@@ -278,6 +278,8 @@ public class GameManager {
             writer.write("\n");
             writer.write(gameSetting.getCount() + "\n");
 
+
+
             for (Programmer p : getProgrammers(true)) {
                 writePlayer(writer, p);
                 writer.write("\n");
@@ -492,6 +494,7 @@ public class GameManager {
         idProgrammers.clear();
         abysses.clear();
         tools.clear();
+        casasMaisPisadas.clear();
         gameSetting = new GameSetting();
         board = new Board();
 
@@ -1171,12 +1174,24 @@ public class GameManager {
 
         }
         if (!counterAbyss && roolback == 0) {//se não for função de roolback
+            if (casasMaisPisadas.containsKey(programmerTemp.getPos())) {
+                casasMaisPisadas.put(programmerTemp.getPos(), casasMaisPisadas.get(programmerTemp.getPos()) +1);
+
+            } else {
+                casasMaisPisadas.put(programmerTemp.getPos(), 1);
+            }
             AuxCode.changePosAndCasa(programmerTemp.getPos() - penaltyCasas,
                     programmers, programmerTemp);
             penalty = true;
         }
 
         if (!counterAbyss && roolback == 1) {//se for duplicated code
+            if (casasMaisPisadas.containsKey(programmerTemp.getPos())) {
+                casasMaisPisadas.put(programmerTemp.getPos(), casasMaisPisadas.get(programmerTemp.getPos()) +1);
+
+            } else {
+                casasMaisPisadas.put(programmerTemp.getPos(), 1);
+            }
             AuxCode.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
                     programmerTemp.getCasasPercorridasList().size() - 2), programmers,
                     programmerTemp);
@@ -1184,6 +1199,12 @@ public class GameManager {
         }
 
         if (!counterAbyss && roolback == 2) {//se for efeitos secundarios
+            if (casasMaisPisadas.containsKey(programmerTemp.getPos())) {
+                casasMaisPisadas.put(programmerTemp.getPos(), casasMaisPisadas.get(programmerTemp.getPos()) +1);
+
+            } else {
+                casasMaisPisadas.put(programmerTemp.getPos(), 1);
+            }
             AuxCode.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
                     programmerTemp.getCasasPercorridasList().size() - 3), programmers,
                     programmerTemp);
