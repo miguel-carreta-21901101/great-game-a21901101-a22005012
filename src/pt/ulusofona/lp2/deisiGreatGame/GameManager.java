@@ -477,6 +477,7 @@ public class GameManager {
 
                 }
             }
+            iniciateAbyssesMaisPisados(abyssesMaisPisados);
 
             fileReader.close();
             return true;
@@ -499,6 +500,7 @@ public class GameManager {
         abyssesMaisPisados.clear();
         gameSetting = new GameSetting();
         board = new Board();
+
 
     }
 
@@ -621,7 +623,7 @@ public class GameManager {
 
         }
 
-
+        iniciateAbyssesMaisPisados(abyssesMaisPisados);
 
     }
 
@@ -1131,6 +1133,7 @@ public class GameManager {
             }
         }
 
+
         if (!penalty) {
            AuxCode.auxiliarIncrementaCasasMaisPisadas(casasMaisPisadas, programmerTemp);
         }
@@ -1305,6 +1308,13 @@ public class GameManager {
         painel.add(ricardo);
 
         return painel;
+    }
+
+    public void iniciateAbyssesMaisPisados(HashMap<Integer, Abyss> abyssesMaisPisados){
+        for (Abyss abyss : abysses){
+            abyssesMaisPisados.put(abyss.getPos(), Abyss.createAbyss(abyss.getId(), abyss.toString(), abyss.getPos()));
+            abyssesMaisPisados.get(abyss.getPos()).setCount(0);
+        }
     }
 
     public HashMap<String, Integer> getSteppedOn() {

@@ -3,7 +3,7 @@ package pt.ulusofona.lp2.deisiGreatGame;
 
 
 public abstract class Abyss extends GameHouseElement {
-    int count = 1;
+    int count;
 
     public Abyss(int id, String title, int pos){
         super(id,  title,  pos);
