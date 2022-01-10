@@ -73,6 +73,15 @@ public  class AuxCode {
         return false;
     }
 
+    public static void auxiliarIncrementaCasasMaisPisadas(HashMap<Integer, Integer> casasMaisPisadas, Programmer programmer){
+        if (casasMaisPisadas.containsKey(programmer.getPos())) {
+            casasMaisPisadas.put(programmer.getPos(), casasMaisPisadas.get(programmer.getPos()) +1);
+
+        } else {
+            casasMaisPisadas.put(programmer.getPos(), 1);
+        }
+    }
+
     public static int setIdAbyss(List<Abyss>hashAbyss,int pos) {
         for (Abyss abyss : hashAbyss) {
             if (abyss.getPos() == pos) {
