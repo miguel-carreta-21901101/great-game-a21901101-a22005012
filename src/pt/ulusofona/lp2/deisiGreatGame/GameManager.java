@@ -1108,9 +1108,7 @@ public class GameManager {
             }
         }
 
-        for (int i: casasMaisPisadas.keySet()){
-            System.out.println(i + " " + casasMaisPisadas.get(i));
-        }
+
         // Incremento o count para ir buscar o proximo posicao no array IDS
         gameSetting.addOneCount();
 
