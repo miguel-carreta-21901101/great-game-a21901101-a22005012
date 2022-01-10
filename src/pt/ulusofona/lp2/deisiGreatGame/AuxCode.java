@@ -81,7 +81,7 @@ public  class AuxCode {
             casasMaisPisadas.put(programmer.getPos(), 1);
         }
     }
-    /*
+
     public static void auxiliarIncrementaAbyssesMaisPisados(HashMap<String, Integer> abyssesMaisPisados, int id){
         if (abyssesMaisPisados.containsKey(setTitleAbyss(id))){
             abyssesMaisPisados.put(setTitleAbyss(id),
@@ -89,7 +89,7 @@ public  class AuxCode {
         } else {
             abyssesMaisPisados.put(setTitleAbyss(id), 1);
         }
-    }*/
+    }
 
     public static int setIdAbyss(List<Abyss>hashAbyss,int pos) {
         for (Abyss abyss : hashAbyss) {
