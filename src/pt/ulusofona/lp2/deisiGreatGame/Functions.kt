@@ -23,7 +23,7 @@ fun functionGet(game: GameManager, list: List<String>): String? {
         "PLAYERS_BY_LANGUAGE" -> return playersByLanguage(game, list[1])
         "POLYGLOTS" -> return polyglots(game)
         "MOST_USED_POSITIONS" -> return mostUsedPositions(game, list)
-        "MOST_USED_ABYSSES" -> return mostUsedAbysses(game, list)
+        "MOST_USED_ABYSSES" -> return mostUsedAbysses(game, list[1].toInt())
     }
     return null
 }
@@ -73,14 +73,15 @@ fun mostUsedPositions(manager: GameManager, list: List<String>): String {
         .take(Integer.parseInt(list[1]))
         .joinToString("\n"){""+ it.first + ":" + it.second}
 }
+/*
 fun mostUsedAbysses(manager: GameManager, list: List<String>): String {
     return manager
         .abyssesMaisPisados.map { it.key to it.value }
         .sortedByDescending { it.second }
         .take(Integer.parseInt(list[1]))
         .joinToString("\n"){""+ it.first + ":" + it.second}
-}
-/*
+}*/
+
 
 fun mostUsedAbysses(manager: GameManager, max_results : Int): String {
     var stringFinal : String = ""
@@ -92,7 +93,7 @@ fun mostUsedAbysses(manager: GameManager, max_results : Int): String {
     res.forEach { stringFinal += it.key + ":" + it.value + "\n" }
 
     return stringFinal.trim().trim()
-}*/
+}
 
 fun move(manager: GameManager, pos: List<String>): String {
     manager.moveCurrentPlayer(Integer.parseInt(pos[1]))
@@ -103,7 +104,7 @@ fun move(manager: GameManager, pos: List<String>): String {
     }
 }
 
-fun postAbyss(manager: GameManager, abyssId : Int , posWanted: Int): String? {
+fun postAbyss(manager: GameManager, abyssId : Int , posWanted: Int): String {
 
     if(manager.abysses.filter { it.pos == posWanted }.isNotEmpty()){
         return "Position is occupied"
