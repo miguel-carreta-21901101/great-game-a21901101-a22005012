@@ -67,7 +67,11 @@ fun polyglots(manager: GameManager): String {
 }
 
 fun mostUsedPositions(manager: GameManager, list: List<String>): String? {
-    return ""
+    return manager
+        .casasMaisPisadas.map { it.key to it.value }
+        .sortedByDescending { it.second }
+        .take(Integer.parseInt(list[1]))
+        .joinToString("\n"){""+ it.first + ":" + it.second}
 }
 
 

@@ -26,8 +26,13 @@ public class GameManager {
     List<Abyss> abysses = new ArrayList<>();
     // Hash< ID , TOOL > de ferramentas
     List<Tool> tools = new ArrayList<>();
+
+    HashMap<Integer, Integer> casasMaisPisadas = new HashMap<>();
+
+
     int idsCasas;
     boolean canCatch = false;
+    boolean penalty = false;
     Board board = new Board();
     GameSetting gameSetting = new GameSetting();
 
@@ -922,6 +927,7 @@ public class GameManager {
         boolean breakTest = false;
         boolean isTool = false;
         boolean isAbyss = false;
+        penalty = false;
         Programmer programmerTemp = programmers.get(gameSetting.getCurrentPlayerID());
 
 
@@ -1093,8 +1099,18 @@ public class GameManager {
             }
         }
 
-      //  System.out.println("player  -> " + getCurrentPlayerID());
-       // System.out.println("count -> " + gameSetting.getCount());
+        if (!penalty) {
+            if (casasMaisPisadas.containsKey(programmerTemp.getPos())) {
+                casasMaisPisadas.put(programmerTemp.getPos(), casasMaisPisadas.get(programmerTemp.getPos()) +1);
+
+            } else {
+                casasMaisPisadas.put(programmerTemp.getPos(), 1);
+            }
+        }
+
+        for (int i: casasMaisPisadas.keySet()){
+            System.out.println(i + " " + casasMaisPisadas.get(i));
+        }
         // Incremento o count para ir buscar o proximo posicao no array IDS
         gameSetting.addOneCount();
 
@@ -1159,18 +1175,21 @@ public class GameManager {
         if (!counterAbyss && roolback == 0) {//se não for função de roolback
             AuxCode.changePosAndCasa(programmerTemp.getPos() - penaltyCasas,
                     programmers, programmerTemp);
+            penalty = true;
         }
 
         if (!counterAbyss && roolback == 1) {//se for duplicated code
             AuxCode.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
                     programmerTemp.getCasasPercorridasList().size() - 2), programmers,
                     programmerTemp);
+            penalty = true;
         }
 
         if (!counterAbyss && roolback == 2) {//se for efeitos secundarios
             AuxCode.changePosAndCasa(programmerTemp.getCasasPercorridasList().get(
                     programmerTemp.getCasasPercorridasList().size() - 3), programmers,
                     programmerTemp);
+            penalty = true;
         }
 
         return counterAbyss;
