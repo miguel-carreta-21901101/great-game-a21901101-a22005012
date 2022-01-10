@@ -84,7 +84,6 @@ public  class AuxCode {
 
     public static void auxiliarIncrementaAbyssesMaisPisados(HashMap<Integer, Abyss> abyssesMaisPisados, int id, int pos){
         if (abyssesMaisPisados.containsKey(pos)){
-            abyssesMaisPisados.put(pos, abyssesMaisPisados.get(pos));
             abyssesMaisPisados.get(pos).setCount(abyssesMaisPisados.get(pos).getCount() +1);
         } else {
             abyssesMaisPisados.put(pos, Abyss.createAbyss(id, setTitleAbyss(id), pos));

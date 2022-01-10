@@ -266,11 +266,10 @@ public class GameManager {
             int sizeOfIdProgrammers = idProgrammers.size();
 
 
-
-            for (Integer i : idProgrammers){
-                count ++;
+            for (Integer i : idProgrammers) {
+                count++;
                 writer.write(i + "");
-                if (count == sizeOfIdProgrammers){
+                if (count == sizeOfIdProgrammers) {
                     break;
                 }
                 writer.write(" : ");
@@ -278,7 +277,6 @@ public class GameManager {
 
             writer.write("\n");
             writer.write(gameSetting.getCount() + "\n");
-
 
 
             for (Programmer p : getProgrammers(true)) {
@@ -377,20 +375,20 @@ public class GameManager {
                 int outOfGame = Integer.parseInt(dados[5].trim());
 
                 int stuck = Integer.parseInt(dados[6].trim());
-                if (outOfGame == 1){
-                    programmersOutOfGame.put(id,new Programmer(id, name, pos, cor, linguagens, outOfGame, stuck));
+                if (outOfGame == 1) {
+                    programmersOutOfGame.put(id, new Programmer(id, name, pos, cor, linguagens, outOfGame, stuck));
                     programmersOutOfGame.get(id).setOutOfGame();
                     continue;
                 }
 
 
-                if (pos == 1 ) {
+                if (pos == 1) {
                     programmers.put(id, new Programmer(id, name, pos, cor, linguagens, outOfGame, stuck));
                     continue
                             ;
                 }
 
-                if (stuck == 1){
+                if (stuck == 1) {
                     programmers.get(id).stuckedByInfiniteCircle();
                 }
                 List<Tool> tools = new ArrayList<>();
@@ -398,7 +396,7 @@ public class GameManager {
                 boolean temTool = false;
                 if (dados.length == 8 || dados.length == 9) {
 
-                    if (dados[7].equals(" ")){
+                    if (dados[7].equals(" ")) {
                         programmers.put(id, new Programmer(id, name, pos, cor, linguagens, outOfGame, stuck));
                         continue;
                     }
@@ -450,11 +448,11 @@ public class GameManager {
 
             while (!(line = fileReader.nextLine()).equals("ABYSS")) {
                 dados = line.split(":".trim());
-                if (dados.length == 2){
+                if (dados.length == 2) {
                     int idTool = Integer.parseInt(dados[0].trim());
                     int posTool = Integer.parseInt(dados[1].trim());
                     Tool tool = Tool.createTool(idTool, AuxCode.setTitleAbyss(idTool), posTool);
-                    if (tool == null){
+                    if (tool == null) {
                         throw new IllegalArgumentException();
                     }
 
@@ -463,13 +461,13 @@ public class GameManager {
                 }
             }
 
-            while(!(line = fileReader.nextLine()).equals("END")){
+            while (!(line = fileReader.nextLine()).equals("END")) {
                 dados = line.split(":".trim());
-                if (dados.length == 2){
+                if (dados.length == 2) {
                     int idAbyss = Integer.parseInt(dados[0].trim());
                     int posAbyss = Integer.parseInt(dados[1].trim());
                     Abyss abyss = Abyss.createAbyss(idAbyss, AuxCode.setTitleAbyss(idAbyss), posAbyss);
-                    if (abyss == null){
+                    if (abyss == null) {
                         throw new IllegalArgumentException();
                     }
 
@@ -602,7 +600,6 @@ public class GameManager {
 
 
                         }
-
 
 
                         abysses.add(abyss);
@@ -966,7 +963,7 @@ public class GameManager {
                                 case 0:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 0,
                                             programmerTemp.getPos());
-                                   // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 0);
+                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 0);
                                     int[] allowedTools0 = new int[2];
                                     allowedTools0[0] = 5;
                                     allowedTools0[1] = 4;
@@ -978,7 +975,7 @@ public class GameManager {
                                 case 1:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 1,
                                             programmerTemp.getPos());
-                                   // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 1);
+                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 1);
                                     int[] allowedTools1 = new int[2];
                                     allowedTools1[0] = 5;
                                     allowedTools1[1] = 2;
@@ -991,7 +988,7 @@ public class GameManager {
                                 case 2:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 2,
                                             programmerTemp.getPos());
-                                   // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 2);
+                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 2);
                                     int[] allowedTools2 = new int[2];
                                     allowedTools2[0] = 5;
                                     allowedTools2[1] = 3;
@@ -1003,7 +1000,7 @@ public class GameManager {
                                 case 3:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 3,
                                             programmerTemp.getPos());
-                                   // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 3);
+                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 3);
                                     int[] allowedTools3 = new int[2];
                                     allowedTools3[0] = 5;
                                     allowedTools3[1] = 3;
@@ -1015,7 +1012,7 @@ public class GameManager {
                                 case 4:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 4,
                                             programmerTemp.getPos());
-                                   // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 4);
+                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 4);
                                     AuxCode.changePosAndCasa(1, programmers, programmerTemp);
                                     breakTest = true;
                                     break;
@@ -1024,18 +1021,18 @@ public class GameManager {
                                 case 5:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 5,
                                             programmerTemp.getPos());
-                                  // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 5);
+                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 5);
                                     int[] allowedTools5 = new int[2];
                                     allowedTools5[0] = 0;
                                     reactAbyss(programmerTemp, allowedTools5, 0, 1);
                                     breakTest = true;
                                     break;
 
-                                    // EFEITOS SECUNDARIOS
+                                // EFEITOS SECUNDARIOS
                                 case 6:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 6,
                                             programmerTemp.getPos());
-                                   // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 6);
+                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 6);
                                     int[] allowedTools6 = new int[1];
                                     allowedTools6[0] = 1;
                                     reactAbyss(programmerTemp, allowedTools6, 0, 2);
@@ -1046,7 +1043,7 @@ public class GameManager {
                                 case 7:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 7,
                                             programmerTemp.getPos());
-                                   // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 7);
+                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 7);
                                     int indexAuxToRemoveID = 0;
                                     for (Integer i : idProgrammers) {
                                         if (i == gameSetting.getCurrentPlayerID()) {
@@ -1073,7 +1070,7 @@ public class GameManager {
                                 case 8:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 8,
                                             programmerTemp.getPos());
-                                   // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 8);
+                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 8);
                                     // Ciclo Infinito
                                     for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 1) {
@@ -1108,7 +1105,7 @@ public class GameManager {
                                 case 9:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 9,
                                             programmerTemp.getPos());
-                                   // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 9);
+                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 9);
                                     programmersInThisPositions = getProgrammers(programmerTemp.getPos());
 
                                     if (programmersInThisPositions.size() > 1) {
@@ -1126,16 +1123,26 @@ public class GameManager {
                             }
                         }
                     }
-                    if (breakTest){
+                    if (breakTest) {
                         break;
                     }
                 }
             }
         }
+/*
+        for (Abyss abyss : abyssesMaisPisados.values()) {
+            System.out.println("ID -> " + abyss.getId() + " POS -> " + abyss.getPos() + " QUEDAS -> " + abyss.getCount());
+        }
+        System.out.println("____________________________________________________");
 
+        for (Abyss a : abysses) {
+            System.out.println("ID -> " + a.getId() + " POS -> " + a.getPos() + " QUEDAS -> " + a.getCount());
+        }
 
+        System.out.println("____________________________________________________");
+   */
         if (!penalty) {
-           AuxCode.auxiliarIncrementaCasasMaisPisadas(casasMaisPisadas, programmerTemp);
+            AuxCode.auxiliarIncrementaCasasMaisPisadas(casasMaisPisadas, programmerTemp);
         }
 
 
@@ -1158,24 +1165,24 @@ public class GameManager {
 
         if (isTool && !canCatch) {
 
-          //    System.out.println("Já tens isto zé");
+            //    System.out.println("Já tens isto zé");
             return "Já tens esta ferramenta, siga para a próxima !";
 
 
         } else if (isTool) {
-          //    System.out.println("TOOL");
+            //    System.out.println("TOOL");
             return "Parabéns, apanhaste uma ferramenta !!";
 
         } else if (isAbyss) {
-          //    System.out.println("ABISMO");
+            //    System.out.println("ABISMO");
             return "Ohhh, caiste num abismo !!";
 
         } else if (programmerTemp.isStuck()) {
-          //    System.out.println("PRESO");
+            //    System.out.println("PRESO");
             return "Estás preso em Ciclos Infinitos! Pode ser que tenhas sorte e alguém te tire daí !";
 
         }
-       //  System.out.println("NULL");
+        //  System.out.println("NULL");
         return null;
 
 
@@ -1310,10 +1317,15 @@ public class GameManager {
         return painel;
     }
 
-    public void iniciateAbyssesMaisPisados(HashMap<Integer, Abyss> abyssesMaisPisados){
-        for (Abyss abyss : abysses){
-            abyssesMaisPisados.put(abyss.getPos(), Abyss.createAbyss(abyss.getId(), abyss.toString(), abyss.getPos()));
-            abyssesMaisPisados.get(abyss.getPos()).setCount(0);
+    public void iniciateAbyssesMaisPisados(HashMap<Integer, Abyss> abyssesMaisPisados) {
+        int count = 0;
+        for (Abyss abyss : abysses) {
+
+            if (count == 3) {
+                abyssesMaisPisados.put(abyss.getPos(), Abyss.createAbyss(abyss.getId(), abyss.toString(), abyss.getPos()));
+                abyssesMaisPisados.get(abyss.getPos()).setCount(0);
+                count =0;
+            }count++;
         }
     }
 
