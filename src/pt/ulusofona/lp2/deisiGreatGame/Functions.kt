@@ -23,44 +23,60 @@ fun functionGet(game: GameManager, list: List<String>): String? {
         "PLAYERS_BY_LANGUAGE" -> return playersByLanguage(game, list[1])
         "POLYGLOTS" -> return polyglots(game)
         "MOST_USED_POSITIONS" -> return mostUsedPositions(game, list)
-        "MOST_USED_ABYSSES" -> return mostUsedAbysses(game, list[1].toInt())
+        //"MOST_USED_ABYSSES" -> return mostUsedAbysses(game, list[1].toInt())
+        "MOST_USED_ABYSSES" -> return mostUsedAbysses(game, list)
     }
     return null
 }
 
 fun functionPost(game: GameManager, list: List<String>): String? {
     when (list[0]) {
-        "MOVE" ->  return move(game, list)
-        "ABYSS" ->  return postAbyss(game, list[1].toInt(), list[2].toInt())
+        "MOVE" -> return move(game, list)
+        "ABYSS" -> return postAbyss(game, list[1].toInt(), list[2].toInt())
     }
     return null
 }
 
 fun player(manager: GameManager, playerName: List<String>): String {
 
-    return manager.programmers.values.filter { it.name == playerName[1] }.joinToString { it.toString() }.ifEmpty {
-        "Inexistent player"
-    }
+    return manager
+        .programmers.values
+        .filter { it.name == playerName[1] }
+        .joinToString {
+            it.toString()
+        }.ifEmpty {
+            "Inexistent player"
+        }
 }
 
 
 fun playersByLanguage(manager: GameManager, wantedLanguage: String): String {
 
-    var stringFinal : String = ""
+    var stringFinal: String = ""
 
     manager.programmers.values
-        .filter { wantedLanguage in it.linguagens.split("; ")}
+        .filter { wantedLanguage in it.linguagens.split("; ") }
         .forEach { stringFinal += it.name + ',' }
     return stringFinal.dropLast(1)
 }
+/*
+fun polyglaots(manager: GameManager): String {
+
+   return manager
+       .programmers.map { it.key to it.value }
+        .filter { it.second.obtainNumeroLinguas() > 1 }
+        .sortedBy {  it.second.obtainNumeroLinguas() }
+       .forEach { it.second.name + ":" +it.second.obtainNumeroLinguas() + "\n" }
+
+}*/
 
 fun polyglots(manager: GameManager): String {
 
-    var stringFinal : String = ""
+    var stringFinal: String = ""
 
     manager.programmers.values
         .filter { it.obtainNumeroLinguas() > 1 }
-        .sortedBy {  it.obtainNumeroLinguas() }
+        .sortedBy { it.obtainNumeroLinguas() }
         .forEach { stringFinal += it.name + ":" + it.obtainNumeroLinguas() + "\n" }
 
     return stringFinal.trim()
@@ -71,32 +87,35 @@ fun mostUsedPositions(manager: GameManager, list: List<String>): String {
         .casasMaisPisadas.map { it.key to it.value }
         .sortedByDescending { it.second }
         .take(Integer.parseInt(list[1]))
-        .joinToString("\n"){""+ it.first + ":" + it.second}
+        .joinToString("\n") { "" + it.first + ":" + it.second }
 }
-/*
+
 fun mostUsedAbysses(manager: GameManager, list: List<String>): String {
     return manager
         .abyssesMaisPisados.map { it.key to it.value }
-        .sortedByDescending { it.second }
+        .distinctBy { it.second.toString() }
+        .sortedByDescending { it.second.getCount() }
         .take(Integer.parseInt(list[1]))
-        .joinToString("\n"){""+ it.first + ":" + it.second}
-}*/
+        .joinToString("\n"){""+ it.second.toString()  + ":" + it.second.getCount()}
+}
 
-
-fun mostUsedAbysses(manager: GameManager, max_results : Int): String {
-    var stringFinal : String = ""
+/*
+fun mostUsedAbysses(manager: GameManager, max_results: Int): String {
+    var stringFinal: String = ""
 
     var res = manager.steppedOn
-        .entries.sortedByDescending{ it.value }
-        .take(max_results -1).associate { it.toPair() }
+        .entries.sortedByDescending { it.value }
+        .take(max_results - 1).associate { it.toPair() }
 
     res.forEach { stringFinal += it.key + ":" + it.value + "\n" }
 
     return stringFinal.trim().trim()
-}
+}*/
 
 fun move(manager: GameManager, pos: List<String>): String {
+
     manager.moveCurrentPlayer(Integer.parseInt(pos[1]))
+
     return if (manager.reactToAbyssOrTool() == null) {
         "OK"
     } else {
@@ -104,9 +123,13 @@ fun move(manager: GameManager, pos: List<String>): String {
     }
 }
 
-fun postAbyss(manager: GameManager, abyssId : Int , posWanted: Int): String {
+fun postAbyss(manager: GameManager, abyssId: Int, posWanted: Int): String {
 
-    if(manager.abysses.filter { it.pos == posWanted }.isNotEmpty()){
+    if (manager
+            .abysses
+            .filter { it.pos == posWanted }
+            .isNotEmpty()
+    ) {
         return "Position is occupied"
     }
 

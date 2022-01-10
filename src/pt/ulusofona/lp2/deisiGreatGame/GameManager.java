@@ -29,7 +29,7 @@ public class GameManager {
 
     HashMap<Integer, Integer> casasMaisPisadas = new HashMap<>();
     //HashMap<String, Integer> abyssesMaisPisados = new HashMap<>();
-
+    HashMap<Integer, Abyss> abyssesMaisPisados = new HashMap<>();
 
     int idsCasas;
     boolean canCatch = false;
@@ -496,6 +496,7 @@ public class GameManager {
         abysses.clear();
         tools.clear();
         casasMaisPisadas.clear();
+        abyssesMaisPisados.clear();
         gameSetting = new GameSetting();
         board = new Board();
 
@@ -961,6 +962,8 @@ public class GameManager {
 
                                 //ERRO SINTAX Recua 1 casa
                                 case 0:
+                                    AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 0,
+                                            programmerTemp.getPos());
                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 0);
                                     int[] allowedTools0 = new int[2];
                                     allowedTools0[0] = 5;
@@ -971,6 +974,8 @@ public class GameManager {
 
                                 //LOGICA - Recua metad3 do valor que tiver saido no dado
                                 case 1:
+                                    AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 1,
+                                            programmerTemp.getPos());
                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 1);
                                     int[] allowedTools1 = new int[2];
                                     allowedTools1[0] = 5;
@@ -982,6 +987,8 @@ public class GameManager {
 
                                 //EXCEPTION - recua 2 casas
                                 case 2:
+                                    AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 2,
+                                            programmerTemp.getPos());
                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 2);
                                     int[] allowedTools2 = new int[2];
                                     allowedTools2[0] = 5;
@@ -992,6 +999,8 @@ public class GameManager {
 
                                 // FILE NOT FOUND - recua 3 casas
                                 case 3:
+                                    AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 3,
+                                            programmerTemp.getPos());
                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 3);
                                     int[] allowedTools3 = new int[2];
                                     allowedTools3[0] = 5;
@@ -1002,6 +1011,8 @@ public class GameManager {
 
                                 //CRASH - volta à primeira casa
                                 case 4:
+                                    AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 4,
+                                            programmerTemp.getPos());
                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 4);
                                     AuxCode.changePosAndCasa(1, programmers, programmerTemp);
                                     breakTest = true;
@@ -1009,6 +1020,8 @@ public class GameManager {
 
                                 // DUPLICATED CODE - Recuar ate à antiga casa onde o player estava
                                 case 5:
+                                    AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 5,
+                                            programmerTemp.getPos());
                                   // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 5);
                                     int[] allowedTools5 = new int[2];
                                     allowedTools5[0] = 0;
@@ -1018,6 +1031,8 @@ public class GameManager {
 
                                     // EFEITOS SECUNDARIOS
                                 case 6:
+                                    AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 6,
+                                            programmerTemp.getPos());
                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 6);
                                     int[] allowedTools6 = new int[1];
                                     allowedTools6[0] = 1;
@@ -1027,6 +1042,8 @@ public class GameManager {
 
                                 // BLUE SCREEN - perde imediatamente o jogo
                                 case 7:
+                                    AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 7,
+                                            programmerTemp.getPos());
                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 7);
                                     int indexAuxToRemoveID = 0;
                                     for (Integer i : idProgrammers) {
@@ -1052,6 +1069,8 @@ public class GameManager {
 
 
                                 case 8:
+                                    AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 8,
+                                            programmerTemp.getPos());
                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 8);
                                     // Ciclo Infinito
                                     for (Tool tool : programmerTemp.getTools()) {
@@ -1085,6 +1104,8 @@ public class GameManager {
 
                                 //Segmentation Fault
                                 case 9:
+                                    AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 9,
+                                            programmerTemp.getPos());
                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 9);
                                     programmersInThisPositions = getProgrammers(programmerTemp.getPos());
 
