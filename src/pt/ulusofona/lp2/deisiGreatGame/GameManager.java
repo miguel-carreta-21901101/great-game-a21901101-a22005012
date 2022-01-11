@@ -1134,9 +1134,11 @@ public class GameManager {
             System.out.println("ID -> " + abyss.getId() + " POS -> " + abyss.getPos() + " QUEDAS -> " + abyss.getCount());
         }
         System.out.println("____________________________________________________");
+
         for (Abyss a : abysses) {
             System.out.println("ID -> " + a.getId() + " POS -> " + a.getPos() + " QUEDAS -> " + a.getCount());
         }
+
         System.out.println("____________________________________________________");
    */
         if (!penalty) {

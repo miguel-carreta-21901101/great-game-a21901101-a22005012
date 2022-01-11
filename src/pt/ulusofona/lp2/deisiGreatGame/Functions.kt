@@ -59,7 +59,16 @@ fun playersByLanguage(manager: GameManager, wantedLanguage: String): String {
         .forEach { stringFinal += it.name + ',' }
     return stringFinal.dropLast(1)
 }
+/*
+fun polyglaots(manager: GameManager): String {
 
+   return manager
+       .programmers.map { it.key to it.value }
+        .filter { it.second.obtainNumeroLinguas() > 1 }
+        .sortedBy {  it.second.obtainNumeroLinguas() }
+       .forEach { it.second.name + ":" +it.second.obtainNumeroLinguas() + "\n" }
+
+}*/
 
 fun polyglots(manager: GameManager): String {
 
@@ -93,10 +102,13 @@ fun mostUsedAbysses(manager: GameManager, list: List<String>): String {
 /*
 fun mostUsedAbysses(manager: GameManager, max_results: Int): String {
     var stringFinal: String = ""
+
     var res = manager.steppedOn
         .entries.sortedByDescending { it.value }
         .take(max_results - 1).associate { it.toPair() }
+
     res.forEach { stringFinal += it.key + ":" + it.value + "\n" }
+
     return stringFinal.trim().trim()
 }*/
 

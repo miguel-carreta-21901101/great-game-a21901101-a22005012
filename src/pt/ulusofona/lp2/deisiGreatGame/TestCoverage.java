@@ -38,7 +38,7 @@ public class TestCoverage {
         System.out.println(programmer.getPos());
         System.out.println(programmer.getCasasPercorridasList());
 
-        List<Integer> expected_precurso = new ArrayList<>();
+        List<Integer> expected_precurso = new ArrayList<Integer>();
         expected_precurso.add(4);
         expected_precurso.add(7);
 
@@ -71,7 +71,7 @@ public class TestCoverage {
 
     @Test
     public void testSetTool(){
-        List<Tool> tools = new ArrayList<>();
+        List<Tool> tools = new ArrayList<Tool>();
         Tool tool0 = Tool.createTool(4, "IDE", 0);
         tools.add(tool0);
 
@@ -86,7 +86,7 @@ public class TestCoverage {
 
     @Test
     public void testIsTool(){
-        List<Tool> tools = new ArrayList<>();
+        List<Tool> tools = new ArrayList<Tool>();
         Tool tool0 = Tool.createTool(4, "IDE", 0);
         tools.add(tool0);
 
@@ -99,7 +99,7 @@ public class TestCoverage {
     @Test
     public void testBlueScreenDeathToString(){
         BlueScreenDeath error = new BlueScreenDeath(7, "Blue Screen of Death", 0);
-        assertEquals("Blue Screen of Death", error.getTitle());
+        assertEquals("Blue Screen of Death", error.toString());
     }
 
     @Test
@@ -113,7 +113,7 @@ public class TestCoverage {
     @Test
     public void testSyntaxErrorToString(){
         SyntaxError error = new SyntaxError(7, "Syntax Error", 0);
-        assertEquals("Syntax Error", error.getTitle());
+        assertEquals("Syntax Error", error.toString());
     }
 
     @Test
