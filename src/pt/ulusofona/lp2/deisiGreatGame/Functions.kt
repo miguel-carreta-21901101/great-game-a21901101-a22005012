@@ -41,12 +41,9 @@ fun player(manager: GameManager, playerName: List<String>): String {
 
     return manager
         .programmers.values
-        .filter { it.name == playerName[1] }
-        .joinToString {
-            it.toString()
-        }.ifEmpty {
-            "Inexistent player"
-        }
+        .filter { it.name.split(" ")[0] == playerName[1] }
+        .joinToString {it.toString() }
+        .ifEmpty {"Inexistent player" }
 }
 
 
@@ -59,16 +56,7 @@ fun playersByLanguage(manager: GameManager, wantedLanguage: String): String {
         .forEach { stringFinal += it.name + ',' }
     return stringFinal.dropLast(1)
 }
-/*
-fun polyglaots(manager: GameManager): String {
 
-   return manager
-       .programmers.map { it.key to it.value }
-        .filter { it.second.obtainNumeroLinguas() > 1 }
-        .sortedBy {  it.second.obtainNumeroLinguas() }
-       .forEach { it.second.name + ":" +it.second.obtainNumeroLinguas() + "\n" }
-
-}*/
 
 fun polyglots(manager: GameManager): String {
 

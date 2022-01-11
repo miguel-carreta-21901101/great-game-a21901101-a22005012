@@ -91,16 +91,6 @@ public  class AuxCode {
     }
 
 
-    /*
-    public static void auxiliarIncrementaAbyssesMaisPisados(HashMap<String, Integer> abyssesMaisPisados, int id){
-        if (abyssesMaisPisados.containsKey(setTitleAbyss(id))){
-            abyssesMaisPisados.put(setTitleAbyss(id),
-                    abyssesMaisPisados.get(setTitleAbyss(id)) +1 );
-        } else {
-            abyssesMaisPisados.put(setTitleAbyss(id), 1);
-        }
-    }*/
-
     public static int setIdAbyss(List<Abyss>hashAbyss,int pos) {
         for (Abyss abyss : hashAbyss) {
             if (abyss.getPos() == pos) {
