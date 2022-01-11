@@ -52,27 +52,17 @@ fun player(manager: GameManager, playerName: List<String>): String {
 
 fun playersByLanguage(manager: GameManager, wantedLanguage: String): String {
 
-    var stringFinal: String = ""
+    var stringFinal = ""
 
     manager.programmers.values
         .filter { wantedLanguage in it.linguagens.split("; ") }
         .forEach { stringFinal += it.name + ',' }
     return stringFinal.dropLast(1)
 }
-/*
-fun polyglaots(manager: GameManager): String {
-
-   return manager
-       .programmers.map { it.key to it.value }
-        .filter { it.second.obtainNumeroLinguas() > 1 }
-        .sortedBy {  it.second.obtainNumeroLinguas() }
-       .forEach { it.second.name + ":" +it.second.obtainNumeroLinguas() + "\n" }
-
-}*/
 
 fun polyglots(manager: GameManager): String {
 
-    var stringFinal: String = ""
+    var stringFinal = ""
 
     manager.programmers.values
         .filter { it.obtainNumeroLinguas() > 1 }

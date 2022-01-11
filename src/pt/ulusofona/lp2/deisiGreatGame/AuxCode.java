@@ -91,16 +91,6 @@ public  class AuxCode {
     }
 
 
-    /*
-    public static void auxiliarIncrementaAbyssesMaisPisados(HashMap<String, Integer> abyssesMaisPisados, int id){
-        if (abyssesMaisPisados.containsKey(setTitleAbyss(id))){
-            abyssesMaisPisados.put(setTitleAbyss(id),
-                    abyssesMaisPisados.get(setTitleAbyss(id)) +1 );
-        } else {
-            abyssesMaisPisados.put(setTitleAbyss(id), 1);
-        }
-    }*/
-
     public static int setIdAbyss(List<Abyss>hashAbyss,int pos) {
         for (Abyss abyss : hashAbyss) {
             if (abyss.getPos() == pos) {
@@ -141,33 +131,6 @@ public  class AuxCode {
 
             default:
                 return -1;
-
-        }
-    }
-
-    public static String setTitleToolLoad(int id){
-
-        switch(id){
-            case 0:
-                return "Herança";
-
-            case 1:
-                return "Programação Funcional";
-
-            case 2:
-                return "Testes unitários";
-
-            case 3:
-                return "Tratamento de Excepções";
-
-            case 4:
-                return "IDE";
-
-            case 5:
-                return "Ajuda Do Professor";
-
-            default:
-                return "";
 
         }
     }

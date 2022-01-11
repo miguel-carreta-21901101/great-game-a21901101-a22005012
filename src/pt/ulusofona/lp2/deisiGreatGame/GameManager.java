@@ -28,7 +28,6 @@ public class GameManager {
     List<Tool> tools = new ArrayList<>();
 
     HashMap<Integer, Integer> casasMaisPisadas = new HashMap<>();
-    //HashMap<String, Integer> abyssesMaisPisados = new HashMap<>();
     HashMap<Integer, Abyss> abyssesMaisPisados = new HashMap<>();
 
     int idsCasas;
@@ -36,19 +35,6 @@ public class GameManager {
     boolean penalty = false;
     Board board = new Board();
     GameSetting gameSetting = new GameSetting();
-
-    //Counter de steppedOn Abysses
-    int steppedOnSyntaxError = 0;
-    int steppedOnLogicError = 0;
-    int steppedOnExceptionFault = 0;
-    int steppedOnFileNotFoundException = 0;
-    int steppedOnCrash = 0;
-    int steppedOnDuplicatedCode = 0;
-    int steppedOnSideEffect = 0;
-    int steppedOnBlueScreenDeath = 0;
-    int steppedOnInfiniteLoop = 0;
-    int steppedOnSegmentationFault = 0;
-
 
     public GameManager() {
     }
@@ -339,12 +325,12 @@ public class GameManager {
             line = fileReader.nextLine();
             gameSetting.setCount(Integer.parseInt(line.trim()));
 
-            int idAux = 0;
+            int idAux;
 
             for (int i = 0; i < programmersSize; i++) {
                 line = fileReader.nextLine();
                 dados = line.split(":");
-                int id = 0;
+                int id;
                 id = Integer.parseInt(dados[0].trim());
                 idAux = id;
                 String name = dados[1].trim();
@@ -846,32 +832,27 @@ public class GameManager {
                     // ERRO SINTAX -  Recua 1 casa
                     case 0:
                         idsCasas = 0;
-                        steppedOnSyntaxError++;
                         break;
 
 
                     case 1:
                         idsCasas = 1;
                         gameSetting.setDiceShoot(nrSpaces);
-                        steppedOnLogicError++;
                         break;
 
 
                     case 2:
                         idsCasas = 2;
-                        steppedOnExceptionFault++;
                         break;
 
 
                     case 3:
                         idsCasas = 3;
-                        steppedOnFileNotFoundException++;
                         break;
 
 
                     case 4:
                         idsCasas = 4;
-                        steppedOnCrash++;
                         break;
 
 
@@ -879,7 +860,6 @@ public class GameManager {
                     // Recua até à casa onde estava antes de chegar a esta casa.
                     case 5:
                         idsCasas = 5;
-                        steppedOnDuplicatedCode++;
                         break;
 
 
@@ -888,26 +868,21 @@ public class GameManager {
                     case 6:
 
                         idsCasas = 6;
-                        steppedOnSideEffect++;
                         break;
 
 
                     //Blue Screen  -   perde imediatamente o jogo
                     case 7:
                         idsCasas = 7;
-                        steppedOnBlueScreenDeath++;
                         break;
-
 
                     // CICLO INFINITO
                     case 8:
                         idsCasas = 8;
-                        steppedOnInfiniteLoop++;
                         break;
                     // CORE DUMPED
                     case 9:
                         idsCasas = 9;
-                        steppedOnSegmentationFault++;
                         break;
 
                     default:
@@ -963,7 +938,6 @@ public class GameManager {
                                 case 0:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 0,
                                             programmerTemp.getPos());
-                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 0);
                                     int[] allowedTools0 = new int[2];
                                     allowedTools0[0] = 5;
                                     allowedTools0[1] = 4;
@@ -975,7 +949,6 @@ public class GameManager {
                                 case 1:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 1,
                                             programmerTemp.getPos());
-                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 1);
                                     int[] allowedTools1 = new int[2];
                                     allowedTools1[0] = 5;
                                     allowedTools1[1] = 2;
@@ -988,7 +961,6 @@ public class GameManager {
                                 case 2:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 2,
                                             programmerTemp.getPos());
-                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 2);
                                     int[] allowedTools2 = new int[2];
                                     allowedTools2[0] = 5;
                                     allowedTools2[1] = 3;
@@ -1000,7 +972,6 @@ public class GameManager {
                                 case 3:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 3,
                                             programmerTemp.getPos());
-                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 3);
                                     int[] allowedTools3 = new int[2];
                                     allowedTools3[0] = 5;
                                     allowedTools3[1] = 3;
@@ -1012,7 +983,6 @@ public class GameManager {
                                 case 4:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 4,
                                             programmerTemp.getPos());
-                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 4);
                                     AuxCode.changePosAndCasa(1, programmers, programmerTemp);
                                     breakTest = true;
                                     break;
@@ -1021,9 +991,7 @@ public class GameManager {
                                 case 5:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 5,
                                             programmerTemp.getPos());
-                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 5);
                                     int[] allowedTools5 = new int[2];
-                                    allowedTools5[0] = 0;
                                     reactAbyss(programmerTemp, allowedTools5, 0, 1);
                                     breakTest = true;
                                     break;
@@ -1032,7 +1000,6 @@ public class GameManager {
                                 case 6:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 6,
                                             programmerTemp.getPos());
-                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 6);
                                     int[] allowedTools6 = new int[1];
                                     allowedTools6[0] = 1;
                                     reactAbyss(programmerTemp, allowedTools6, 0, 2);
@@ -1043,7 +1010,6 @@ public class GameManager {
                                 case 7:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 7,
                                             programmerTemp.getPos());
-                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 7);
                                     int indexAuxToRemoveID = 0;
                                     for (Integer i : idProgrammers) {
                                         if (i == gameSetting.getCurrentPlayerID()) {
@@ -1070,7 +1036,6 @@ public class GameManager {
                                 case 8:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 8,
                                             programmerTemp.getPos());
-                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 8);
                                     // Ciclo Infinito
                                     for (Tool tool : programmerTemp.getTools()) {
                                         if (tool.getId() == 1) {
@@ -1105,7 +1070,6 @@ public class GameManager {
                                 case 9:
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 9,
                                             programmerTemp.getPos());
-                                    // AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 9);
                                     programmersInThisPositions = getProgrammers(programmerTemp.getPos());
 
                                     if (programmersInThisPositions.size() > 1) {
@@ -1129,18 +1093,7 @@ public class GameManager {
                 }
             }
         }
-/*
-        for (Abyss abyss : abyssesMaisPisados.values()) {
-            System.out.println("ID -> " + abyss.getId() + " POS -> " + abyss.getPos() + " QUEDAS -> " + abyss.getCount());
-        }
-        System.out.println("____________________________________________________");
 
-        for (Abyss a : abysses) {
-            System.out.println("ID -> " + a.getId() + " POS -> " + a.getPos() + " QUEDAS -> " + a.getCount());
-        }
-
-        System.out.println("____________________________________________________");
-   */
         if (!penalty) {
             AuxCode.auxiliarIncrementaCasasMaisPisadas(casasMaisPisadas, programmerTemp);
         }
@@ -1327,23 +1280,6 @@ public class GameManager {
                 count =0;
             }count++;
         }
-    }
-
-    public HashMap<String, Integer> getSteppedOn() {
-        HashMap<String, Integer> casas = new HashMap<>();
-        casas.put("File Not Found Exception", steppedOnFileNotFoundException);
-        casas.put("Erro de sintaxe", steppedOnSyntaxError);
-        casas.put("Erro de lógica", steppedOnLogicError);
-        casas.put("Exception", steppedOnExceptionFault);
-        casas.put("Crash (aka Rebentanço)", steppedOnCrash);
-        casas.put("Duplicated Code", steppedOnDuplicatedCode);
-        casas.put("Efeitos secundários", steppedOnSideEffect);
-        casas.put("Blue Screen of Death", steppedOnBlueScreenDeath);
-        casas.put("Ciclo infinito", steppedOnInfiniteLoop);
-        casas.put("Segmentation Fault", steppedOnSegmentationFault);
-
-
-        return casas;
     }
 
 }

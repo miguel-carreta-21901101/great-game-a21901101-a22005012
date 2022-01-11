@@ -33,9 +33,8 @@ public class GameSetting {
     }
 //SETTERS
 
-    public void setCount(int count) {
-        this.count = count;
-    }
+
+    public void setCount(int count) {this.count = count;}
 
     public void setCurrentPlayerID(int currentPlayerID) {
         this.currentPlayerID = currentPlayerID;
@@ -59,7 +58,6 @@ public class GameSetting {
     public void removeOneCount(){count -= 1;}
     public void nextShift() {
         endedShifts ++;
-       // currentPlayerID++;
     }
 
 }
