@@ -88,14 +88,14 @@ public class GameManager {
 
         for (Abyss abyss : abysses) {
             if (abyss.getPos() == position) {
-                return abyss.toString();
+                return abyss.getTitle();
             }
         }
 
 
         for (Tool tool : tools) {
             if (tool.getPos() == position) {
-                return tool.toString();
+                return tool.getTitle();
             }
         }
 
@@ -110,6 +110,7 @@ public class GameManager {
             allProgrammers.addAll(programmersOutOfGame.values());
             return allProgrammers;
         }
+
         List<Programmer> programmersAlive = new ArrayList<>();
 
 
@@ -178,6 +179,7 @@ public class GameManager {
     public int getCurrentPlayerID() {
         return gameSetting.getCurrentPlayerID();
     }
+
     //**********************************************************************************************
 
     private void writePlayer(FileWriter writer, Programmer programmer) throws IOException {
@@ -325,12 +327,12 @@ public class GameManager {
             line = fileReader.nextLine();
             gameSetting.setCount(Integer.parseInt(line.trim()));
 
-            int idAux = 0;
+            int idAux;
 
             for (int i = 0; i < programmersSize; i++) {
                 line = fileReader.nextLine();
                 dados = line.split(":");
-                int id = 0;
+                int id;
                 id = Integer.parseInt(dados[0].trim());
                 idAux = id;
                 String name = dados[1].trim();
@@ -470,8 +472,22 @@ public class GameManager {
         }
     }
 
+    private void iniciateAbyssesMaisPisados(HashMap<Integer, Abyss> abyssesMaisPisados) {
+        int count = 0;
+        for (Abyss abyss : abysses) {
 
-    public void resetGame() {
+            if (count == 3) {
+                abyssesMaisPisados.put(abyss.getPos(), Abyss.createAbyss(abyss.getId(), abyss.getTitle(),
+                        abyss.getPos()));
+                abyssesMaisPisados.get(abyss.getPos()).setCount(0);
+
+                count =0;
+            }
+            count++;
+        }
+    }
+
+    private void resetGame() {
 
         programmers.clear();
         programmersOutOfGame.clear();
@@ -992,7 +1008,6 @@ public class GameManager {
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 5,
                                             programmerTemp.getPos());
                                     int[] allowedTools5 = new int[2];
-                                    allowedTools5[0] = 0;
                                     reactAbyss(programmerTemp, allowedTools5, 0, 1);
                                     breakTest = true;
                                     break;
@@ -1269,18 +1284,6 @@ public class GameManager {
         painel.add(ricardo);
 
         return painel;
-    }
-
-    public void iniciateAbyssesMaisPisados(HashMap<Integer, Abyss> abyssesMaisPisados) {
-        int count = 0;
-        for (Abyss abyss : abysses) {
-
-            if (count == 3) {
-                abyssesMaisPisados.put(abyss.getPos(), Abyss.createAbyss(abyss.getId(), abyss.toString(), abyss.getPos()));
-                abyssesMaisPisados.get(abyss.getPos()).setCount(0);
-                count =0;
-            }count++;
-        }
     }
 
 }

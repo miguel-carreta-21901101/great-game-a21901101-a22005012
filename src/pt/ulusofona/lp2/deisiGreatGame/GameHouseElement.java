@@ -27,5 +27,6 @@ public abstract class GameHouseElement {
         return pos;
     }
 
-    public  String toString(){return title;}
+    public  String getTitle(){return title;}
+
 }

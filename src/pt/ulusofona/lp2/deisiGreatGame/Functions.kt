@@ -79,11 +79,11 @@ fun mostUsedPositions(manager: GameManager, list: List<String>): String {
 
 fun mostUsedAbysses(manager: GameManager, list: List<String>): String {
     return manager
-        .abyssesMaisPisados.map { it.key to it.value }
-        .distinctBy { it.second.toString() }
-        .sortedByDescending { it.second.getCount() }
+        .abyssesMaisPisados.values
+        .distinctBy { it.getTitle() }
+        .sortedByDescending { it.getCount() }
         .take(Integer.parseInt(list[1]))
-        .joinToString("\n"){""+ it.second.toString()  + ":" + it.second.getCount()}
+        .joinToString("\n"){""+ it.getTitle()  + ":" + it.getCount()}
 }
 
 /*
