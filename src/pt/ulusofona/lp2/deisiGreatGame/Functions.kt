@@ -23,7 +23,6 @@ fun functionGet(game: GameManager, list: List<String>): String? {
         "PLAYERS_BY_LANGUAGE" -> return playersByLanguage(game, list[1])
         "POLYGLOTS" -> return polyglots(game)
         "MOST_USED_POSITIONS" -> return mostUsedPositions(game, list)
-        //"MOST_USED_ABYSSES" -> return mostUsedAbysses(game, list[1].toInt())
         "MOST_USED_ABYSSES" -> return mostUsedAbysses(game, list)
     }
     return null
@@ -36,19 +35,26 @@ fun functionPost(game: GameManager, list: List<String>): String? {
     }
     return null
 }
-
+/*
 fun player(manager: GameManager, playerName: List<String>): String {
 
     return manager
         .programmers.values
         .filter { it.name == playerName[1] }
-        .joinToString {
-            it.toString()
-        }.ifEmpty {
-            "Inexistent player"
-        }
+        .joinToString { it.toString() }
+        .ifEmpty { "Inexistent player" }
 }
+*/
 
+fun player(manager: GameManager, playerName: List<String>): String {
+
+    return manager
+        .programmers.map { it.key to it.value }
+        .filter { it.second.name.split(" ")[0] == playerName[1] }
+        .joinToString {""+ it.toString().replace("(","").replace(")","")
+            .replace("${it.second.id}, ", "") }
+        .ifEmpty { "Inexistent player" }
+}
 
 fun playersByLanguage(manager: GameManager, wantedLanguage: String): String {
 
