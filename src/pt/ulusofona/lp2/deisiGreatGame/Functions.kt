@@ -35,24 +35,15 @@ fun functionPost(game: GameManager, list: List<String>): String? {
     }
     return null
 }
-/*
+
+
 fun player(manager: GameManager, playerName: List<String>): String {
 
     return manager
         .programmers.values
-        .filter { it.name == playerName[1] }
-        .joinToString { it.toString() }
-        .ifEmpty { "Inexistent player" }
-}
-*/
-
-fun player(manager: GameManager, playerName: List<String>): String {
-
-    return manager
-        .programmers.map { it.key to it.value }
-        .filter { it.second.name.split(" ")[0] == playerName[1] }
+        .filter { it.name.split(" ")[0] == playerName[1] }
         .joinToString {""+ it.toString().replace("(","").replace(")","")
-            .replace("${it.second.id}, ", "") }
+            .replace("${it.id}, ", "") }
         .ifEmpty { "Inexistent player" }
 }
 
