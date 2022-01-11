@@ -91,6 +91,7 @@ public  class AuxCode {
     }
 
 
+
     public static int setIdAbyss(List<Abyss>hashAbyss,int pos) {
         for (Abyss abyss : hashAbyss) {
             if (abyss.getPos() == pos) {
@@ -131,6 +132,33 @@ public  class AuxCode {
 
             default:
                 return -1;
+
+        }
+    }
+
+    public static String setTitleToolLoad(int id){
+
+        switch(id){
+            case 0:
+                return "Herança";
+
+            case 1:
+                return "Programação Funcional";
+
+            case 2:
+                return "Testes unitários";
+
+            case 3:
+                return "Tratamento de Excepções";
+
+            case 4:
+                return "IDE";
+
+            case 5:
+                return "Ajuda Do Professor";
+
+            default:
+                return "";
 
         }
     }

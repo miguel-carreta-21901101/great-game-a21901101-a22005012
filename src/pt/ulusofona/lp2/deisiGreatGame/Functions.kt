@@ -23,6 +23,7 @@ fun functionGet(game: GameManager, list: List<String>): String? {
         "PLAYERS_BY_LANGUAGE" -> return playersByLanguage(game, list[1])
         "POLYGLOTS" -> return polyglots(game)
         "MOST_USED_POSITIONS" -> return mostUsedPositions(game, list)
+        //"MOST_USED_ABYSSES" -> return mostUsedAbysses(game, list[1].toInt())
         "MOST_USED_ABYSSES" -> return mostUsedAbysses(game, list)
     }
     return null
@@ -36,20 +37,22 @@ fun functionPost(game: GameManager, list: List<String>): String? {
     return null
 }
 
-
 fun player(manager: GameManager, playerName: List<String>): String {
 
     return manager
         .programmers.values
-        .filter { it.name.split(" ")[0] == playerName[1] }
-        .joinToString {""+ it.toString().replace("(","").replace(")","")
-            .replace("${it.id}, ", "") }
-        .ifEmpty { "Inexistent player" }
+        .filter { it.name == playerName[1] }
+        .joinToString {
+            it.toString()
+        }.ifEmpty {
+            "Inexistent player"
+        }
 }
+
 
 fun playersByLanguage(manager: GameManager, wantedLanguage: String): String {
 
-    var stringFinal = ""
+    var stringFinal: String = ""
 
     manager.programmers.values
         .filter { wantedLanguage in it.linguagens.split("; ") }
@@ -57,9 +60,10 @@ fun playersByLanguage(manager: GameManager, wantedLanguage: String): String {
     return stringFinal.dropLast(1)
 }
 
+
 fun polyglots(manager: GameManager): String {
 
-    var stringFinal = ""
+    var stringFinal: String = ""
 
     manager.programmers.values
         .filter { it.obtainNumeroLinguas() > 1 }
@@ -79,23 +83,20 @@ fun mostUsedPositions(manager: GameManager, list: List<String>): String {
 
 fun mostUsedAbysses(manager: GameManager, list: List<String>): String {
     return manager
-        .abyssesMaisPisados.values
-        .distinctBy { it.getTitle() }
-        .sortedByDescending { it.getCount() }
+        .abyssesMaisPisados.map { it.key to it.value }
+        .distinctBy { it.second.toString() }
+        .sortedByDescending { it.second.getCount() }
         .take(Integer.parseInt(list[1]))
-        .joinToString("\n"){""+ it.getTitle()  + ":" + it.getCount()}
+        .joinToString("\n"){""+ it.second.toString()  + ":" + it.second.getCount()}
 }
 
 /*
 fun mostUsedAbysses(manager: GameManager, max_results: Int): String {
     var stringFinal: String = ""
-
     var res = manager.steppedOn
         .entries.sortedByDescending { it.value }
         .take(max_results - 1).associate { it.toPair() }
-
     res.forEach { stringFinal += it.key + ":" + it.value + "\n" }
-
     return stringFinal.trim().trim()
 }*/
 
