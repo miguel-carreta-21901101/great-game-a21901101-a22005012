@@ -325,12 +325,12 @@ public class GameManager {
             line = fileReader.nextLine();
             gameSetting.setCount(Integer.parseInt(line.trim()));
 
-            int idAux;
+            int idAux = 0;
 
             for (int i = 0; i < programmersSize; i++) {
                 line = fileReader.nextLine();
                 dados = line.split(":");
-                int id;
+                int id = 0;
                 id = Integer.parseInt(dados[0].trim());
                 idAux = id;
                 String name = dados[1].trim();
@@ -992,6 +992,7 @@ public class GameManager {
                                     AuxCode.auxiliarIncrementaAbyssesMaisPisados(abyssesMaisPisados, 5,
                                             programmerTemp.getPos());
                                     int[] allowedTools5 = new int[2];
+                                    allowedTools5[0] = 0;
                                     reactAbyss(programmerTemp, allowedTools5, 0, 1);
                                     breakTest = true;
                                     break;
