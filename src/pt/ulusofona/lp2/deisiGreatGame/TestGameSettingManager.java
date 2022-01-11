@@ -166,6 +166,7 @@ public class TestGameSettingManager {
             Abyss abyss0 = createAbyss(0, "Syntax Error", 1);
             manager.abysses.add(0, abyss0);
             //System.out.println(manager.abysses);
+            assert abyss0 != null;
             assertEquals(1, abyss0.getPos());
 
         }catch (InvalidInitialBoardException ex){
